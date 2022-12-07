@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="employees">
+
+	<select id="getAllEmployees" resultClass="com.community.vo.Employee">
+		select
+			emp_no as empNo,
+			emp_password as empPassword,
+			emp_name as empName,
+			emp_email as empEmail,
+			emp_phone as empPhone,
+			emp_dept_no as empDeptNo,
+			emp_position_no as empPositionNo,
+			emp_deleted as empDeleted,
+			emp_created_date as empCreatedDate,
+			emp_updated_date as empUpdatedDate,
+			emp_deleted_date as empDeletedDate,
+			emp_type as empType
+		from
+			comm_employees
+	</select>
+
+	<insert id="insertEmployee" parameterClass="com.community.vo.Employee">
+		insert into comm_employees
+			(emp_no, emp_password, emp_name, emp_email, emp_phone, emp_dept_no, emp_position_no)
+		values
+			(comm_employees_seq.nextval,#password#,#name#,#email#,#phone#,#deptNo#,#positionNo#)
+	</insert>
+	
+	<select id="getEmployeeByNo" parameterClass="int" resultClass="com.community.vo.Employee">
+		select
+			emp_no as empNo,
+			emp_password as empPassword,
+			emp_name as empName,
+			emp_email as empEmail,
+			emp_phone as empPhone,
+			emp_dept_no as empDeptNo,
+			emp_position_no as empPositionNo,
+			emp_deleted as empDeleted,
+			emp_created_date as empCreatedDate,
+			emp_updated_date as empUpdatedDate,
+			emp_deleted_date as empDeletedDate,
+			emp_type as empType
+		from
+			comm_employees
+		where
+			emp_no = #value#
+			
+	</select>
+</sqlMap>
+

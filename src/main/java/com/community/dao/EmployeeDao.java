@@ -1,5 +1,5 @@
 package com.community.dao;
 
-public class BoardDao {
-	
+public class EmployeeDao {
+
 }
