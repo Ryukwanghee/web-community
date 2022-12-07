@@ -2,48 +2,8 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
  
-<sqlMap namespace="employees">
+<sqlMap namespace="questions">
 
-	<select id="getEmployeesByDepartmentId" parameterClass="int" resultClass="com.sample.vo.Employee">
-		select
-			employee_id as id,
-			first_name as firstName,
-			last_name as lastName,
-			email,
-			phone_number as phoneNumber,
-			hire_date as hireDate,
-			job_id as jobId,
-			salary,
-			commission_pct as commissionPct,
-			manager_id as managerId,
-			department_id as departmentId
-		from
-			employees
-		where
-			department_id = #value#
-		order by
-			employee_id asc
-	</select>
 	
-	<select id="getEmployeeById" parameterClass="int" resultClass="com.sample.vo.Employee">
-		select
-			employee_id as id,
-			first_name as firstName,
-			last_name as lastName,
-			email,
-			phone_number as phoneNumber,
-			hire_date as hireDate,
-			job_id as jobId,
-			salary,
-			commission_pct as commissionPct,
-			manager_id as managerId,
-			department_id as departmentId
-		from
-			employees
-		where
-			employee_id = #value#
-		order by
-			employee_id asc
-	</select>
 </sqlMap>
 
