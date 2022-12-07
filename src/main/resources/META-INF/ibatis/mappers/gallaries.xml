@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="gallaries">
+
+	<select id="getGallaryByNo" parameterClass="int" resultClass="com.community.vo.Gallary">
+		select
+			*
+		from
+			semi_community_posts
+		where
+			post_board_no = 300
+			and post_no = #value#
+	</select>
+</sqlMap>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="departments">
+
+	<select id="getAllDepartments" resultClass="com.sample.vo.Department">
+		select
+			department_id as id,
+			department_name as name
+		from
+			departments
+		where
+			manager_id is not null
+		order by
+			department_id asc
+	</select>
+	
+</sqlMap>
+
