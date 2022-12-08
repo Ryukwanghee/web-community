@@ -4,14 +4,53 @@
  
 <sqlMap namespace="fileshares">
 
-	<select id="getFileShareByNo" parameterClass="int" resultClass="com.community.vo.FileShare">
+	<select id="getFileShares" parameterClass="map" resultClass="com.community.vo.Post">
 		select
-			*
+			post_no as no,
+			post_board_no as boardNo,
+			post_title as title,
+			post_writer_no as writerNo,
+			post_content as content,
+			post_important as important,
+			post_read_count as readCount,
+			post_suggestion_count as suggestionCount,
+			post_comment_count as commentCount,
+			post_deleted as deleted,
+			post_created_date as createdDate,
+			post_updated_date as updatedDate,
+			post_deleted_date as deletedDate,
+			post_original_no as originalNo
 		from
-			semi_community_posts
+			(select
+				row_number() over (order by post_no desc) row_numbers,
+				post_no, post_board_no, post_title, post_writer_no, post_content, post_important, post_read_count, post_suggestion_count, post_comment_count,
+				post_deleted, post_created_date, post_updated_date, post_deleted_date, post_original_no
+			from
+				comm_posts
+			where
+				post_board_no = 101)
 		where
-			post_board_no = 200
-			and post_no = #value#
+	         row_numbers between #begin# and #end#   
 	</select>
+
+	<select id="getTotalRows" resultClass="int">
+		select
+			count(*)
+		from
+			comm_posts
+		where
+			post_board_no = 101
+	</select>
+	
+	<select id="getFileShareByNo" parameterClass="int" resultClass="com.community.vo.Employee">
+		select 
+			emp_no as no,
+			emp_name as name
+		from
+			comm_employees
+		where
+			emp_no = #value#
+	</select>
+
 </sqlMap>
 

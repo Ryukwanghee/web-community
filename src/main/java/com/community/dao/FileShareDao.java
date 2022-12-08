@@ -1,5 +1,25 @@
 package com.community.dao;
 
-public class FileShareDao {
+import java.util.List;
+import java.util.Map;
 
+import com.community.util.SqlMapper;
+import com.community.vo.Employee;
+import com.community.vo.FileShare;
+import com.community.vo.Post;
+
+public class FileShareDao {
+	
+	@SuppressWarnings("unchecked")
+	public List<Post> getFileShares(Map<String, Object> param){
+		return (List<Post>) SqlMapper.selectList("fileshares.getFileShares", param);
+	}
+	
+	public int getTotalRows() {
+		return (Integer) SqlMapper.selectOne("fileshares.getTotalRows");
+	}
+	
+	public Employee getFileShareByNo(int no) {
+		return (Employee) SqlMapper.selectOne("fileshares.getFileShareByNo", no);
+	}
 }

@@ -1,3 +1,12 @@
+<%@page import="com.community.util.StringUtils"%>
+<%@page import="com.community.vo.Employee"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+<%@page import="com.community.dao.PostDao"%>
+<%@page import="com.community.vo.Post"%>
+<%@page import="com.community.dao.FileShareDao"%>
+<%@page import="java.util.List"%>
+<%@page import="com.community.vo.FileShare"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -19,6 +28,28 @@
 		<div class="col">
 			<h1 class="heading">파일 게시판</h1>
 		</div>
+		<%
+			// 페이징 처리하기
+			
+			final int rows = 10;
+		
+			int currentPage = 1;
+			try {
+				currentPage = Integer.parseInt(request.getParameter("page"));
+			} catch (NumberFormatException ex){
+			}
+			
+			
+			int begin = (currentPage - 1)*rows + 1;
+			int end = currentPage*rows;
+			
+			Map<String, Object> param = new HashMap<>();
+			param.put("begin", begin);
+			param.put("end", end);		
+			
+			FileShareDao fileShareDao = new FileShareDao();
+			List<Post> posts = fileShareDao.getFileShares(param);
+		%>
 	</div>
 	<div class="row mb-3">
 		<div class="col-3">
@@ -76,30 +107,53 @@
 									<th>조회</th>
 								</tr>
 							</thead>
+<%
+	List<Post> postList = fileShareDao.getFileShares(param);
+
+	if (postList.isEmpty()) {
+%>
+			<tr><td class="text-center" colspan="6"> 게시글 정보가 없습니다. </td></tr>
+<%
+	} else {
+		for (Post post : postList) {
+			Employee emp = fileShareDao.getFileShareByNo(post.getWriterNo());
+			
+%>
 							<tbody>
 								<tr>
 									<td><input type="checkbox" name="" value=""/></td>
-									<td>100000</td>
+									<td><%=post.getNo() %></td>
 									<td><a href="download"><i class="bi bi-paperclip"></i></a></td>
-									<td><a href="" class="text-decoration-none text-dark">휴가 신청서</a></td>
-									<td>홍길동</td>
-									<td>2022-12-01</td>
-									<td>12</td>
+									<td><a href="" class="text-decoration-none text-dark"><%=post.getTitle() %></a></td>
+									<td><%=emp.getName() %></td>
+									<td><%=StringUtils.dateToText(post.getCreatedDate()) %></td>
+									<td><%=post.getReadCount() %></td>
 								</tr>
 							</tbody>
+<%
+	}}
+%>
 						</table>
 					</form>
 					<nav>
+<%
+	int totalRows = fileShareDao.getTotalRows();
+	int totalPages = (int)Math.ceil((double)totalRows/rows);
+%>
 						<ul class="pagination pagination-sm justify-content-center">
-							<li class="page-item disabled">
-								<a class="page-link">이전</a>
+							<li class="page-item <%=currentPage == 1 ? "disabled" : "" %>">
+								<a class="page-link" href="list.jsp?page=<%=currentPage - 1 %>">이전</a>
 							</li>
-							<li class="page-item"><a class="page-link active" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item">
-								<a class="page-link" href="#">다음</a>
-							</li>
+<%
+	for(int number = 1; number <= totalPages; number++) {
+%>
+				<li class="page-item"><a class="page-link <%=currentPage == number ? "active" : "" %>" href="list.jsp?page=<%=number %>"><%=number %></a></li>
+<%
+	}
+%>
+				<li class="page-item <%=currentPage >= totalPages ? "disabled" : "" %>">
+					<a class="page-link" href="list.jsp?page=<%=currentPage + 1 %>">다음</a>
+				</li>
 						</ul>
 					</nav>
 					<div class="text-end">
