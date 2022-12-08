@@ -1,3 +1,4 @@
+<%@page import="com.community.vo.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,6 +9,14 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 <link href="/web-community/resources/css/style.css" rel="stylesheet">
+<%
+	Employee employee = (Employee) session.getAttribute("loginedUser");
+	
+	if (employee == null) {
+	response.sendRedirect("/web-community/employees/loginform.jsp?error=deny");
+	return;
+}
+%>
 <title>사내 커뮤니티</title>
 </head>
 <body>

@@ -1,5 +1,7 @@
 package com.community.vo;
 
+import java.util.Date;
+
 public class Employee {
 	private int no;				// 직원번호
 	private String password;	// 직원비밀번호
@@ -8,6 +10,42 @@ public class Employee {
 	private String phone;		// 직원연락처
 	private int deptNo;			// 소속부서 번호
 	private int positionNo;		// 직위번호
+	private String deleted;		// 삭제여부
+	private Date createdDate;	// 등록일
+	private Date updatedDate;	// 수정일
+	private Date deletedDate;	// 삭제일
+	private String type;		//
+	
+	public String getDeleted() {
+		return deleted;
+	}
+	public void setDeleted(String deleted) {
+		this.deleted = deleted;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+	public Date getDeletedDate() {
+		return deletedDate;
+	}
+	public void setDeletedDate(Date deletedDate) {
+		this.deletedDate = deletedDate;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
 	
 	public int getNo() {
 		return no;
