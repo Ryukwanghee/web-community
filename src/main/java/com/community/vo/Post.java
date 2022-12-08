@@ -3,21 +3,21 @@ package com.community.vo;
 import java.util.Date;
 
 public class Post {
-
-	private int no; 			// 게시글번호
-	private int boardNo; 		// 게시판번호
-	private String title; 		// 게시글제목
-	private int writerNo;		// 작성자번호
-	private String content;		// 게시글내용
-	private String important;	// 중요게시글 여부
-	private int readCount;		// 조회수
-	private int suggestionCount;// 추천수
-	private int commentCount;	// 댓글개수
-	private String deleted;		// 게시글삭제 여부
-	private Date createdDate;	// 등록일
-	private Date updatedDate;	// 수정일
-	private Date deletedDate;	// 삭제일
-	private Integer originalNo;		// 원글 번호
+	
+	private int no;
+	private int boardNo;
+	private String title;
+	private int writerNo;
+	private String content;
+	private String important;
+	private int readCount;
+	private int suggestionCount;
+	private int commentCount;
+	private String deleted;
+	private Date createdDate;
+	private Date updatedDate;
+	private Date deletedDate;
+	private Integer originalNo;
 	
 	public int getNo() {
 		return no;
@@ -102,6 +102,15 @@ public class Post {
 	}
 	public void setOriginalNo(Integer originalNo) {
 		this.originalNo = originalNo;
+	}
+	
+	@Override
+	public String toString() {
+		return "Post [no=" + no + ", boardNo=" + boardNo + ", title=" + title + ", writerNo=" + writerNo + ", content="
+				+ content + ", important=" + important + ", readCount=" + readCount + ", suggestionCount="
+				+ suggestionCount + ", commentCount=" + commentCount + ", deleted=" + deleted + ", createdDate="
+				+ createdDate + ", updatedDate=" + updatedDate + ", deletedDate=" + deletedDate + ", originalNo="
+				+ originalNo + "]";
 	}
 	
 }
