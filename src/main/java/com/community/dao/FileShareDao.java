@@ -19,7 +19,11 @@ public class FileShareDao {
 		return (Integer) SqlMapper.selectOne("fileshares.getTotalRows");
 	}
 	
-	public Employee getFileShareByNo(int no) {
-		return (Employee) SqlMapper.selectOne("fileshares.getFileShareByNo", no);
+	public Employee getEmployeeByNo(int no) {
+		return (Employee) SqlMapper.selectOne("fileshares.getEmployeeByNo", no);
+	}
+	
+	public Employee getEmployeeByName(String name) {
+		return (Employee) SqlMapper.selectOne("fileshares.getEmployeeByName", name);
 	}
 }

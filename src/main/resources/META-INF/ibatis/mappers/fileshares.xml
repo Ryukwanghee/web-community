@@ -42,7 +42,7 @@
 			post_board_no = 101
 	</select>
 	
-	<select id="getFileShareByNo" parameterClass="int" resultClass="com.community.vo.Employee">
+	<select id="getEmployeeByNo" parameterClass="int" resultClass="com.community.vo.Employee">
 		select 
 			emp_no as no,
 			emp_name as name
@@ -50,6 +50,16 @@
 			comm_employees
 		where
 			emp_no = #value#
+	</select>
+	
+	<select id="getEmployeeByName" parameterClass="string" resultClass="com.community.vo.Employee">
+		select 
+			emp_no as no,
+			emp_name as name
+		from
+			comm_employees
+		where
+			emp_name = #value#	
 	</select>
 
 </sqlMap>
