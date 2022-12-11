@@ -1,5 +1,10 @@
+<%@page import="com.community.vo.Employees"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%
+    
+    Employees emp = (Employees) session.getAttribute("loginedUser");
+    %>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	<div class="container">
 		<ul class="navbar-nav me-auto">
@@ -18,9 +23,9 @@
 				</ul>
 			</li> 
 		</ul>
-		<span class="navbar-text"><strong class="text-white">홍길동 </strong> 님 환영합니다.</span>
+		<span class="navbar-text"><strong class="text-white">길동</strong> 님 환영합니다.</span>
 		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link " href="/web-community/loginform.jsp">로그인</a></li>
+			<li class="nav-item"><a class="nav-link " href="/web-community/employees/loginform.jsp">로그인</a></li>
 			<li class="nav-item"><a class="nav-link" href="/web-community/logout.jsp">로그아웃</a></li>
 		</ul>
 	</div>

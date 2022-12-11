@@ -1,9 +1,14 @@
+<%@page import="com.community.util.StringUtils"%>
+<%@page import="com.community.vo.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div class="modal" tabindex="-1" id="modal-form-posts">
 	<div class="modal-dialog modal-lg">
+		<form method="post" action="../notice/registertest.jsp">
 		<div class="modal-content">
 			<div class="modal-header">
+			
+				
 				<h5 class="modal-title">게시글 등록폼</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
@@ -25,13 +30,13 @@
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">제목</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" placeholder="제목">
+							<input type="text" class="form-control form-control-sm" placeholder="제목" name="title">
 						</div>
 					</div>
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">작성자</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" readonly="readonly" value="홍길동">
+							<input type="text" class="form-control form-control-sm" readonly="readonly" value="홍길동" name="writer_no">
 						</div>
 					</div>
 					<div class="row mb-2">
@@ -49,7 +54,7 @@
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">내용</label>
 						<div class="col-sm-10">
-							<textarea rows="5" class="form-control"></textarea>
+							<textarea rows="5" class="form-control" name="content"></textarea>
 						</div>
 					</div>
 					<div class="row mb-2">
@@ -74,8 +79,10 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary btn-xs" data-bs-dismiss="modal">닫기</button>
-				<button type="button" class="btn btn-primary btn-xs">등록</button>
+				<button type="submit" class="btn btn-primary btn-xs">등록</button>
 			</div>
+			
 		</div>
+		</form>
 	</div>
 </div>

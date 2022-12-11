@@ -1,3 +1,10 @@
+<%@page import="com.community.util.Pagination"%>
+<%@page import="com.community.util.StringUtils"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+<%@page import="com.community.dao.NoticeDao"%>
+<%@page import="com.community.vo.Notice"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -15,9 +22,28 @@
 	<jsp:param name="menu" value="board"/>
 </jsp:include>
 <div class="container my-3">
+<%
+
+
+	// 페이지번호를 조회한다.
+	int currentPage = StringUtils.stringToInt(request.getParameter("page"), 1);
+	
+	// 페이지번호에 맞는 조회범위를 계산
+	int rows = 10;
+	int begin = (currentPage - 1)*rows +1;
+	int end = currentPage*rows;
+	
+	Map<String, Object> param = new HashMap<>();
+	param.put("begin", begin);
+	param.put("end", end);
+	
+	// NoticeDao 객체를 생성해서 getNotices 메소드해서 목록조회
+	NoticeDao noticeDao = new NoticeDao();
+	List<Notice> noticeList = noticeDao.getNotices(param);
+%>
 	<div class="row mb-3">
 		<div class="col">
-			<h1 class="heading">공지사항</h1>
+			<h1 class="heading">공지사항 게시판</h1>
 		</div>
 	</div>
 	<div class="row mb-3">
@@ -36,7 +62,7 @@
 			<div class="card">
 				<div class="card-header">공지사항</div>
 				<div class="card-body">
-					<form class="mb-3" method="get" action="">
+					<form class="mb-3" method="get" action="list.jsp">
 						<div class="mb-2 d-flex justify-content-between">
 							<div>
 								<select class="form-select form-select-xs">
@@ -78,28 +104,62 @@
 								</tr>
 							</thead>
 							<tbody>
+			<%
+				if (noticeList.isEmpty()) {
+			%>
+				<tr>
+					<td> 게시글이 없습니다 </td>
+				</tr>
+			<%
+				} else {
+					for (Notice notice : noticeList) {
+				
+			%>
+				
 								<tr>
 									<td><input type="checkbox" name="" value=""/></td>
-									<td>100000</td>
-									<td><a href="" class="text-decoration-none text-dark">[중요] 공지사항 등록</a></td>
-									<td>홍길동</td>
-									<td>2022-12-01</td>
-									<td>12</td>
-									<td>10</td>
+									<td><%=notice.getBoardNo() %></td>
+									<td><a href="detail.jsp" class="text-decoration-none text-dark"><%=notice.getTitle() %></a></td>
+									<td><%=notice.getWriterNo() %></td>
+									<td><%=StringUtils.dateToText(notice.getCreatedDate()) %></td>
+									<td><%=notice.getReadCount() %></td>
+									<td><%=notice.getSuggestionCount() %></td>
 								</tr>
+				<%		
+		}
+	}
+%>
 							</tbody>
 						</table>
+						
+						<%
+							// 총 게시글 갯수 조회
+							int totalRows = noticeDao.getTotalRows();
+						
+						// 총페이지 블록갯수 시작,끝페이지 번호 계산
+						int pages = 5;
+						int totalPages = (int) Math.ceil((double) totalRows/rows);
+						int totalBlocks = (int) Math.ceil((double) totalPages/pages);
+						int currentPageBlock = (int) Math.ceil((double) currentPage/pages);
+						int beginPage = (currentPageBlock - 1) *pages+1;
+						int endPage = currentPageBlock == totalBlocks ? totalPages : currentPageBlock *pages;
+						
+						%>
 					</form>
 					<nav>
 						<ul class="pagination pagination-sm justify-content-center">
 							<li class="page-item disabled">
-								<a class="page-link">이전</a>
-							</li>
-							<li class="page-item"><a class="page-link active" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<a class="page-link <%=currentPage <=1 ? "disabled" : "" %>" href="list.jsp?page=<%=currentPage -1%>">이전</a></li>
+							<%
+								for(int number = beginPage; number <= endPage; number++) {
+							%>
+							
+							<li class="page-item"><a class="page-link <%=currentPage == number ? "active" : "" %>" href="list.jsp?page<%=number %>"><%=number %></a></li>
+			<%
+								}
+			%>
 							<li class="page-item">
-								<a class="page-link" href="#">다음</a>
+								<a class="page-link <%=currentPage >= totalPages ? "disabled" : "" %>" href="list.jsp?page=<%=currentPage+1%>">다음</a>
 							</li>
 						</ul>
 					</nav>

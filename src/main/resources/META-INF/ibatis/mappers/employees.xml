@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap >
+
+	<!-- 
+		아이디를 전달받아서 sample_board_users 테이블에서 사용자정보를 조회해서 반환한다.
+		
+		public User getUserById(String id) {
+			return (User) SqlMapper.selectOne("getUsrById", id);
+		}
+	 -->
+	<select id="getUserById" parameterClass="string" resultClass="com.community.vo.Employees">
+		select
+			emp_no as no,
+			emp_password as password,
+			emp_name as name,
+			emp_email as email,
+			emp_created_date as createdDate,
+			emp_updated_date as updatedDate
+		from
+			comm_employees
+		where
+			emp_no = #value#
+	</select>
+	
+	<select id="getUserByNo" parameterClass="int" resultClass="com.community.vo.Employees">
+		select
+			emp_no as no,
+			emp_password as password,
+			emp_name as name,
+			emp_email as email,
+			emp_created_date as createdDate,
+			emp_updated_date as updatedDate
+		from
+			comm_employees
+		where
+			emp_no = #value#
+	</select>
+
+	<!-- 
+		이메일을 전달받아서 sample_board_users 테이블에서 사용자정보를 조회해서 반환한다.
+		
+		public User getUserByEmail(String email) {
+			return (User) SqlMapper.selectOne("getUserByEmail", email);
+		}
+	 -->
+	<select id="getUserByEmail" parameterClass="string" resultClass="com.community.vo.Employees">
+		select
+			emp_no as no,
+			emp_password as password,
+			emp_name as name,
+			emp_email as email,
+			emp_created_date as createdDate,
+			emp_updated_date as updatedDate
+		from
+			comm_employees
+		where
+			user_email = #value#
+	</select>
+	 
+	 <!-- 
+	 	사용자정보를 전달받아서 sample_board_users 테이블에서 저장한다.
+	 	
+	 	public void insertUser(User user) {
+	 		SqlMapper.insert("insertUser", user)
+	 	}
+	  -->
+	<insert id="insertUser" parameterClass="com.community.vo.Employees">
+		insert into comm_employees
+		(emp_no, emp_password, emp_name, emp_email)
+		values
+		(#id#, #password#, #name#, #email#)
+	</insert>
+</sqlMap>
+
