@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="comments">
+	
+	
+	<select id="getComments" parameterClass="int" resultClass="com.community.dto.CommentDto">
+		select
+			comment_no as commentNo,
+			comment_emp_no as commentEmpNo,
+			comment_content as commentContent,
+			comment_deleted as commentDeleted,
+			comment_created_date as commentCreatedDate,
+			comment_updated_date as commentUpdatedDate,
+			comment_deleted_date as commentDeletedDate,
+			comment_post_no as commentPostNo
+		from
+			comm_post_comments
+		where
+			comment_post_no = #value#
+			and comment_deleted = 'N'
+		order by
+			comment_created_date desc
+	</select>
+	
+	<select id="getCommentBycommentNo" parameterClass="int" resultClass="com.community.dto.CommentDto">
+		select
+			comment_no as commentNo,
+			comment_emp_no as commentEmpNo,
+			comment_content as commentContent,
+			comment_deleted as commentDeleted,
+			comment_created_date as commentCreatedDate,
+			comment_updated_date as commentUpdatedDate,
+			comment_deleted_date as commentDeletedDate,
+			comment_post_no as commentPostNo
+		from
+			comm_post_comments
+		where
+			comment_no = #value#
+			and comment_deleted = 'N'
+	</select>
+	
+	<select id="getCommentsCount" parameterClass="int" >
+		select
+			count(*)
+		from
+			comm_post_comments
+		where
+			comment_post_no = #value#
+			and comment_deleted = 'N'
+	</select>
+	
+	<insert id="insertComment" parameterClass="com.community.dto.CommentDto">
+		insert into comm_post_comments
+		(comment_no, comment_emp_no, comment_content,comment_post_no)
+		values
+		(comm_comments_seq.nextval, #commentEmpNo#, #commentContent#, #commentPostNo#)
+	</insert>
+	
+	<update id="updateComment" parameterClass="com.community.dto.CommentDto">
+		update 
+			comm_post_comments
+		set
+			comment_emp_no = #commentEmpNo#,
+			comment_content = #commentContent#,
+			comment_deleted = #commentDeleted#,
+			comment_updated_date = sysdate,
+			comment_deleted_date = #commentDeletedDate#,
+			comment_post_no = #commentPostNo#
+		where
+			comment_no = #commentNo#
+			and comment_deleted = 'N'
+	</update>
+	
+	<update id="updateCommentDeleted" parameterClass="int">
+		update 
+			comm_post_comments
+		set
+			comment_deleted = 'Y',
+			comment_updated_date = sysdate,
+			comment_deleted_date = sysdate
+		where
+			comment_no = #commentNo#
+			and comment_deleted = 'N'
+	</update>
+</sqlMap>
+

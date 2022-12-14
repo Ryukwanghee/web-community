@@ -6,18 +6,18 @@
 
 	<select id="getAllEmployees" resultClass="com.community.vo.Employee">
 		select
-			emp_no as empNo,
-			emp_password as empPassword,
-			emp_name as empName,
-			emp_email as empEmail,
-			emp_phone as empPhone,
-			emp_dept_no as empDeptNo,
-			emp_position_no as empPositionNo,
-			emp_deleted as empDeleted,
-			emp_created_date as empCreatedDate,
-			emp_updated_date as empUpdatedDate,
-			emp_deleted_date as empDeletedDate,
-			emp_type as empType
+			emp_no as no,
+			emp_password as password,
+			emp_name as name,
+			emp_email as email,
+			emp_phone as phone,
+			emp_dept_no as deptNo,
+			emp_position_no as positionNo,
+			emp_deleted as deleted,
+			emp_created_date as createdDate,
+			emp_updated_date as updatedDate,
+			emp_deleted_date as deletedDate,
+			emp_type as type
 		from
 			comm_employees
 	</select>
@@ -31,22 +31,43 @@
 	
 	<select id="getEmployeeByNo" parameterClass="int" resultClass="com.community.vo.Employee">
 		select
-			emp_no as empNo,
-			emp_password as empPassword,
-			emp_name as empName,
-			emp_email as empEmail,
-			emp_phone as empPhone,
-			emp_dept_no as empDeptNo,
-			emp_position_no as empPositionNo,
-			emp_deleted as empDeleted,
-			emp_created_date as empCreatedDate,
-			emp_updated_date as empUpdatedDate,
-			emp_deleted_date as empDeletedDate,
-			emp_type as empType
+			emp_no as no,
+			emp_password as password,
+			emp_name as name,
+			emp_email as email,
+			emp_phone as phone,
+			emp_dept_no as deptNo,
+			emp_position_no as positionNo,
+			emp_deleted as deleted,
+			emp_created_date as createdDate,
+			emp_updated_date as updatedDate,
+			emp_deleted_date as deletedDate,
+			emp_type as type
 		from
 			comm_employees
 		where
 			emp_no = #value#
+			
+	</select>
+	
+	<select id="getEmployeeByEmail" parameterClass="string" resultClass="com.community.vo.Employee">
+		select
+			emp_no as no,
+			emp_password as password,
+			emp_name as name,
+			emp_email as email,
+			emp_phone as phone,
+			emp_dept_no as deptNo,
+			emp_position_no as positionNo,
+			emp_deleted as deleted,
+			emp_created_date as createdDate,
+			emp_updated_date as updatedDate,
+			emp_deleted_date as deletedDate,
+			emp_type as type
+		from
+			comm_employees
+		where
+			emp_email = #value#
 			
 	</select>
 </sqlMap>

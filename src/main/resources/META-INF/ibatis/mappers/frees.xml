@@ -4,6 +4,62 @@
  
 <sqlMap namespace="frees">
 
+	<select id="getFrees" parameterClass="map" resultClass="com.community.vo.Free">
+		select
+			post_no as no,
+			post_board_no as boardNo,
+			post_title as title,
+			post_writer_no as writerNo,
+			post_content as content,
+			post_important as important,
+			post_read_count as readCount,
+			post_suggestion_count as suggestionCount,
+			post_comment_count as commentCount,
+			post_deleted as deleted,
+			post_created_date as createdDate,
+			post_updated_date as updatedDate,
+			post_deleted_date as deletedDate,
+			post_original_no as originalNo
+		from
+			(select
+				row_number() over(order by post_no desc) row_numbers,
+				post_no ,
+				post_board_no,
+				post_title,
+				post_writer_no,
+				post_content,
+				post_important,
+				post_read_count,
+				post_suggestion_count,
+				post_comment_count,
+				post_deleted,
+				post_created_date,
+				post_updated_date,
+				post_deleted_date,
+				post_original_no
+			from
+				comm_posts
+			where
+				post_deleted = 'N'
+			<dynamic>	
+					<isNotNull property="opt">
+						<isEqual property="opt" compareValue="title">
+							and post_title like '%' || #keyword# || '%'
+						</isEqual>
+						<isEqual property="opt" compareValue="writer">
+							and post_writer_no like '%' || #keyword# || '%'
+						</isEqual>
+						<isEqual property="opt" compareValue="content">
+							and post_content like '%' || #keyword# || '%'
+						</isEqual>
+					</isNotNull>
+				</dynamic>		
+			)
+		where
+			post_board_no = 102 
+		and	row_numbers between #begin# and #end#
+	</select>
+	
 	<select id="getFreeByNo" parameterClass="int" resultClass="com.community.vo.Free">
 		select
 			post_no as no,
@@ -27,36 +83,64 @@
 			and post_no = #value#
 	</select>
 	
-	<select id="getAllFree" resultClass="com.community.vo.Free">
+	<select id="getTotalRows" parameterClass="map" resultClass="int">
 		select
-			post_no as no,
-			post_board_no as boardNo,
-			post_title as title,
-			post_writer_no as writerNo,
-			post_content as content,
-			post_important as important,
-			post_read_count as readCount,
-			post_suggestion_count as suggestionCount,
-			post_comment_count as commentCount,
-			post_deleted as deleted,
-			post_created_date as createdDate,
-			post_updated_date as updatedDate,
-			post_deleted_date as deletedDate,
-			post_original_no as originalNo
-		from
+			count(*)
+		from 
 			comm_posts
 		where
-			post_board_no = 102
+			post_deleted = 'N'
+		<dynamic>	
+			<isNotNull property="opt">
+				<isEqual property="opt" compareValue="title">
+					and post_title like '%' || #keyword# || '%'
+				</isEqual>
+				<isEqual property="opt" compareValue="writer">
+					and post_writer_no like '%' || #keyword# || '%'
+				</isEqual>
+				<isEqual property="opt" compareValue="content">
+					and post_content like '%' || #keyword# || '%'
+				</isEqual>
+			</isNotNull>
+		</dynamic>	
 	</select>
 	
+	<insert id="insertFree" parameterClass="com.community.vo.Free">
+		insert into comm_posts
+			(post_no,post_board_no, post_title, post_writer_no, post_content, post_important)
+		values
+			(comm_posts_seq.nextval,#boardNo#, #title#, #writerNo#, #content#, #important#)
+	</insert>
+	
 	<update id="updateFree" parameterClass="com.community.vo.Free">
-		update comm_posts
-			(post_board_no, post_title, post_writer, post_content, post_important, post_read_count,
-			post_suggestion_count, post_comment_count, post_updated_date, post_original_no)
+		update
+			comm_posts
 		set
-			(#boardNo#, #title#, #writerNo#, #content#, #important#, #readCount#, #suggestionCount#,#commentCount#,sysdate,#originalNo#)
+			post_board_no = #boardNo#,
+			post_title = #title#,
+			post_writer_no = #writerNo#,
+			post_content = #content#,
+			post_important = #important#,
+			post_read_count = #readCount#,
+			post_suggestion_count = #suggestionCount#,
+			post_comment_count = #commentCount#,
+			post_deleted = #deleted#,
+			post_deleted_date = #deletedDate#,
+			post_updated_date = sysdate,
+			post_original_no = #originalNo#
 		where
 			post_no = #no#
 	</update>
+	<update id="upateFreeDeleted" parameterClass="int">
+		update
+			comm_posts
+		set
+			post_deleted = 'D',
+			post_updated_date = sysdate,
+			post_deleted_date = sysdate
+		where
+			post_no = #postNo#
+	</update>
+	
 </sqlMap>
 
