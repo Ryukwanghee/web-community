@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="suggestions">
+	<!-- 
+		추천정보를 전달받아서 테이블에 저장한다.
+	 -->
+	<insert id="insertSuggestion" parameterClass="com.community.vo.Suggestion">
+		insert into comm_post_suggestions
+			(suggestion_post_no, suggestion_emp_no)
+		values
+			( #postNo#, #empNo#)
+	</insert>	
+	
+
+</sqlMap>
+
