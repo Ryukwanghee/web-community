@@ -5,7 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 
 <%	
-	//첨부파일 업로드를 지원하는 객체 
 	MultipartRequest mr = new MultipartRequest(request, "");
 	int boardNo = StringUtils.stringToInt(mr.getParameter("boardNo"));
 	String title = mr.getParameter("title");

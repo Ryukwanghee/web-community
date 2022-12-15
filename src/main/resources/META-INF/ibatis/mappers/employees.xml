@@ -23,24 +23,38 @@
 			emp_no = #value#	
 	</select>	
 	
-	<select id="getEmployeeByEmail" parameterClass="string" resultClass="com.community.vo.Employee">
+	<select id="getEmployeeByEmail" parameterClass="string" resultClass="com.community.dto.EmployeeDto">
 		select 
-			emp_no as no,
-			emp_password as password,
-			emp_name as name,
-			emp_email as email,
-			emp_phone as phone,
-			emp_dept_no as deptNo,
-			emp_position_no as positionNo,
-			emp_deleted as deleted,
-			emp_created_date as createdDate,
-			emp_updated_date as updatedDate,
-			emp_deleted_date as deletedDate,
-			emp_type as "type"
+			A.emp_no as no,
+			A.emp_password as password,
+			A.emp_name as name,
+			A.emp_email as email,
+			A.emp_phone as phone,
+			A.emp_dept_no as deptNo,
+			A.emp_position_no as positionNo,
+			A.emp_deleted as deleted,
+			A.emp_created_date as createdDate,
+			A.emp_updated_date as updatedDate,
+			A.emp_deleted_date as deletedDate,
+			A.emp_type as "type",
+			B.position_name as positionName,
+			C.department_name as departmentName
 		from
-			comm_employees
+			comm_employees A, comm_positions B, comm_departments C
 		where
-			emp_email = #value#	
+			A.emp_position_no = B.position_no
+			and A.emp_dept_no = C.department_no
+			and A.emp_email = #value#	
 	</select>
+	
+	<update id="changePassword" parameterClass="com.community.vo.Employee">
+		update
+			comm_employees
+		set
+			emp_password = #password#,
+			emp_updated_date = sysdate
+		where 
+			emp_no = #no#
+	</update>
 </sqlMap>
 

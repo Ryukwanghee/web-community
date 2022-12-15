@@ -1,8 +1,9 @@
+<%@page import="com.community.dto.EmployeeDto"%>
 <%@page import="com.community.vo.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <%
- 	Employee emp = (Employee) session.getAttribute("loginedUser");
+ 	EmployeeDto emp = (EmployeeDto) session.getAttribute("loginedUser");
  %>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 	<div class="container">

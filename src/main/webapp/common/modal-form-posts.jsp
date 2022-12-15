@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ include file= "../../common/logincheck.jsp" %>
 <div class="modal" tabindex="-1" id="modal-form-posts">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
@@ -31,7 +32,7 @@
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">작성자</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" readonly="readonly" value="김유신" name="writer">
+							<input type="text" class="form-control form-control-sm" readonly="readonly" value="<%=loginUser.getName() %>" name="writer">
 						</div>
 					</div>
 					<div class="row mb-2">
