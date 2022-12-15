@@ -26,8 +26,17 @@ public class CommentDao {
 		return (CommentDto)SqlMapper.selectOne("comments.getCommentBycommentNo", commentNo);
 	}
 	
+	/**
+	 * 게시글번호로 해당게시글의 댓글 갯수를 구하는 메소드
+	 * @param commentPostNo
+	 * @return
+	 */
 	public int getCommentsCount(int commentPostNo) {
-		return (int)SqlMapper.selectOne("comments.getCommentsCount", commentPostNo);
+		return (Integer)SqlMapper.selectOne("comments.getCommentsCount", commentPostNo);
+	}
+	
+	public int getCommentsCountByEmpNo(int commentEmpNo) {
+		return (Integer)SqlMapper.selectOne("comments.getCommentsCountByEmpNo", commentEmpNo);
 	}
 	
 	public void updateComment(int commentNo) {

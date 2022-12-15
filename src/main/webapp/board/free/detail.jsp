@@ -62,7 +62,7 @@
 						<th class="text-center bg-light">번호</th>
 						<td><%=detail.getPostNo() %></td>
 						<th class="text-center bg-light">등록일</th>
-						<td><%=detail.getPostCreatedDate() %></td>
+						<td><%=StringUtils.dateToText(detail.getPostCreatedDate()) %></td>
 					</tr>
 					<tr>
 						<th class="text-center bg-light">제목</th>

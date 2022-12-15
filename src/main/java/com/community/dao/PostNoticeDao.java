@@ -18,4 +18,7 @@ public class PostNoticeDao {
 		return (List<PostNoticeDto>)SqlMapper.selectList("postNotices.getPostNoticeByEmpNo", empNo);
 	}
 	
+	public int getPostNoticeCountByEmpNo(int empNo) {
+		return (Integer)SqlMapper.selectOne("postNotices.getPostNoticeCountByEmpNo", empNo);
+	}
 }

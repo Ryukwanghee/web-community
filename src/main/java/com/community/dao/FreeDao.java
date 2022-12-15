@@ -23,6 +23,10 @@ public class FreeDao {
 		return (Free)SqlMapper.selectOne("frees.getFreeByNo", no);
 	}
 	
+	public int getPostsCountByWriterNo(int writerNo) {
+		return (Integer)SqlMapper.selectOne("frees.getPostsCountByWriterNo", writerNo);
+	}
+	
 	public void updateFree(Free free) {
 		SqlMapper.update("frees.updateFree", free);
 	}

@@ -48,6 +48,15 @@
 			and notice_reading_status = 'N'
 	</select>
 	
+	<select id="getPostNoticeCountByEmpNo" parameterClass="int" resultClass="int">
+		select
+			count(*)
+		from
+			comm_post_notices
+		where
+			notice_receive_emp_no = #value#
+			and notice_reading_status = 'N'
+	</select>
 	
 </sqlMap>
 

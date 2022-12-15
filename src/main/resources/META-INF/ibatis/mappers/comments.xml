@@ -41,13 +41,23 @@
 			and comment_deleted = 'N'
 	</select>
 	
-	<select id="getCommentsCount" parameterClass="int" >
+	<select id="getCommentsCount" parameterClass="int">
 		select
 			count(*)
 		from
 			comm_post_comments
 		where
 			comment_post_no = #value#
+			and comment_deleted = 'N'
+	</select>
+	
+	<select id="getCommentsCountByEmpNo" parameterClass="int" resultClass="int">
+		select
+			count(*)
+		from
+			comm_post_comments
+		where
+			comment_emp_no =#value#
 			and comment_deleted = 'N'
 	</select>
 	

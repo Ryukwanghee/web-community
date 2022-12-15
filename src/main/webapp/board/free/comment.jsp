@@ -1,3 +1,4 @@
+<%@page import="com.community.dao.PostNoticeDao"%>
 <%@page import="com.community.vo.Free"%>
 <%@page import="com.community.dao.FreeDao"%>
 <%@page import="com.community.util.StringUtils"%>
@@ -31,6 +32,11 @@
 	Free free = (Free)freeDao.getFreeByNo(postNo);
 	free.setCommentCount(free.getCommentCount() + 1);
 	freeDao.updateFree(free);
+	
+	//알림정보에 등록하기
+	PostNoticeDao postNoticeDao = PostNoticeDao.getInstance();
+	
+	
 	
 	response.sendRedirect("detail.jsp?no=" + postNo);
 %>
