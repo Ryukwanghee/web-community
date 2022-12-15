@@ -5,9 +5,9 @@
 <sqlMap namespace="reviews">
 	<insert id="insertReview" parameterClass="com.community.vo.Review">
 		insert into comm_post_comments
-		(comment_no, comment_emp_no, comment_content, comment_deleted, comment_post_no)
+		(comment_no, comment_emp_no, comment_content, comment_post_no)
 		values
-		(comm_comments_seq.nextval, #no#, #empNo#, #content#, #deleted#, #tempNo#)
+		(comm_comments_seq.nextval, #empNo#, #content#, #tempNo#)
 	</insert>
 	
 	<select id="getReviewsByTempNo" parameterClass="int" resultClass="com.community.dto.ReviewDto">
