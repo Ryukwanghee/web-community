@@ -33,7 +33,7 @@
 		</div>
 <%
 	// 페이징 처리하기
-	// 행 개수, 요청한 페이지번호, 검색옵션, 검색키워드를 조회하기. 값이 없으면 기본값 설정.
+	// 행 개수, 요청한 페이지번호, 검색 옵션, 검색 키워드를 조회하기. 값이 없으면 기본값 설정.
 	int rows = StringUtils.stringToInt(request.getParameter("rows"), 10 );
 	int currentPage = StringUtils.stringToInt(request.getParameter("page"), 1);
 	String opt = StringUtils.nullToValue(request.getParameter("opt"), "title");
