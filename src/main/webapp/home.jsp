@@ -1,6 +1,10 @@
+
+<%@page import="com.community.vo.Employees"%>
+
 <%@page import="com.community.dto.EmployeeDto"%>
 <%@page import="com.community.dao.EmployeeDao"%>
 <%@page import="com.community.vo.Employee"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -16,6 +20,10 @@
 <title>사내 커뮤니티</title>
 </head>
 <body>
+<%
+	// HttpSession객체에서 loginedUser라는 이름으로 저장된 객체를 조회한다.
+	Employees employees = (Employees) session.getAttribute("loginedEmployees");
+%>
 <jsp:include page="common/header.jsp">
 	<jsp:param name="menu" value="home"/>
 </jsp:include>
@@ -26,9 +34,13 @@
 				<h1 class="mb-4">사내 커뮤니티 애플리케이션</h1>
 				<p class="mb-1">구성원들간의 효과적인 의사소통을 지원하는 게시판입니다.</p>
 				<p class="">공지사항, 각종 News, 경조사, 생활정보 등의 다양한 내용을 게시판을 통해 공유, 전파할 수 있습니다.</p>
+
+				<p><%=employees %></p>
+
 <%
 	if (emp == null) {
 %>
+
 				<div>
 					<a href="employees/loginform.jsp" class="btn btn-primary">로그인</a>
                 </div>

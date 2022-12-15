@@ -121,4 +121,8 @@ public class Pagination {
    public int getNextPage() {
       return currentPage + 1;
    }
+
 }
+
+}
+

@@ -4,6 +4,124 @@
  
 <sqlMap namespace="notices">
 
+
+<!-- 
+	Notice 객체(제목,작성자,등록일,조회,추천,번호를 전달받아서 comm_posts 테이블에 저장한다.
+	
+	public void insertNotice(Notice notice) {
+	SqlMapper.insert("insertNotice", notice);
+ -->
+<insert id="insertNotice" parameterClass="com.community.vo.Notice">
+		insert into comm_posts
+		(post_no, post_board_no, post_title, post_writer_no, post_content, post_important, post_original_no)
+		values
+		(comm_posts_seq.nextval, #boardNo#, #title#, #writerNo#, #content#, #important#,  comm_posts_seq.currval)
+	</insert>
+	
+
+	
+	
+	<select id="getNotices" parameterClass="map" resultClass="com.community.vo.Notice">
+		select
+			post_no as postNo,
+			post_board_no as boardNo,
+			post_title as title,
+			post_content as content,
+			post_writer_no as writerNo,
+			post_important as important,
+			post_read_count as readCount,
+			post_suggestion_count as suggestionCount,
+			post_comment_count as commentCount,
+			post_deleted as deleted,
+			post_created_date as createdDate,
+			post_updated_date as updatedDate,
+			post_deleted_date as deletedDate,
+			post_original_no as originalNo
+		from (select
+				row_number() over (order by post_no desc) row_numbers,
+				post_no,
+				post_board_no,
+				post_title,
+				post_content,
+				post_writer_no,
+				post_important,
+				post_read_count,
+				post_suggestion_count,
+				post_comment_count,
+				post_deleted,
+				post_created_date,
+				post_updated_date,
+				post_deleted_date,
+				post_original_no
+			from
+				comm_posts
+			where
+				post_deleted = 'N')
+			where
+				row_numbers between #begin# and #end#
+	
+	
+	</select>
+	
+	
+	<!-- 
+		comm_posts에서 총 갯수를 조회해서 반환
+	 -->
+	<select id="getTotalRows"  resultClass="int">
+		select
+			count(*)
+		from
+			comm_posts
+		where
+			post_deleted = 'N'
+	
+	</select>
+	
+	<select id="getNoticeByNo" parameterClass="int" resultClass="com.community.vo.Notice">
+		select
+				post_no as postNo,
+				post_board_no as boardNo,
+				post_title as title,
+				post_writer_no as writerNo,
+				post_content as content,
+				post_important as important,
+				post_read_count as readCount,
+				post_suggestion_count as suggestionCount,
+				post_comment_count as commentCount,
+				post_deleted as deleted,
+				post_created_date as createdDate,
+				post_updated_date as updatedDate,
+				post_deleted_date as deletedDate,
+				post_original_no as originalNo
+			from
+				comm_posts
+			where
+				post_no = #value#
+	</select>
+	
+	<update id="updateNotice" parameterClass="com.community.vo.Notice">
+		update
+			comm_posts
+		set
+			post_title = #title#,
+			post_board_no = #boardNo#,
+			post_content = #content#,
+			post_important = #important#,
+			post_writer_no = #writerNo#,
+			post_read_count = #readCount#,
+			post_suggestion_count = #suggestionCount#,
+			post_deleted = #deleted#,
+			post_created_date = #createdDate#,
+			post_deleted_date = #deletedDate#,
+			post_comment_count = #commentCount#,
+			post_updated_date = sysdate,
+			post_original_no = #originalNo#
+		where
+			post_no = #postNo#
+		
+	</update>
+	
+
 	<insert id="addNotice" parameterClass="com.community.vo.Notice">
 		insert into comm_post_notices
 			(notice_no, notice_post_no, notice_send_emp_no, notice_receive_emp_no)
@@ -22,4 +140,5 @@
 		where
 			notice_no = #no#
 	</update>
+
 </sqlMap>

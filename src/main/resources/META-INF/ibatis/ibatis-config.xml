@@ -18,6 +18,12 @@
 	</transactionManager>
 
 	<!-- SQL 매퍼 파일을 등록 가능한 알파벳 순으로 -->
+
+
+	<sqlMap resource="META-INF/ibatis/mappers/notices.xml" />	
+	<sqlMap resource="META-INF/ibatis/mappers/employees.xml" />
+	<sqlMap resource="META-INF/ibatis/mappers/Comments.xml" />
+
 	<sqlMap resource="META-INF/ibatis/mappers/comments.xml" />
 	<sqlMap resource="META-INF/ibatis/mappers/employees.xml" />
 	<sqlMap resource="META-INF/ibatis/mappers/fileshares.xml" />
@@ -26,5 +32,6 @@
 	<sqlMap resource="META-INF/ibatis/mappers/posts.xml" />	
 	<sqlMap resource="META-INF/ibatis/mappers/questions.xml" />	
 	<sqlMap resource="META-INF/ibatis/mappers/suggestions.xml" />
+
 
 </sqlMapConfig>
