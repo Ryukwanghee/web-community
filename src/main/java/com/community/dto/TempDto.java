@@ -17,9 +17,9 @@ public class TempDto {
 	private String content;
 	private int postReadCount;
 	private int postReviewCount;
-	private int recommendCount;
 	private String important;
 	private String fileName;
+	private int recommendCount;	//temp의 recommendCount
 	
 	public TempDto() {}
 
@@ -147,8 +147,5 @@ public class TempDto {
 	public void setRecommendCount(int recommendCount) {
 		this.recommendCount = recommendCount;
 	}
-
-	
-	
 	
 }

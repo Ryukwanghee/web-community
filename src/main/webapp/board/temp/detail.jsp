@@ -1,3 +1,7 @@
+<%@page import="com.community.dto.ReviewDto"%>
+<%@page import="com.community.vo.Review"%>
+<%@page import="java.util.List"%>
+<%@page import="com.community.dao.ReviewDao"%>
 <%@page import="com.community.dto.TempDto"%>
 <%@page import="com.community.vo.Temp"%>
 <%@page import="com.community.dao.TempDao"%>
@@ -55,6 +59,7 @@
 	temp.setPostReviewCount(tempDto.getPostReviewCount());
 	temp.setRecommendCount(tempDto.getRecommendCount());
 	tempDao.updateTemp(temp);
+	
 %>
 	<div class="row mb-3">
 		<div class="col-12">
@@ -117,17 +122,22 @@
 					<a href="" class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modal-form-posts">수정</a>
 				</span>
 				<span>
-					<a href="recommend.jsp" class="btn btn-outline-primary btn-xs" >추천</a>
-					<button class="btn btn-outline-primary btn-xs">답변</button>
+				<!-- 추천 한 유저당 한번되게 하는 것 질문하기 -->
+					<a href="recommend.jsp?tempNo=<%=tempDto.getTempNo() %>" class="btn btn-outline-primary btn-xs" >추천</a>
+					<!-- <button class="btn btn-outline-primary btn-xs">답변</button> -->
 				</span>
 			</div>
 		</div>
 	</div>
+<%
+	ReviewDao reviewDao = ReviewDao.getInstance();
+	List<ReviewDto> dtoList = reviewDao.getReviewsByTempNo(tempNo);
+%>
 	<div class="row mb-3">
 		<div class="col-12 mb-1">
-			<form method="post" action="">
+			<form method="post" action="addReview.jsp">
 				<!-- 게시글의 글 번호을 value에 설정하세요 -->
-				<input type="hidden" name="postNo" value="1000"/>
+				<input type="hidden" name="postNo" value="<%=tempNo%>"/>
 				<div class="row mb-3">
 					<div class="col-sm-11">
 						<input type="text" class="form-control form-control-sm" name="content" placeholder="댓글을 남겨주세요">
@@ -138,40 +148,28 @@
 				</div>
 			</form>
 		</div>
+<%
+	if (!dtoList.isEmpty()) {
+		for (ReviewDto reviewDto : dtoList) {
+	
+%>
 		<div class="col-12">
 			<div class="card">
 				<!-- 댓글 반복 시작 -->
 				<div class="card-body py-1 px-3 small border-bottom">
 					<div class="mb-1 d-flex justify-content-between text-muted">
-						<span>홍길동</span>
-						<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
+						<span><%=reviewDto.getEmpName()%></span>
+						<span><span class="me-4"><%=StringUtils.dateToText(reviewDto.getCreatedDate()) %></span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
 					</div>
-					<p class="card-text">내용</p>
+					<p class="card-text"><%=reviewDto.getContent() %></p>
 				</div>
 				<!-- 댓글 반복 끝 -->
-				<div class="card-body py-1 px-3 small border-bottom">
-					<div class="mb-1 d-flex justify-content-between text-muted">
-						<span>홍길동</span>
-						<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-					</div>
-					<p class="card-text">내용</p>
-				</div>
-				<div class="card-body py-1 px-3 small border-bottom">
-					<div class="mb-1 d-flex justify-content-between text-muted">
-						<span>홍길동</span>
-						<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-					</div>
-					<p class="card-text">내용</p>
-				</div>
-				<div class="card-body py-1 px-3 small border-bottom">
-					<div class="mb-1 d-flex justify-content-between text-muted">
-						<span>홍길동</span>
-						<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-					</div>
-					<p class="card-text">내용</p>
-				</div>
 			</div>				
 		</div>
+<%
+		}
+	}
+%>
 	</div>
 </div>
 <div class="modal" tabindex="-1" id="modal-form-posts">

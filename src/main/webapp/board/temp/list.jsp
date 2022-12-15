@@ -243,7 +243,7 @@
 							<textarea rows="5" class="form-control" name="content"></textarea>
 						</div>
 					</div>
-					<div id="box-file"> <!--append는 안쪽에 생성되는 거라서 div를 바깥에 생성해서 감싸준다.  -->
+					<!-- <div id="box-file"> append는 안쪽에 생성되는 거라서 div를 바깥에 생성해서 감싸준다. 
 						<div class="row mb-2">
 							<label class="col-sm-2 col-form-label col-form-label-sm">첨부파일</label>
 							<div class="col-sm-8 mb-1">
@@ -253,7 +253,7 @@
 								<button type="button" class="btn btn-sm" id="file-add-field" ><i class="bi bi-plus-circle" ></i></button>
 							</div>
 						</div>
-					</div>
+					</div> -->
 					
 			</div>
 			<div class="modal-footer">
@@ -313,7 +313,7 @@ $(function(){
 				alert("체크한게 하나도 없습니다. 체크하세요");
 			}
 		}); */
-		$("#file-add-field").click(function() {
+		/* $("#file-add-field").click(function() { 첨부파일
 			var htmlContent = `
 				<div class="row ">
 					<div class="col-8 offset-2">
@@ -330,7 +330,7 @@ $(function(){
 		//미래에 생길 테이블에서 삭제버튼 클릭했을 때 발생하는 이벤트, 클래스의 bi-dash-circle이 실제 이벤트 핸들러 대상임
 		$("#box-file").on("click", '.bi-dash-circle', function() {
 			$(this).closest('.row').remove();
-		});
+		}); */
 	
 });
 

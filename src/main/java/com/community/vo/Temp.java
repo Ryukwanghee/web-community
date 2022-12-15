@@ -99,9 +99,10 @@ public class Temp {
 	public int getRecommendCount() {
 		return recommendCount;
 	}
-
 	public void setRecommendCount(int recommendCount) {
 		this.recommendCount = recommendCount;
 	}
+	
+	
 	
 }

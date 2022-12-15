@@ -6,14 +6,14 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../../common/logincheck.jsp" %>
 <%
-	MultipartRequest mr = new MultipartRequest(request, "C:\\app\\web-workspace\\temp");
+	/* MultipartRequest mr = new MultipartRequest(request, "C:\\app\\web-workspace\\temp"); */
 	
 	int boardNo = Integer.parseInt(request.getParameter("boardNo"));
 	
-	String title = mr.getParameter("title");
-	String important = mr.getParameter("important");
-	String content = mr.getParameter("content");
-	String filename = mr.getFilename("add");
+	String title = request.getParameter("title");
+	String important = request.getParameter("important");
+	String content = request.getParameter("content");
+	/* String filename = request.getFilename("add"); */
 	
 	TempDao tempDao = TempDao.getInstance();
 	
@@ -23,7 +23,7 @@
 	temp.setContent(content);
 	temp.setImportant(important);
 	temp.setBoardNo(boardNo);
-	temp.setFileName(filename);
+/* 	temp.setFileName(filename); */	
 	temp.setEmpNo(loginEmployee.getNo());
 	tempDao.insertTemp(temp);
 	

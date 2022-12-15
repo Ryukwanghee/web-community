@@ -50,7 +50,7 @@
 			A.post_read_count as postReadCount,
 			D.department_name as deptName,
 			C.emp_dept_no as deptNo,
-			 A.post_recommend_count as recommendCount
+			A.post_recommend_count as recommendCount
           from
              comm_temp_post A, comm_boards B, comm_employees C, comm_departments D
 			where
@@ -112,11 +112,9 @@
 			D.department_name as deptName,
 			C.emp_dept_no as deptNo,
 			A.post_content as content,
-			A.post_read_count as postReadCount,
-			A.post_review_count as postReviewCount,
 			A.post_important as important,
-			A.post_file_name as fileName,
-			 A.post_recommend_count as recommendCount
+			<!-- A.post_file_name as fileName, -->
+			A.post_recommend_count as recommendCount
 		from
 			comm_temp_post A, comm_boards B, comm_employees C, comm_departments D
 		where
@@ -136,7 +134,7 @@
 			board_no = #boardNo#,
 			post_read_count = #postReadCount#,
 			post_review_count = #postReviewCount#,
-			post_file_name = #fileName#,
+			<!-- post_file_name = #fileName#, -->
 			post_recommend_count = #recommendCount#
 		where
 			post_temp_no = #tempNo#
