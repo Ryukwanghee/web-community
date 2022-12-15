@@ -1,3 +1,6 @@
+
+<%@page import="com.community.vo.Employee"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,6 +11,16 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 <link href="/web-community/resources/css/style.css" rel="stylesheet">
+
+<%
+	Employee employee = (Employee) session.getAttribute("loginedUser");
+	
+	if (employee == null) {
+	response.sendRedirect("/web-community/employees/loginform.jsp?error=deny");
+	return;
+}
+%>
+
 <title>사내 커뮤니티</title>
 </head>
 <body>
@@ -53,11 +66,13 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th class="bg-light">직원번호</th><td>1000</td>
-								<th class="bg-light">입사일</th><td>2022년 12월 1일</td>
+
+								<th class="bg-light">직원번호</th><td><%=employee.getName() %></td>
+								<th class="bg-light">입사일</th><td><%=employee.getCreatedDate() %></td>
 							</tr>
 							<tr>
-								<th class="bg-light">소속부서</th><td>개발1팀</td>
+								<th class="bg-light">소속부서</th><td><%=employee.getDeptNo() %></td>
+
 								<th class="bg-light">직위</th><td>과장</td>
 							</tr>
 							<tr>

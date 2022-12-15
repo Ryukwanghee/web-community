@@ -1,9 +1,166 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
- 
+
+
 <sqlMap namespace="questions">
 
+	<insert id="insertQuestion" parameterClass="com.community.vo.Question">
+		insert into comm_posts
+			(post_no, post_board_no, post_title, post_writer_no, post_content, post_original_no)
+		values
+			(comm_posts_seq.nextval, #boardNo#, #title#, #writerNo#, #content# , comm_posts_seq.currtval )
+	</insert>
+	<insert id="insertAnswer" parameterClass="com.community.vo.Question">
+		insert into comm_posts
+			(post_no, post_board_no, post_title, post_writer_no, post_content, post_original_no)
+		values
+			(comm_posts_seq.nextval, #boardNo#, #title#, #writerNo#, #content# , #originalNo# )
+	</insert>
 	
-</sqlMap>
+
+	<select id="getQuestions" parameterClass="map" resultClass="com.community.vo.Question">
+		select
+			post_no as no,
+			post_board_no as boardNo,
+			post_title as title,
+			post_writer_no as writerNo,
+			post_content as content,
+			post_important as important,
+			post_read_count as readCount,
+			post_suggestion_count as suggestionCount,
+			post_comment_count as commentCount,
+			post_deleted as deleted,
+			post_created_date as createdDate,
+			post_updated_date as updateDate,
+			post_original_no as originalNo
+		from
+			(select
+				row_number() over (order by post_no desc) row_numbers,
+				post_no, post_board_no, post_title, post_writer_no, post_content,
+				post_important, post_read_count, post_suggestion_count,
+				post_comment_count, post_deleted, post_created_date,
+				post_updated_date, post_original_no
+			from
+				comm_posts
+			where
+				post_deleted = 'N'
+				and post_board_no = 105)
+		where
+			row_numbers between #begin# and #end#
+	</select>
+
+	<select id="getTotalRows" resultClass="int">
+		select
+			count(*)
+		from 	
+			comm_posts
+		where
+			post_deleted = 'N'
+			and post_board_no = 105
+	</select>
+	
+	<!-- 글 번호 전달받아서 게시판 테이블에서 게시글 정보를 조회해서 반환 
+		 
+		 public Question getQuestionByNo(int questionNo) {
+		 	return (Question) SqlMapper.selectOne("getQuestionByNo", questionNo);
+		 }
+	-->
+	<select id="getQuestionDetailDtoByNo" parameterClass="int" resultClass="com.community.dto.QuestionDetailDto">
+		select
+	         A.post_no as no,
+	         A.post_board_no as boardNo,
+	         A.post_title as title,
+	         A.post_writer_no as writerNo,
+             B.emp_name as empName,
+             B.emp_dept_no as deptNo,
+             C.department_name as deptName,
+             B.emp_position_no as positionNo,
+             D.position_name as positionName,
+	         A.post_content as content,
+	         A.post_important as important,
+	         A.post_read_count as readCount,
+	         A.post_comment_count as commentCount,
+	         A.post_suggestion_count as suggestionCount,
+	         A.post_deleted as deleted,
+	         A.post_created_date as createdDate,
+	         A.post_updated_date as updatedDate,
+	         A.post_deleted_date as deletedDate,
+	         A.post_original_no as originalNo
+     	 from
+         	comm_posts A, comm_employees B, comm_departments C, comm_positions D
+         where
+        	 A.post_no = #value#
+             and A.post_writer_no = B.emp_no
+             and B.emp_dept_no = C.department_no
+             and B.emp_position_no = D.position_no
+	</select>
+	
+	
+	<select id="getQuestionByNo" parameterClass="int" resultClass="com.community.vo.Question">
+		select
+			post_no as no,
+			post_board_no as boardNo,
+			post_title as title,
+			post_writer_no as writerNo,
+			post_content as content,
+			post_important as important,
+			post_read_count as readCount,
+			post_suggestion_count as suggestionCount,
+			post_comment_count as commentCount,
+			post_deleted as deleted,
+			post_created_date as createdDate,
+			post_updated_date as updateDate,
+			post_original_no as originalNo
+		from
+			comm_posts
+		where
+			post_no = #value#
+	</select>
+	
+	<update id="updateQuestion" parameterClass="com.community.vo.Question">
+		update comm_posts
+		set
+			post_board_no = #boardNo#,
+			post_title = #title#,
+			post_content = #content#,
+			post_important = #important#,
+			post_read_count = #readCount#,
+			post_suggestion_count = #suggestionCount#,
+			post_comment_count = #commentCount#,
+			post_deleted = #deleted#,
+			post_updated_date = sysdate
+		where
+			post_no = #no#
+	</update>	
+			
+	
+		<!-- 	
+			게시물 조회수 +1증가할때 사용
+		-->
+	<update id="increaseReadCount" parameterClass="int">
+		update
+			comm_posts
+		set
+			post_read_count = post_read_count + 1
+		where
+			post_no = #value#
+	</update>
+	
+	<!-- 
+		게시물 추천수 +1증가할때 사용
+	 -->
+	<update id="increaseSuggestionCount" parameterClass="int">
+		update
+			comm_posts
+		set
+			post_suggestion_count = post_suggestion_count + 1
+		where
+			post_no = #value#
+	</update>
+	
+	
+	 
+	</sqlMap>
+
 

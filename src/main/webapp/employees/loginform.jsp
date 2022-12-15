@@ -7,7 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+
 <title>게시판</title>
+
 <style type="text/css">
 	textarea {
 		resize: none;
@@ -43,13 +45,21 @@
 	<div id="error-message-box" class="alert alert-danger d-none" >
 		<strong>입력값 누락</strong> <span id="message-box"></span>
 	</div>
-	<form class="bg-light border p-3" id="form-login" method="post" action="login.jsp" onsubmit="return checkLoginForm();">
+	<form class="bg-light border p-3" method="post" action="login.jsp" onsubmit="return checkLoginForm();">
 		<div class="mb-3">
 			<label class="form-label">직원번호</label>
 			<input type="text" class="form-control" name="no" />
 		</div>
 		<div class="mb-3">
 			<label class="form-label">비밀번호</label>
+
+
+			<label class="form-label">e-mail</label>
+			<input type="text" class="form-control" name="email" />
+		</div>
+		<div class="mb-3">
+			<label class="form-label">password</label>
+
 			<input type="password" class="form-control" name="password" />
 		</div>
 		<div class="text-end">
@@ -57,6 +67,7 @@
 		</div>
 	</form>
 </div>
+
 <script type="text/javascript">
 function checkLoginForm() {
 	var noField = document.querySelector("[name=no]");
@@ -78,6 +89,28 @@ function checkLoginForm() {
 	
 	return true;
 }
+
+<script>
+	function checkLoginForm(){
+		var emailField = document.querySelector("[name=email]");
+		var passwordField = document.querySelector("[name=password]");
+		var errorMessageBox = document.querySelector("#error-message-box");
+		var messageBox = document.querySelector("#message-box");
+		
+		if (emailField.value === '') {
+			errorMessageBox.classList.remove("d-none");
+			messageBox.textContent = " 아이디는 필수입력값입니다.";
+			idField.focus();
+			return false;
+		}
+		if (passwordField.value === '') {
+			errorMessageBox.classList.remove("d-none");
+			messageBox.textContent = " 비밀번호는 필수입력값입니다.";
+			passwordField.focus();
+			return false;
+		}
+	}
+
 </script>
 </body>
 </html>

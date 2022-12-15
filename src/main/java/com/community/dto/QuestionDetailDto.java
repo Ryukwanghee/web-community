@@ -1,19 +1,24 @@
-package com.community.vo;
+package com.community.dto;
 
 import java.util.Date;
 
-public class Question {
-	
-	private int no;
+public class QuestionDetailDto {
+
+	private int  no;
 	private int boardNo;
 	private String title;
 	private int writerNo;
+	private String empName;
+	private int depNo;
+	private String deptName;
+	private int positionNo;
+	private String positionName;
 	private String content;
 	private String important;
 	private int readCount;
-	private int suggestionCount;
 	private int commentCount;
 	private String deleted;
+	private int suggestionCount;
 	private Date createdDate;
 	private Date updatedDate;
 	private Date deletedDate;
@@ -43,6 +48,36 @@ public class Question {
 	public void setWriterNo(int writerNo) {
 		this.writerNo = writerNo;
 	}
+	public String getEmpName() {
+		return empName;
+	}
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+	public int getDepNo() {
+		return depNo;
+	}
+	public void setDepNo(int depNo) {
+		this.depNo = depNo;
+	}
+	public String getDeptName() {
+		return deptName;
+	}
+	public void setDeptName(String deptName) {
+		this.deptName = deptName;
+	}
+	public int getPositionNo() {
+		return positionNo;
+	}
+	public void setPositionNo(int positionNo) {
+		this.positionNo = positionNo;
+	}
+	public String getPositionName() {
+		return positionName;
+	}
+	public void setPositionName(String positionName) {
+		this.positionName = positionName;
+	}
 	public String getContent() {
 		return content;
 	}
@@ -61,12 +96,6 @@ public class Question {
 	public void setReadCount(int readCount) {
 		this.readCount = readCount;
 	}
-	public int getSuggestionCount() {
-		return suggestionCount;
-	}
-	public void setSuggestionCount(int suggestionCount) {
-		this.suggestionCount = suggestionCount;
-	}
 	public int getCommentCount() {
 		return commentCount;
 	}
@@ -78,6 +107,12 @@ public class Question {
 	}
 	public void setDeleted(String deleted) {
 		this.deleted = deleted;
+	}
+	public int getSuggestionCount() {
+		return suggestionCount;
+	}
+	public void setSuggestionCount(int suggestionCount) {
+		this.suggestionCount = suggestionCount;
 	}
 	public Date getCreatedDate() {
 		return createdDate;
@@ -106,12 +141,15 @@ public class Question {
 	
 	@Override
 	public String toString() {
-		return "Question [no=" + no + ", boardNo=" + boardNo + ", title=" + title + ", writerNo=" + writerNo
-				+ ", content=" + content + ", important=" + important + ", readCount=" + readCount
-				+ ", suggestionCount=" + suggestionCount + ", commentCount=" + commentCount + ", deleted=" + deleted
-				+ ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", deletedDate=" + deletedDate
-				+ ", originalNo=" + originalNo + "]";
+		return "QuestionDetailDto [no=" + no + ", boardNo=" + boardNo + ", title=" + title + ", writerNo=" + writerNo
+				+ ", empName=" + empName + ", depNo=" + depNo + ", deptName=" + deptName + ", positionNo=" + positionNo
+				+ ", positionName=" + positionName + ", content=" + content + ", important=" + important
+				+ ", readCount=" + readCount + ", commentCount=" + commentCount + ", deleted=" + deleted
+				+ ", suggestionCount=" + suggestionCount + ", createdDate=" + createdDate + ", updatedDate="
+				+ updatedDate + ", deletedDate=" + deletedDate + ", originalNo=" + originalNo + "]";
 	}
+	
+	
 	
 	
 	

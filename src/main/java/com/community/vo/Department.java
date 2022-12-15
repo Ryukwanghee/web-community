@@ -1,6 +1,7 @@
 package com.community.vo;
 
 public class Department {
+
 	private int no;
 	private String name;
 	
@@ -8,6 +9,7 @@ public class Department {
 	public Department(int no) {
 		this.no = no;
 	}
+
 	
 	public int getNo() {
 		return no;
@@ -25,5 +27,6 @@ public class Department {
 		this.name = name;
 	}
 	
+
 	
 }

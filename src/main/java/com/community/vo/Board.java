@@ -1,5 +1,6 @@
 package com.community.vo;
 
+
 import java.util.Date;
 
 public class Board { // 게시판 목록 정보
@@ -106,12 +107,6 @@ public class Board { // 게시판 목록 정보
 		this.boardNo = boardNo;
 	}
 
-	@Override
-	public String toString() {
-		return "Board [no=" + no + ", name=" + name + ", Description=" + Description + ", seq=" + seq + ", readOption="
-				+ readOption + ", writeOption=" + writeOption + ", deleted=" + deleted + ", createdDate=" + createdDate
-				+ ", updatedDate=" + updatedDate + ", deletedDate=" + deletedDate + ", boardNo=" + boardNo + "]";
-	};
-	
+
 	
 }

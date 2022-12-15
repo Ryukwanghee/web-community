@@ -1,4 +1,3 @@
-<%@page import="com.community.vo.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -8,39 +7,35 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-<%
-	Employee emp = (Employee) session.getAttribute("loginedUser");
-%>
+<link href="/web-community/resources/css/style.css" rel="stylesheet">
 <title>사내 커뮤니티</title>
 </head>
 <body>
 <jsp:include page="common/header.jsp">
-	<jsp:param name="menu" value="home"/>
+	<jsp:param name="menu" value="login"/>
 </jsp:include>
-<%
-	Employee employee = (Employee) session.getAttribute("loginedEmployee");
-%>
 <div class="container my-3">
 	<div class="row mb-3">
 		<div class="col">
-			<div class="border p-3 bg-light">
-				<h1 class="mb-4">사내 커뮤니티 애플리케이션</h1>
-				<p class="mb-1">구성원들간의 효과적인 의사소통을 지원하는 게시판입니다.</p>
-				<p class="">공지사항, 각종 News, 경조사, 생활정보 등의 다양한 내용을 게시판을 통해 공유, 전파할 수 있습니다.</p>
-<%
-
-	if (employee == null) {
-
-%>
-				<div>
-					<a href="employees/loginform.jsp" class="btn btn-primary">로그인</a>
-                </div>
-
-<%
-	}
-%>
-        </div>
-
+			<h1 class="heading">로그인</h1>
+		</div>
+	</div>
+	<div class="row mb-3">
+		<div class="col-sm-6">
+			<form class="border bg-light p-3">
+				<div class="mb-3">
+					<label class="form-label">직원번호</label>
+					<input type="text" class="form-control" name="no"/>
+				</div>
+				<div class="mb-3">
+					<label class="form-label">비밀번호</label>
+					<input type="password" class="form-control" name="no"/>
+				</div>
+				<div class="text-end">
+					<a href="../home.jsp" class="btn btn-secondary">취소</a>
+					<button type="submit" class="btn btn-primary">로그인</button>
+				</div>
+			</form>
         </div>
     </div>
 </div>

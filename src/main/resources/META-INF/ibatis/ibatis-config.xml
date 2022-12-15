@@ -28,6 +28,8 @@
 	<sqlMap resource="META-INF/ibatis/mappers/questions.xml" />	
 	<sqlMap resource="META-INF/ibatis/mappers/reviews.xml" />	
 	<sqlMap resource="META-INF/ibatis/mappers/temps.xml" />	
-	
+	<sqlMap resource="META-INF/ibatis/mappers/comments.xml" />
+	<sqlMap resource="META-INF/ibatis/mappers/positions.xml" />	
+	<sqlMap resource="META-INF/ibatis/mappers/suggestions.xml" />	
 
 </sqlMapConfig>

@@ -3,6 +3,7 @@ package com.community.vo;
 import java.util.Date;
 
 public class Employee {
+
 	private int no;
 	private String password;
 	private String name;
@@ -114,13 +115,8 @@ public class Employee {
 		this.type = type;
 	}
 
-	@Override
-	public String toString() {
-		return "Employee [no=" + no + ", password=" + password + ", name=" + name + ", email=" + email + ", phone="
-				+ phone + ", deptNo=" + deptNo + ", positionNo=" + positionNo + ", deleted=" + deleted
-				+ ", createdDate=" + createdDate + ", updatedDate=" + updatedDate + ", deletedDate=" + deletedDate
-				+ ", type=" + type + "]";
+	
 	}
 	
 	
-}
+
