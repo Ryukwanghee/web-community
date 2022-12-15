@@ -2,7 +2,9 @@
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
  
-<sqlMap >
+<sqlMap namespace="employees">
+
+
 
 	<!-- 
 		아이디를 전달받아서 sample_board_users 테이블에서 사용자정보를 조회해서 반환한다.
@@ -31,8 +33,14 @@
 			emp_password as password,
 			emp_name as name,
 			emp_email as email,
+			emp_phone as phone,
+			emp_dept_no as deptNo,
+			emp_position_no as positionNo,
+			emp_deleted as deleted,
 			emp_created_date as createdDate,
-			emp_updated_date as updatedDate
+			emp_updated_date as updatedDate,
+			emp_deleted_date as deletedDate,
+			emp_type as type
 		from
 			comm_employees
 		where
@@ -52,12 +60,18 @@
 			emp_password as password,
 			emp_name as name,
 			emp_email as email,
+			emp_phone as phone,
+			emp_dept_no as deptNo,
+			emp_position_no as positionNo,
+			emp_deleted as deleted,
 			emp_created_date as createdDate,
-			emp_updated_date as updatedDate
+			emp_updated_date as updatedDate,
+			emp_deleted_date as deletedDate,
+			emp_type as type
 		from
 			comm_employees
 		where
-			user_email = #value#
+			emp_email = #value#
 	</select>
 	 
 	 <!-- 
@@ -67,11 +81,11 @@
 	 		SqlMapper.insert("insertUser", user)
 	 	}
 	  -->
-	<insert id="insertUser" parameterClass="com.community.vo.Employees">
+	<insert id="insertEmployees" parameterClass="com.community.vo.Employees">
 		insert into comm_employees
-		(emp_no, emp_password, emp_name, emp_email)
+		(emp_no, emp_password, emp_name, emp_email, emp_phone, emp_dept_no, emp_position_no)
 		values
-		(#id#, #password#, #name#, #email#)
+		(#no#, #password#, #name#, #email#, #phone#, #deptNo#, #positionNo#)
 	</insert>
 </sqlMap>
 

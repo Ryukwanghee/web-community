@@ -4,74 +4,15 @@
  
 <sqlMap namespace="temppost">
 
-		<insert id="insertTempPost" parameterClass="com.community.vo.TempPost">
+	<insert id="insertTempPost" parameterClass="com.community.vo.TempPost">
 		insert into comm_temp_post
 		(post_temp_no, post_title, post_content,  barod_no, emp_no)
 		values
-		(comm_post_seq.nextval, #post_title#, #post_content#,  comm_boards_seq.nextval, #emp_no#)
+		(comm_post_seq.nextval, #title#, #content#,  #boardNo#, #empNo#)
 	</insert>
 	
 	
-	<select id="getTemps" parameterClass="map" resultClass="com.community.vo.TempPost">
-		select *
-		from (select
-			row_number() over (order by post_temp_no desc) row_numbers,
-			post_temp_no as tempNo,
-			post_title as title,
-			post_content as content,
-			post_important as important,
-			post_created_date as createdDate,
-			board_no as boardNo,
-			emp_no as empNo
-		from 
-			comm_temp_post
-			where
-				post_temp_no = #empNo#)
-		where
-			row_numbers between #begin# and #end#
-		
-			
 	
-	</select>
 	
-	<select id="getTotalRows" parameterClass="map" resultClass="int">
-		select
-			count(*)
-		from
-			comm_temp_post
-	</select>
-	
-	<select id="getNoticeByNo" parameterClass="int" resultClass="com.community.vo.Notice">
-		select
-				post_no,
-				post_title,
-				post_content,
-				post_writer_no,
-				post_read_count,
-				post_suggestion_count,
-				post_created_date,
-				post_deleted_date
-			from
-				comm_posts
-			where
-				post_no = #value#
-	</select>
-	
-	<update id="updateNotice" parameterClass="com.community.vo.Notice">
-		update
-			comm_posts
-		set
-			post_title = #title#,
-			post_content = #content#,
-			post_writer_no = #writerNo#,
-			post_read_count = #readCount#,
-			post_suggestion_count = #suggestionCount#,
-			post_created_date = #createdDate#,
-			post_deleted_date = #deletedDate#
-		where
-			post_no = #no#
-		
-			
-	</update>
 	
 </sqlMap>

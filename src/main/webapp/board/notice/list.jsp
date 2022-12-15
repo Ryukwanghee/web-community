@@ -1,10 +1,12 @@
+<%@page import="com.community.vo.Employees"%>
+<%@page import="java.util.List"%>
 <%@page import="com.community.util.Pagination"%>
 <%@page import="com.community.util.StringUtils"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="com.community.dao.NoticeDao"%>
 <%@page import="com.community.vo.Notice"%>
-<%@page import="java.util.List"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -23,7 +25,7 @@
 </jsp:include>
 <div class="container my-3">
 <%
-
+	Employees loginEmployees = (Employees) session.getAttribute("loginedEmployees");
 
 	// 페이지번호를 조회한다.
 	int currentPage = StringUtils.stringToInt(request.getParameter("page"), 1);
@@ -37,7 +39,7 @@
 	param.put("begin", begin);
 	param.put("end", end);
 	
-	// NoticeDao 객체를 생성해서 getNotices 메소드해서 목록조회
+	// NoticeDao 객체를 생성해서 noticeDao 메소드해서 목록조회
 	NoticeDao noticeDao = new NoticeDao();
 	List<Notice> noticeList = noticeDao.getNotices(param);
 %>
@@ -88,7 +90,7 @@
 								<col width="9%">
 								<col width="*">
 								<col width="10%">
-								<col width="12%">
+								<col width="20%">
 								<col width="7%">
 								<col width="7%">
 							</colgroup>
@@ -118,8 +120,8 @@
 				
 								<tr>
 									<td><input type="checkbox" name="" value=""/></td>
-									<td><%=notice.getBoardNo() %></td>
-									<td><a href="detail.jsp" class="text-decoration-none text-dark"><%=notice.getTitle() %></a></td>
+									<td><%=notice.getPostNo() %></td>
+									<td><a href="detail.jsp?no=<%=notice.getPostNo() %>" class="text-decoration-none text-dark"><%=notice.getTitle() %></a></td>
 									<td><%=notice.getWriterNo() %></td>
 									<td><%=StringUtils.dateToText(notice.getCreatedDate()) %></td>
 									<td><%=notice.getReadCount() %></td>
@@ -148,7 +150,7 @@
 					</form>
 					<nav>
 						<ul class="pagination pagination-sm justify-content-center">
-							<li class="page-item disabled">
+							<li class="page-item">
 								<a class="page-link <%=currentPage <=1 ? "disabled" : "" %>" href="list.jsp?page=<%=currentPage -1%>">이전</a></li>
 							<%
 								for(int number = beginPage; number <= endPage; number++) {
@@ -164,7 +166,13 @@
 						</ul>
 					</nav>
 					<div class="text-end">
+<%
+	if (loginEmployees != null) {
+%>
 						<button class="btn btn-dark btn-xs" data-bs-toggle="modal" data-bs-target="#modal-form-posts">등록</button>
+<%
+	}
+%>
 						<button class="btn btn-outline-dark btn-xs">삭제</button>
 					</div>
 				</div>
@@ -172,9 +180,92 @@
 		</div>
 	</div>
 </div>
-<jsp:include page="../../common/modal-form-posts.jsp">
-	<jsp:param name="boardNo" value="100"/>
-</jsp:include>
+<%
+	if (loginEmployees != null) {
+%>
+<div class="modal" tabindex="-1" id="modal-form-posts">
+	<div class="modal-dialog modal-lg">
+		<form method="post" action="register.jsp">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">게시글 등록폼</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+					<div class="row mb-2">
+						<label class="col-sm-2 col-form-label col-form-label-sm">게시판 이름</label>
+						<div class="col-sm-5">
+							<select class="form-select form-select-sm" name="boardNo">
+								<option value="100"> 공지사항</option>
+								<option value="101"> 파일게시판</option>
+								<option value="102"> 갤러리</option>
+								<option value="103"> 묻고 답하기</option>
+								<option value="104"> 벼룩시장</option>
+								<option value="105"> 사는 얘기</option>
+							</select>
+						</div>
+					</div>
+					<div class="row mb-2">
+						<label class="col-sm-2 col-form-label col-form-label-sm">제목</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control form-control-sm" placeholder="제목" name="title">
+						</div>
+					</div>
+					<div class="row mb-2">
+						<label class="col-sm-2 col-form-label col-form-label-sm">작성자</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control form-control-sm" readonly="readonly" value="<%=loginEmployees.getName()%>">
+						</div>
+					</div>
+					<div class="row mb-2">
+						<div class="col-sm-8 offset-sm-2">
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="important" value="N" checked="checked">
+								<label class="form-check-label">일반</label>
+							</div>
+							<div class="form-check form-check-inline">
+								<input class="form-check-input" type="radio" name="important" value="Y" >
+								<label class="form-check-label">중요</label>
+							</div>
+						</div>
+					</div>
+					<div class="row mb-2">
+						<label class="col-sm-2 col-form-label col-form-label-sm">내용</label>
+						<div class="col-sm-10">
+							<textarea rows="5" class="form-control" name="content"></textarea>
+						</div>
+					</div>
+					<div class="row mb-2">
+						<label class="col-sm-2 col-form-label col-form-label-sm">첨부파일</label>
+						<div class="col-sm-9 mb-1">
+							<input type="file" class="form-control form-control-sm">
+						</div>
+						<div class="col-sm-1">
+							<button type="button" class="btn btn-sm"><i class="bi bi-plus-circle"></i></button>
+						</div>
+					</div>
+					<div class="row mb-2">
+						<label class="col-sm-2 col-form-label col-form-label-sm">첨부파일</label>
+						<div class="col-sm-9 mb-1">
+							<input type="file" class="form-control form-control-sm">
+						</div>
+						<div class="col-sm-1">
+							<button type="button" class="btn btn-sm"><i class="bi bi-plus-circle"></i></button>
+						</div>
+					</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary btn-xs" data-bs-dismiss="modal">닫기</button>
+				<button type="submit" class="btn btn-primary btn-xs">등록</button>
+			</div>
+			
+		</div>
+		</form>
+	</div>
+</div>
+<%
+	}
+%>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </body>

@@ -3,8 +3,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	Employees loginUser = (Employees) session.getAttribute("loginedUser");
-	if (loginUser == null) {
+	Employees loginEmployees = (Employees) session.getAttribute("loginedEmployees");
+	if (loginEmployees == null) {
 		response.sendRedirect("/web-community/employees/loginform.jsp?error=deny");
 		return;
 	}

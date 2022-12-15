@@ -8,18 +8,16 @@ public class Notice {
 	private int postNo;				// 게시글번호
 	private int boardNo;			// 게시판번호
 	private String title;			// 게시글제목
-	private int writerNo;				// 작성자번호
-	
-	private String content;		// 게시글내용
-	private String important;			// 중요게시글 여부
-	private int readCount;		// 조회수
+	private int writerNo;			// 작성자번호
+	private String content;			// 게시글내용
+	private String important;		// 중요게시글 여부
+	private int readCount;			// 조회수
 	private int suggestionCount;	// 추천수
 	private int commentCount;		// 댓글갯수
-	private String deleted;		// 게시글삭제 여부
-	
-	private Date createdDate;			// 등록일
-	private Date updatedDate;			// 수정일
-	private Date deletedDate;			// 삭제일
+	private String deleted;			// 게시글삭제 여부
+	private Date createdDate;		// 등록일
+	private Date updatedDate;		// 수정일
+	private Date deletedDate;		// 삭제일
 	private int originalNo;			// 원글번호
 
 	

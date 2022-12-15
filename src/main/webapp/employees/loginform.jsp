@@ -22,7 +22,7 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col-sm-6">
-			<form class="border bg-light p-3" method="post" action="login.jsp">
+			<form id="form-login" class="border bg-light p-3" method="post" action="login.jsp">
 				<div class="mb-3">
 					<label class="form-label">직원번호</label>
 					<input type="text" class="form-control" name="no"/>
@@ -41,5 +41,24 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#form-login").submit(function(){
+		let EmployeesNo = $(":input[name=no]").val();	
+		let EmployeesPassword = $(":input[name=password]").val();
+		if(EmployeesNo === "") {
+			alert("아이디는 필수입력입니다");
+			return false;
+		}
+		if(EmployeesPassword === "") {
+			alert("비밀번호는 필수입력입니다");
+			return false;
+		}
+		
+		return true;
+	});
+});
+
+</script>
 </body>
 </html>

@@ -11,27 +11,30 @@
 	String password = request.getParameter("password");
 	
 	// 사용자 정보 조회를 위해서 UserDao객체를 생성한다.
-	EmployeesDao employeesDao = new EmployeesDao();
+	EmployeesDao employeesDao = EmployeesDao.getInstance();
+	Employees employees = employeesDao.getUserByNo(no);
 	
 	// 아이디로 사용자 정보를 조회해서 사용자정보가 null이면 가입된 아이디가 아니므로 로그인화면을 재요청하는 URL을 응답으로 보낸다.
-	Employees savedUser = employeesDao.getUserByNo(no);
-	if (savedUser == null) {
-		response.sendRedirect("loginform.jsp?error=fail");
+	Employees savedEmployees = employeesDao.getUserByNo(no);
+	
+	if (savedEmployees == null) {
+		response.sendRedirect("loginform.jsp?iderror=fail");
 		return;
 	}
 	
-	//String salt = savedUser.getId() + savedUser.getEmail();
+	//String salt = savedUser.getNo() + savedUser.getEmail();
 	// String secretPassword = DigestUtils.sha256Hex(salt+password);
 	
 	// 조회된 사용자정보의 비밀번호와 입력한 비밀번호가 일치하지 않으면 로그인화면을 재요청하는 URL을 응답으로 보낸다.
-	if (!savedUser.getPassword().equals(password)) {
-		response.sendRedirect("loginform.jsp?error=fail");
+	if (!savedEmployees.getPassword().equals(password)) {
+		response.sendRedirect("loginform.jsp?error=fai!l");
 		return;
 	}
 	
+	
 	// 사용자 인증이 완료된 경우, 세션객체에 사용자정보를 저장한다.
 	// HttpSession의 setAttribute(String name, Object value) 메소드를 사용해서 세션객체에 사용자 정보를 저장한다.
-	session.setAttribute("loginedUser", savedUser);
+	session.setAttribute("loginedEmployees", savedEmployees);
 	
 	// 재요청 URL을 응답으로 보낸다.
 	response.sendRedirect("../home.jsp");

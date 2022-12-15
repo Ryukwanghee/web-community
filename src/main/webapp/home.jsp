@@ -12,7 +12,8 @@
 </head>
 <body>
 <%
-	Employees employees = (Employees) session.getAttribute("loginedUser");
+	// HttpSession객체에서 loginedUser라는 이름으로 저장된 객체를 조회한다.
+	Employees employees = (Employees) session.getAttribute("loginedEmployees");
 %>
 <jsp:include page="common/header.jsp">
 	<jsp:param name="menu" value="home"/>

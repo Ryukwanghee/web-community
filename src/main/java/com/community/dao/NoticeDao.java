@@ -21,11 +21,11 @@ public class NoticeDao {
 		return (Integer) SqlMapper.selectOne("notices.getTotalRows");
 	}
 	
-	public Notice getNoticeByNo(int boardNo) {
-		return (Notice) SqlMapper.selectOne("notices.getBoardByNo", boardNo);
+	public Notice getNoticeByNo(int postNo) {
+		return (Notice) SqlMapper.selectOne("notices.getNoticeByNo", postNo);
 	}
 	
 	public void updateNotice(Notice notice) {
-		SqlMapper.update("notices.updateBoard", notice);
+		SqlMapper.update("notices.updateNotice", notice);
 	}
 }

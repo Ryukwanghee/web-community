@@ -1,3 +1,11 @@
+<%@page import="java.util.List"%>
+<%@page import="com.community.vo.Comment"%>
+<%@page import="com.community.dao.CommentDao"%>
+<%@page import="com.community.vo.Employees"%>
+<%@page import="com.community.dao.EmployeesDao"%>
+<%@page import="com.community.vo.Notice"%>
+<%@page import="com.community.dao.NoticeDao"%>
+<%@page import="com.community.util.StringUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -22,6 +30,30 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col-12">
+		<%
+			// 글번호를 조회한다.
+			int postNo = StringUtils.stringToInt(request.getParameter("no"));
+		
+			String id = request.getParameter("id");
+		
+			// NoticeDao 객체를 생성하고 getNoticeByNo를 실행하고 조회하고 출력
+			NoticeDao noticeDao = new NoticeDao();
+			Notice notice = noticeDao.getNoticeByNo(postNo);
+			
+		
+					
+			// 조회수를 1 증가 시키고, 테이블에도 반영시킨다.
+			notice.setReadCount(notice.getReadCount() + 1);
+			noticeDao.updateNotice(notice);
+		
+			notice.setSuggestionCount(notice.getSuggestionCount() + 1);
+			noticeDao.updateNotice(notice);
+			
+			//Comment comment = new Comment();
+			
+			//CommentDao commentDao = new CommentDao();
+			//commentDao.insertComment(comment);
+		%>
 			<table class="table table-sm table-bordered">
 				<colgroup>
 					<col width="15%">
@@ -32,38 +64,38 @@
 				<tbody>
 					<tr>
 						<th class="text-center bg-light">번호</th>
-						<td>10000</td>
+						<td><%=notice.getPostNo() %></td>
 						<th class="text-center bg-light">등록일</th>
-						<td>2022년 12월 10일</td>
+						<td><%=StringUtils.dateToText(notice.getCreatedDate()) %></td>
 					</tr>
 					<tr>
 						<th class="text-center bg-light">제목</th>
-						<td>연습입니다.</td>
+						<td><%=notice.getTitle() %></td>
 						<th class="text-center bg-light">추천수</th>
-						<td>10</td>
+						<td><%=notice.getSuggestionCount() %></td>
 					</tr>
 					<tr>
 						<th class="text-center bg-light">작성자</th>
-						<td>홍길동 (차장)</td>
+						<td><%=notice.getWriterNo() %></td>
 						<th class="text-center bg-light">소속부서</th>
-						<td>개발1팀</td>
+						<td>개발팀</td>
 					</tr>
 					<tr>
 						<th class="text-center bg-light">조회수</th>
-						<td>10</td>
+						<td><%=notice.getReadCount() %></td>
 						<th class="text-center bg-light">댓글 수</th>
-						<td>10</td>
+						<td><%=notice.getCommentCount() %></td>
 					</tr>
 					<tr>
 						<th class="text-center bg-light">내용</th>
-						<td colspan="3"><textarea rows="4" class="form-control border-0"></textarea> </td>
+						<td colspan="3"><textarea rows="4" class="form-control border-0"><%=notice.getContent() %></textarea> </td>
 					</tr>
 				</tbody>
 			</table>
 			<div class="d-flex justify-content-between">
 				<span>
-					<a href="" class="btn btn-danger btn-xs">삭제</a>
-					<a href="" class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modal-form-posts">수정</a>
+					<a href="delete.jsp?no=<%=notice.getPostNo() %>" class="btn btn-danger btn-xs">삭제</a>
+					<a href="modifyform.jsp?no=<%=notice.getPostNo() %>" class="btn btn-warning btn-xs" data-bs-toggle="modal" data-bs-target="#modal-form-posts">수정</a>
 				</span>
 				<span>
 					<a href="" class="btn btn-outline-primary btn-xs">추천</a>
@@ -74,63 +106,60 @@
 	</div>
 	<div class="row mb-3">
 		<div class="col-12 mb-1">
-			<form method="post" action="">
+			<form method="post" action="comment.jsp">
 				<!-- 게시글의 글 번호을 value에 설정하세요 -->
-				<input type="hidden" name="postNo" value="1000"/>
+				<input type="hidden" name="postNo" value="<%=postNo %>"/>
 				<div class="row mb-3">
 					<div class="col-sm-11">
 						<input type="text" class="form-control form-control-sm" name="content" placeholder="댓글을 남겨주세요">
 					</div>
 					<div class="col-sm-1 text-end" style="margin-top: 2px;">
-						<button class="btn btn-secondary btn-xs">댓글</button>
+						<button type="submit" class="btn btn-secondary btn-xs">댓글</button>
 					</div>
 				</div>
 			</form>
 		</div>
+		<%
+			// CommentDao 객체를 생성해서 getCommentsByPostNo(int postNo)를 실행해서 리뷰를 조회하낟.
+			CommentDao commentDao = new CommentDao();
+		List<Comment> commentList = commentDao.getCommentsByPostNo(postNo);
+		%>
+		
 		<div class="col-12">
 			<div class="card">
-				<!-- 댓글 반복 시작 -->
+			
+			<%
+				if (commentList.isEmpty()) {
+					for (Comment comment : commentList) {
+			%>
 				<div class="card-body py-1 px-3 small border-bottom">
 					<div class="mb-1 d-flex justify-content-between text-muted">
-						<span>홍길동</span>
-						<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
+						<span><%=comment.getEmpNo() %></span>
+						<span><span class="me-4"><%=StringUtils.dateToText(comment.getCreatedDate()) %></span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
 					</div>
-					<p class="card-text">내용</p>
+					<p class="card-text"><%=comment.getContent() %></p>
 				</div>
-				<!-- 댓글 반복 끝 -->
-				<div class="card-body py-1 px-3 small border-bottom">
-					<div class="mb-1 d-flex justify-content-between text-muted">
-						<span>홍길동</span>
-						<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-					</div>
-					<p class="card-text">내용</p>
-				</div>
-				<div class="card-body py-1 px-3 small border-bottom">
-					<div class="mb-1 d-flex justify-content-between text-muted">
-						<span>홍길동</span>
-						<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-					</div>
-					<p class="card-text">내용</p>
-				</div>
-				<div class="card-body py-1 px-3 small border-bottom">
-					<div class="mb-1 d-flex justify-content-between text-muted">
-						<span>홍길동</span>
-						<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-					</div>
-					<p class="card-text">내용</p>
-				</div>
+			<% 		
+					}
+				}
+			%>
+				
+			
 			</div>				
 		</div>
 	</div>
 </div>
 <div class="modal" tabindex="-1" id="modal-form-posts">
 	<div class="modal-dialog modal-lg">
-	<form class="border p-3 bg-light" method="post" action="modify.jsp">
+	<form class="border p-3 bg-light" method="post" action="update.jsp">
 		<!-- 게시글의 글 번호을 value에 설정하세요 -->
-		<input type="hidden" name="postNo" value="1000"/>
+		<input type="hidden" name="postNo" value="<%=notice.getPostNo() %>"/>
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">게시글 등록폼</h5>
+				
+			
+				
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
@@ -150,13 +179,13 @@
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">제목</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" placeholder="제목">
+							<input type="text" class="form-control form-control-sm" placeholder="제목" name="title" value=<%=notice.getTitle() %>>
 						</div>
 					</div>
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">작성자</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" readonly="readonly" value="홍길동">
+							<input type="text" class="form-control form-control-sm" readonly="readonly" value="<%=notice.getWriterNo() %>">
 						</div>
 					</div>
 					<div class="row mb-2">
@@ -174,7 +203,7 @@
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">내용</label>
 						<div class="col-sm-10">
-							<textarea rows="5" class="form-control">내용을 수정하세요</textarea>
+							<textarea rows="5" class="form-control" name="content"><%=notice.getContent() %></textarea>
 						</div>
 					</div>
 			</div>
