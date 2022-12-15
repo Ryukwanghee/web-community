@@ -3,16 +3,21 @@
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="suggestions">
-	<!-- 
-		추천정보를 전달받아서 테이블에 저장한다.
-	 -->
-	<insert id="insertSuggestion" parameterClass="com.community.vo.Suggestion">
+	<insert id="addSuggestion" parameterClass="com.community.vo.Suggestion">
 		insert into comm_post_suggestions
 			(suggestion_post_no, suggestion_emp_no)
 		values
-			( #postNo#, #empNo#)
-	</insert>	
+			(#postNo#, #empNo#)
+	</insert>
 	
-
+	<select id="getSuggestionsByEmpNo" parameterClass="int" resultClass="com.community.vo.Suggestion">
+		select
+			suggestion_post_no as postNo,
+			suggestion_emp_no as empNo
+		from 
+			comm_post_suggestions
+		where
+			suggestion_emp_no = #value#
+	</select>
 </sqlMap>
 

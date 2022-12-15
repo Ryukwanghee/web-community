@@ -1,9 +1,9 @@
 package com.community.vo;
 
 public class Suggestion {
-
-	private int postNo;
-	private int empNo;
+	
+	private int postNo;		// 게시글 번호
+	private int empNo;		// 직원 번호
 	
 	public int getPostNo() {
 		return postNo;
@@ -17,14 +17,4 @@ public class Suggestion {
 	public void setEmpNo(int empNo) {
 		this.empNo = empNo;
 	}
-	
-	@Override
-	public String toString() {
-		return "Suggestion [postNo=" + postNo + ", empNo=" + empNo + "]";
-	}
-	
-	
-	
-	
-	
 }

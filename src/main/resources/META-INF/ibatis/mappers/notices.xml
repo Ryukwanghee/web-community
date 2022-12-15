@@ -4,13 +4,22 @@
  
 <sqlMap namespace="notices">
 
-	<select id="getFileShareByNo" parameterClass="int" resultClass="com.community.vo.Notice">
-		select
-			*
-		from
-			semi_community_posts
+	<insert id="addNotice" parameterClass="com.community.vo.Notice">
+		insert into comm_post_notices
+			(notice_no, notice_post_no, notice_send_emp_no, notice_receive_emp_no)
+		values
+			(comm_notices_seq.nextval, #postNo#, #sendEmpNo#, #receiveEmpNo#)
+	</insert>
+	
+	<update id="updateNotice" parameterClass="com.community.vo.Notice">
+		update
+			comm_post_notices
+		set
+			notice_content = #content#,
+			notice_reading_status = #readingStatus#,
+			notice_deleted = #deleted#,
+			notice_updated_date = #updatedDate#
 		where
-			post_board_no = 100
-			and post_no = #value#
-	</select>
+			notice_no = #no#
+	</update>
 </sqlMap>

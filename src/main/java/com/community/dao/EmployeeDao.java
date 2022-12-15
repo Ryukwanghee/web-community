@@ -1,5 +1,6 @@
 package com.community.dao;
 
+import com.community.dto.EmployeeDto;
 import com.community.util.SqlMapper;
 import com.community.vo.Employee;
 
@@ -8,8 +9,11 @@ public class EmployeeDao {
 		return (Employee) SqlMapper.selectOne("employees.getEmployeeByNo", no);
 	}
 	
-	public Employee getEmployeeByEmail(String email) {
-		return (Employee) SqlMapper.selectOne("employees.getEmployeeByEmail", email);
+	public EmployeeDto getEmployeeByEmail(String email) {
+		return (EmployeeDto) SqlMapper.selectOne("employees.getEmployeeByEmail", email);
 	}
-
+	
+	public void changePassword(Employee employee) {
+		SqlMapper.update("employees.changePassword", employee);
+	}
 }

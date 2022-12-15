@@ -1,8 +1,8 @@
-package com.community.vo;
+package com.community.dto;
 
 import java.util.Date;
 
-public class Comment {
+public class CommentDto {
 	private int no;					// 댓글 번호
 	private int empNo;				// 작성자 직원번호
 	private String content;			// 댓글 내용
@@ -11,6 +11,8 @@ public class Comment {
 	private Date updatedDate;		// 댓글 수정일
 	private Date deletedDate;		// 댓글 삭제일
 	private int postNo;				// 게시글 번호
+	private String name;			// 작성자 직원명
+	
 	
 	public int getNo() {
 		return no;
@@ -60,6 +62,10 @@ public class Comment {
 	public void setPostNo(int postNo) {
 		this.postNo = postNo;
 	}
-	
-
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 }
