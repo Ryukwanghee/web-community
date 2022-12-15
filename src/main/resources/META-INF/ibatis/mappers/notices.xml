@@ -4,6 +4,7 @@
  
 <sqlMap namespace="notices">
 
+
 <!-- 
 	Notice 객체(제목,작성자,등록일,조회,추천,번호를 전달받아서 comm_posts 테이블에 저장한다.
 	
@@ -120,4 +121,24 @@
 		
 	</update>
 	
+
+	<insert id="addNotice" parameterClass="com.community.vo.Notice">
+		insert into comm_post_notices
+			(notice_no, notice_post_no, notice_send_emp_no, notice_receive_emp_no)
+		values
+			(comm_notices_seq.nextval, #postNo#, #sendEmpNo#, #receiveEmpNo#)
+	</insert>
+	
+	<update id="updateNotice" parameterClass="com.community.vo.Notice">
+		update
+			comm_post_notices
+		set
+			notice_content = #content#,
+			notice_reading_status = #readingStatus#,
+			notice_deleted = #deleted#,
+			notice_updated_date = #updatedDate#
+		where
+			notice_no = #no#
+	</update>
+
 </sqlMap>

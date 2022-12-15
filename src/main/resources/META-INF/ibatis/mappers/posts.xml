@@ -1,20 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
- 
-<sqlMap namespace="departments">
 
-	<select id="getAllDepartments" resultClass="com.sample.vo.Department">
-		select
-			department_id as id,
-			department_name as name
-		from
-			departments
-		where
-			manager_id is not null
-		order by
-			department_id asc
-	</select>
+<sqlMap namespace="posts">
+	<insert id="insertPost" parameterClass="com.community.vo.Post">
+		insert into comm_posts
+			(post_no, post_board_no, post_title, post_writer_no, post_content)
+		values
+			(comm_posts_seq.nextval, #boardNo#, #title#, #writerNo#, #content#)
+	</insert>	
 	
+	<update id="updatePost" parameterClass="com.community.vo.Post">
+		update
+			comm_posts
+		set 
+			post_board_no = #boardNo#,
+			post_title = #title#,
+			post_content = #content#,
+			post_important = #important#,
+			post_updated_date = sysdate,
+			post_read_count = #readCount#,
+			post_suggestion_count = #suggestionCount#,
+			post_comment_count = #commentCount#
+		where
+			post_no = #no#
+	</update>
+	
+	<update id="deletePost" parameterClass="com.community.vo.Post">
+		update
+			comm_posts
+		set 
+			post_deleted = #deleted#,
+			post_deleted_date = sysdate
+		where
+			post_no = #no#
+	</update>
+	
+	<select id="getPostByNo" parameterClass="int" resultClass="com.community.vo.Post">
+		select 
+			post_no as no,
+			post_board_no as boardNo,
+			post_title as title,
+			post_writer_no as writerNo,
+			post_content as content,
+			post_important as important,
+			post_read_count as readCount,
+			post_suggestion_count as suggestionCount,
+			post_comment_count as commentCount,
+			post_deleted as deleted,
+			post_created_date as createdDate,
+			post_updated_date as updatedDate,
+			post_deleted_date as deletedDate,
+			post_original_no as originalNo
+		from
+			comm_posts
+		where
+			post_no = #value#
+	</select>
+
 </sqlMap>
 

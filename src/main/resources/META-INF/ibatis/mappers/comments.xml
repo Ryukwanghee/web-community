@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="comments">
+	<insert id="addComment" parameterClass="com.community.vo.Comment">
+		insert into comm_post_comments
+			(comment_no, comment_emp_no, comment_content, comment_post_no)
+		values 
+			(comm_comments_seq.nextval, #empNo#, #content#, #postNo#)
+	</insert>
+	
+	<select id="getCommentsByNo" parameterClass="int" resultClass="com.community.dto.CommentDto">
+		select
+			B.emp_name as name,
+			A.comment_no as no,
+			A.comment_emp_no as empNo,
+			A.comment_content as content,
+			A.comment_deleted as deleted,
+			A.comment_created_date as createdDate,
+			A.comment_updated_date as updatedDate,
+			A.comment_deleted_date as deletedDate,
+			A.comment_post_no as postNo
+		from
+			comm_post_comments A, comm_employees B
+		where
+			B.emp_no = A.comment_emp_no
+			and A.comment_deleted = 'N'
+			and A.comment_post_no = #value#
+	</select>
+	
+	<select id="getCommentByCommentNo" parameterClass="int" resultClass="com.community.vo.Comment">
+		select
+			comment_no as no,
+			comment_emp_no as empNo,
+			comment_content as content,
+			comment_deleted as deleted,
+			comment_created_date as createdDate,
+			comment_updated_date as updatedDate,
+			comment_deleted_date as deletedDate,
+			comment_post_no as postNo
+		from
+			comm_post_comments
+		where
+			comment_no = #value#
+	</select>
+
+	<update id="deleteComment" parameterClass="com.community.vo.Comment">
+		update
+			comm_post_comments
+		set
+			comment_deleted = #deleted#,
+			comment_updated_date = sysdate
+		where
+			comment_no = #no#
+	</update>
+	
+</sqlMap>
+
