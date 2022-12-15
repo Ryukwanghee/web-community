@@ -4,13 +4,5 @@
  
 <sqlMap namespace="notices">
 
-	<select id="getFileShareByNo" parameterClass="int" resultClass="com.community.vo.Notice">
-		select
-			*
-		from
-			semi_community_posts
-		where
-			post_board_no = 100
-			and post_no = #value#
-	</select>
+	
 </sqlMap>

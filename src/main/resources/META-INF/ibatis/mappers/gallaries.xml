@@ -4,13 +4,4 @@
  
 <sqlMap namespace="gallaries">
 
-	<select id="getGallaryByNo" parameterClass="int" resultClass="com.community.vo.Gallary">
-		select
-			*
-		from
-			semi_community_posts
-		where
-			post_board_no = 300
-			and post_no = #value#
-	</select>
 </sqlMap>

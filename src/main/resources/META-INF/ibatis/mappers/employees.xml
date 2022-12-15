@@ -3,8 +3,10 @@
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
  
 <sqlMap namespace="employees">
+
 	<select id="getEmployeeByNo" parameterClass="int" resultClass="com.community.vo.Employee">
-		select 
+		select
+
 			emp_no as no,
 			emp_password as password,
 			emp_name as name,
@@ -19,9 +21,13 @@
 			emp_type as "type"
 		from
 			comm_employees
-		where
-			emp_no = #value#	
-	</select>	
+		where 
+			emp_no = #value#
+	</select>
+	
+	
+</sqlMap>
+
 	
 	<select id="getEmployeeByEmail" parameterClass="string" resultClass="com.community.vo.Employee">
 		select 

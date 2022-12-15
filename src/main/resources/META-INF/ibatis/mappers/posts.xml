@@ -3,6 +3,9 @@
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="posts">
+
+
+<sqlMap namespace="posts">
 	<insert id="insertPost" parameterClass="com.community.vo.Post">
 		insert into comm_posts
 			(post_no, post_board_no, post_title, post_writer_no, post_content)

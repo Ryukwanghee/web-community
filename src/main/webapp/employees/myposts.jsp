@@ -1,4 +1,3 @@
-<%@page import="com.community.vo.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -9,42 +8,41 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 <link href="/web-community/resources/css/style.css" rel="stylesheet">
-<%
-	Employee employee = (Employee) session.getAttribute("loginedUser");
-	
-	if (employee == null) {
-	response.sendRedirect("/web-community/employees/loginform.jsp?error=deny");
-	return;
-}
-%>
 <title>사내 커뮤니티</title>
 </head>
 <body>
-<jsp:include page="../common/header.jsp"> 
-	<jsp:param name="menu" value="board"/>
+<jsp:include page="../common/header.jsp">
+	<jsp:param name="menu" value="admin"/>
 </jsp:include>
 <div class="container my-3">
 	<div class="row mb-3">
 		<div class="col">
-			<h1 class="heading">최신 게시글</h1>
+			<h1 class="heading">내 정보 보기</h1>
 		</div>
 	</div>
 	<div class="row mb-3">
 		<div class="col-3">
 			<div class="card">
-				<div class="card-header">전체 게시판 목록</div>
+				<div class="card-header">나의 메뉴</div>
 				<div class="card-body">
-					<div class="d-grid gap-2">
-						<button class="btn btn-dark btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#modal-form-posts">게시글 등록</button>
+					<div class="list-group">
+						<a href="" class="list-group-item list-group-item-action">내 정보 보기</a>
+						<a href="" class="list-group-item list-group-item-action active">내가 작성한 게시글</a>
+						<a href="" class="list-group-item list-group-item-action">내가 작성한 댓글</a>
+						<a href="" class="list-group-item list-group-item-action">나에게 온 알림</a>
 					</div>
-					<jsp:include page="../common/tree.jsp" />
+				</div>
+				<div class="card-body">
+					<div class="list-group">
+						<a href="" class="list-group-item list-group-item-action">비밀번호 변경하기</a>
+					</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-9">
-			<div class="card">
-				<div class="card-header">최신 게시글</div>
-				<div class="card-body">
+			<div class="row mb-3">
+				<div class="col-12">
+					<p>내가 작성한 게시글을 확인하세요</p>
 					<form class="mb-3" method="get" action="">
 						<div class="mb-2 d-flex justify-content-between">
 							<div>
@@ -55,11 +53,9 @@
 								</select>
 							</div>
 							<div>
-								<small><input type="checkbox"> 안읽은 게시글</small>
 								<select class="form-select form-select-xs">
-									<option value="10"> 제목</option>
-									<option value="10"> 작성자</option>
-									<option value="10"> </option>
+									<option value="title"> 제목</option>
+									<option value="content"> 내용</option>
 								</select>
 								<input type="text" class="form-control form-control-xs w-150">
 								<button type="button" class="btn btn-outline-secondary btn-xs">검색</button>
@@ -67,37 +63,47 @@
 						</div>
 						<table class="table table-sm border-top">
 							<colgroup>
-								<col width="3%">
 								<col width="9%">
 								<col width="15%">
 								<col width="*">
-								<col width="10%">
-								<col width="12%">
+								<col width="18%">
 								<col width="7%">
 								<col width="7%">
+								<col width="8%">
 							</colgroup>
 							<thead>
 								<tr class="bg-light">
-									<th><input type="checkbox"></th>
 									<th>번호</th>
 									<th>게시판명</th>
 									<th>제목</th>
-									<th>작성자</th>
 									<th>등록일</th>
 									<th>조회</th>
 									<th>추천</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<td><input type="checkbox" name="" value=""/></td>
 									<td>100000</td>
 									<td>공지사항</td>
 									<td><a href="" class="text-decoration-none text-dark">[중요] 공지사항 등록</a></td>
-									<td>홍길동</td>
 									<td>2022-12-01</td>
 									<td>12</td>
 									<td>10</td>
+									<td>
+										<a href="" class="btn btn-outline-secondary btn-xs">삭제</a>
+									</td>
+								</tr>
+								<tr>
+									<td>100000</td>
+									<td>공지사항</td>
+									<td><a href="" class="text-decoration-none text-dark">[중요] 공지사항 등록</a></td>
+									<td>2022-12-01</td>
+									<td>12</td>
+									<td>10</td>
+									<td>
+										<a href="" class="btn btn-outline-secondary btn-xs">삭제</a>
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -115,18 +121,11 @@
 							</li>
 						</ul>
 					</nav>
-					<div class="text-end">
-						<button class="btn btn-dark btn-xs"  data-bs-toggle="modal" data-bs-target="#modal-form-posts">등록</button>
-						<button class="btn btn-outline-dark btn-xs">삭제</button>
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<jsp:include page="../common/modal-form-posts.jsp">
-	<jsp:param name="boardNo" value="100"/>
-</jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </body>

@@ -1,27 +1,32 @@
 package com.community.vo;
 
 public class Department {
-	
+
 	private int no;
-	private int name;
+	private String name;
+	
+	public Department() {}
+	public Department(int no) {
+		this.no = no;
+	}
+
 	
 	public int getNo() {
 		return no;
 	}
+
 	public void setNo(int no) {
 		this.no = no;
 	}
-	public int getName() {
+
+	public String getName() {
 		return name;
 	}
-	public void setName(int name) {
+
+	public void setName(String name) {
 		this.name = name;
 	}
 	
-	@Override
-	public String toString() {
-		return "Department [no=" + no + ", name=" + name + "]";
-	}
-	
+
 	
 }
