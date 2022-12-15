@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="temps">
+
+	<select id="getTotalRows" parameterClass="map" resultClass="int">
+		select
+	 		count(*)
+	 	from 
+	 		comm_temp_post 
+	 	where
+	 		emp_no = #empNo#
+	 		<dynamic>	<!-- 동적쿼리 시작  -->
+	 		<isNotNull property="opt">		<!-- 동적쿼리 추가 조건 시작  -->
+	 			<isEqual property="opt" compareValue="title"> <!-- opt라는 이름으로 찾은값이 title이면 -->
+	 				and post_title like '%' || #keyword# || '%'
+	 			</isEqual>
+	 			<!-- <isEqual property="opt" compareValue="writer">
+	 				and emp_no in (select emp_no 
+	 				                 from comm_employees 
+	 				                 where emp_name = #writer#)
+	 			</isEqual> -->
+	 			<isEqual property="opt" compareValue="content">
+	 				and post_content like '%' || #keyword# || '%'
+	 			</isEqual> 
+	 			<isEqual property="opt" compareValue="boardName">
+	 				and board_no in (select board_no
+	 									from comm_boards
+	 									where board_name like '%' || #keyword# || '%')
+	 			</isEqual>
+	 		</isNotNull>				<!-- 동적쿼리 추가 조건 끝 -->
+	 	</dynamic> <!-- 동적쿼리 끝 -->
+	 </select>
+	 
+	<select id="getTemps" parameterClass="map" resultClass="com.community.dto.TempDto">
+		select 
+			*
+		from (select 
+            row_number() over (order by A.post_temp_no desc) row_numbers, 
+            A.post_temp_no as tempNo,
+			A.board_no as boardNo,
+			A.emp_no as empNo,
+			C.emp_name as empName,
+			B.board_name as boardName,
+			A.post_title as title,
+			A.post_created_date as createdDate,
+			B.board_updated_date as updatedDate,
+			A.post_review_count as postReviewCount,
+			A.post_read_count as postReadCount,
+			D.department_name as deptName,
+			C.emp_dept_no as deptNo,
+			 A.post_recommend_count as recommendCount
+          from
+             comm_temp_post A, comm_boards B, comm_employees C, comm_departments D
+			where
+				A.emp_no = #empNo#
+				and A.emp_no = C.emp_no
+				and A.board_no = B.board_no
+				and C.emp_dept_no = D.department_no
+			<dynamic>	
+	 		<isNotNull property="opt">		
+	 			<isEqual property="opt" compareValue="title">
+	 				and A.post_title like '%' || #keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="opt" compareValue="content">
+	 				and A.post_content like '%' || #keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="opt" compareValue="boardName">
+	 				and B.board_name like '%' || #keyword# || '%'
+	 			</isEqual>
+	 		</isNotNull>				
+	 	</dynamic> )
+		where
+			row_numbers between #begin# and #end#
+	</select>
+	
+	
+	<insert id="insertTemp" parameterClass="com.community.vo.Temp">
+		insert into comm_temp_post
+		(post_temp_no, post_title, post_content, post_important, board_no, emp_no)
+		values
+		(comm_posts_seq.nextval, #title#, #content#, #important#, #boardNo#, #empNo#)
+	</insert>
+	
+	<delete id="deleteTempByNo" parameterClass="int">
+		delete from
+			comm_temp_post
+		where
+			post_temp_no = #value#
+	</delete>
+	
+	<delete id="deleteEmployeeNo" parameterClass="int">
+		delete from
+			comm_temp_post
+		where
+			emp_no = #value#
+	</delete>
+	
+	<select id="getTempByNo" parameterClass="int" resultClass="com.community.dto.TempDto">
+		select
+			 A.post_temp_no as tempNo,
+			A.board_no as boardNo,
+			A.emp_no as empNo,
+			C.emp_name as empName,
+			B.board_name as boardName,
+			A.post_title as title,
+			A.post_created_date as createdDate,
+			B.board_updated_date as updatedDate,
+			A.post_review_count as postReviewCount,
+			A.post_read_count as postReadCount,
+			D.department_name as deptName,
+			C.emp_dept_no as deptNo,
+			A.post_content as content,
+			A.post_read_count as postReadCount,
+			A.post_review_count as postReviewCount,
+			A.post_important as important,
+			A.post_file_name as fileName,
+			 A.post_recommend_count as recommendCount
+		from
+			comm_temp_post A, comm_boards B, comm_employees C, comm_departments D
+		where
+			A.post_temp_no = #value#
+			and A.emp_no = C.emp_no
+			and A.board_no = B.board_no
+			and C.emp_dept_no = D.department_no
+	</select>
+	
+	<update id="updateTemp" parameterClass="com.community.vo.Temp">
+		update
+			comm_temp_post
+		set
+			post_title = #title#,
+			post_content = #content#,
+			post_important = #important#,
+			board_no = #boardNo#,
+			post_read_count = #postReadCount#,
+			post_review_count = #postReviewCount#,
+			post_file_name = #fileName#,
+			post_recommend_count = #recommendCount#
+		where
+			post_temp_no = #tempNo#
+	</update>
+	
+</sqlMap>
+

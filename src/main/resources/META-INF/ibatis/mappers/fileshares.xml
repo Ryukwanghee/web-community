@@ -4,14 +4,5 @@
  
 <sqlMap namespace="fileshares">
 
-	<select id="getFileShareByNo" parameterClass="int" resultClass="com.community.vo.FileShare">
-		select
-			*
-		from
-			semi_community_posts
-		where
-			post_board_no = 200
-			and post_no = #value#
-	</select>
 </sqlMap>
 

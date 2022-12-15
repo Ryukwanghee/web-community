@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="employees">
+
+	<select id="getEmployeeByNo" parameterClass="int" resultClass="com.community.vo.Employee">
+		select
+			emp_no as no,
+			emp_password as password,
+			emp_name as name,
+			emp_email as email,
+			emp_phone as phone,
+			emp_dept_no as deptNo,
+			emp_position_no as positionNo,
+			emp_deleted as deleted,
+			emp_created_date as createdDate,
+			emp_updated_date as updatedDate,
+			emp_deleted_date as deletedDate,
+			emp_type as "type"
+		from
+			comm_employees
+		where 
+			emp_no = #value#
+	</select>
+	
+	
+</sqlMap>
