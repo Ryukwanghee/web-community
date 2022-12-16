@@ -34,12 +34,6 @@
 				<div class="card-body">
 					<div class="list-group">
 
-						<a href="" class="list-group-item list-group-item-action active">내 정보 보기</a>
-						<a href="" class="list-group-item list-group-item-action">내가 작성한 게시글</a>
-						<a href="" class="list-group-item list-group-item-action">내가 작성한 댓글</a>
-						<a href="" class="list-group-item list-group-item-action">나에게 온 알림</a>
-						<a href="" class="list-group-item list-group-item-action">나에게 온 알림</a>
-
 						<a href="home.jsp" class="list-group-item list-group-item-action active">내 정보 보기</a>
 						<a href="myposts.jsp" class="list-group-item list-group-item-action">내가 작성한 게시글</a>
 						<a href="mycomments.jsp" class="list-group-item list-group-item-action">내가 작성한 댓글</a>
@@ -49,11 +43,7 @@
 				</div>
 				<div class="card-body">
 					<div class="list-group">
-
-						<a href="" class="list-group-item list-group-item-action">비밀번호 변경하기</a>
-
 						<a href="passwordform.jsp" class="list-group-item list-group-item-action">비밀번호 변경하기</a>
-
 					</div>
 				</div>
 			</div>
@@ -71,7 +61,6 @@
 						</colgroup>
 						<tbody>
 							<tr>
-
 								<th class="bg-light">직원번호</th><td>1000</td>
 								<th class="bg-light">입사일</th><td>2022년 12월 1일</td>
 							</tr>

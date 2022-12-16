@@ -1,4 +1,4 @@
-<%@page import="com.community.vo.Employees"%>
+<%@page import="com.community.vo.Employee"%>
 <%@page import="java.util.List"%>
 <%@page import="com.community.util.Pagination"%>
 <%@page import="com.community.util.StringUtils"%>
@@ -25,7 +25,7 @@
 </jsp:include>
 <div class="container my-3">
 <%
-	Employees loginEmployees = (Employees) session.getAttribute("loginedEmployees");
+	Employee loginEmployees = (Employee) session.getAttribute("loginedEmployees");
 
 	// 페이지번호를 조회한다.
 	int currentPage = StringUtils.stringToInt(request.getParameter("page"), 1);
