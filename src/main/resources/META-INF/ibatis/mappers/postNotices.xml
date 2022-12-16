@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="postNotices" >
+	<insert id="insertPostNotice" parameterClass="com.community.dto.PostNoticeDto">
+		insert into comm_post_notices
+			(notice_no, notice_post_no, notice_send_emp_no, notice_receive_emp_no, notice_content)
+		values
+			(comm_notices_seq.nextval, #noticePostNo#, #noticeSendEmpNo#,#noticeReceiveEmpNo#,#noticeContent#)
+	</insert>
+	
+	<select id="getpostNoticesByNoticePostNo" parameterClass="int" resultClass="com.community.dto.PostNoticeDto">
+		select
+			notice_no as noticeNo,
+			notice_post_no as noticePostNo,
+			notice_send_emp_no as noticeSendEmpNo,
+			notice_receive_emp_no as notice_receive_emp_no,
+			notice_content as noticeContent,
+			notice_reading_status as noticeReadingStatus,
+			notice_deleted as noticeDeleted,
+			notice_created_date as noticeCreatedDate,
+			notice_updated_date as noticeUpdatedDate,
+			notice_deleted_date as noticeDeletedDate
+		from
+			comm_post_notices
+		where
+			notice_post_no = #noticePostNo#
+	</select>
+	
+	<!-- 수신자 직원번호로 알림정보찾기 -->
+	<select id="getPostNoticeByEmpNo" parameterClass="int" resultClass="com.community.dto.PostNoticeDto">
+		select
+			notice_no as noticeNo,
+			notice_post_no as noticePostNo,
+			notice_send_emp_no as noticeSendEmpNo,
+			notice_receive_emp_no as notice_receive_emp_no,
+			notice_content as noticeContent,
+			notice_reading_status as noticeReadingStatus,
+			notice_deleted as noticeDeleted,
+			notice_created_date as noticeCreatedDate,
+			notice_updated_date as noticeUpdatedDate,
+			notice_deleted_date as noticeDeletedDate
+		from
+			comm_post_notices
+		where
+			notice_receive_emp_no = #value#
+			and notice_reading_status = 'N'
+	</select>
+	
+	<select id="getPostNoticeCountByEmpNo" parameterClass="int" resultClass="int">
+		select
+			count(*)
+		from
+			comm_post_notices
+		where
+			notice_receive_emp_no = #value#
+			and notice_reading_status = 'N'
+	</select>
+	
+</sqlMap>
+

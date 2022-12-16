@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="details">
+	<select id="getDetailByNo" parameterClass="int" resultClass="com.community.dto.DetailDto">
+		select
+			A.post_no as postNo,
+			A.post_board_no as postBoardNo,
+			A.post_title as postTitle,
+			A.post_writer_no as postWriterNo,
+			B.emp_position_no as positionNo,
+			B.emp_name as empName,
+			C.position_name as positionName,
+			A.post_content as postContent,
+			A.post_important as postImportant,
+			A.post_read_count as postReadCount,
+			A.post_suggestion_count as postSuggestionCount,
+			A.post_comment_count as postCommentCount,
+			A.post_deleted as postDeleted,
+			A.post_created_date as postCreatedDate,
+			A.post_deleted_date as postDeletedDated,
+			B.emp_dept_no as empDeptNo,
+			D.department_name as deptName
+		from
+			comm_posts A, comm_employees B, comm_positions C, comm_departments D
+		where
+			A.post_writer_no = B.emp_no 
+		and B.emp_position_no = C.position_no
+		and D.department_no = B.emp_dept_no
+		and A.post_no = #value#
+	</select>
+	
+</sqlMap>
+
