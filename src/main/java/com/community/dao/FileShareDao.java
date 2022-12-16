@@ -31,4 +31,7 @@ public class FileShareDao {
 	public void updateFileShare(FileShareDto post) {
 		SqlMapper.update("fileshares.updateFileShare", post);
 	}
+	public void insertFile(FileShare fileShare) {
+		SqlMapper.insert("fileshares.insertFile", fileShare);
+	}
 }

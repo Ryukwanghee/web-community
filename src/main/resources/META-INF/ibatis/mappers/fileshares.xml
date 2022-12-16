@@ -131,7 +131,12 @@
 			post_no = #no#
 	</update>
 	
-
+	<insert id="insertFile" parameterClass="com.community.vo.FileShare">
+		insert into comm_post_files
+			(file_no, file_name, file_post_no)
+		values
+			(comm_files_seq.nextval, #name#, #postNo#)
+	</insert>
 
 </sqlMap>
 
