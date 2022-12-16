@@ -1,7 +1,8 @@
+
+<%@page import="com.community.dto.EmployeeDto"%>
 <%@page import="com.community.util.StringUtils"%>
 <%@page import="com.community.vo.Employee"%>
 <%@page import="com.community.dao.EmployeeDao"%>
-<%@page import="org.apache.commons.codec.digest.DigestUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -10,7 +11,7 @@
 	
 	EmployeeDao employeeDao = new EmployeeDao();
 	
-	Employee savedUser = employeeDao.getEmployeeByEmail(email);
+	EmployeeDto savedUser = employeeDao.getEmployeeByEmail(email);
 	
 	if (savedUser == null) {
 		response.sendRedirect("loginform.jsp?error=fail");
@@ -23,6 +24,6 @@
 	}
 	
 	session.setAttribute("loginedUser", savedUser);
-	
+
 	response.sendRedirect("../home.jsp");
 %>

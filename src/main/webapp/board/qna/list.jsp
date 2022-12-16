@@ -111,7 +111,6 @@
 									<th>작성자</th>
 									<th>등록일</th>
 									<th>조회</th>
-									<th>댓글</th>
 									<th>추천</th>
 								</tr>
 							</thead>
@@ -120,7 +119,7 @@
 					if (questionList.isEmpty()) {
 						
 				%>	
-					<tr><td class="text-center" colspan="7"> 게시글 정보가 없습니다. </td></tr>				
+					<tr><td class="text-center" colspan="6"> 게시글 정보가 없습니다. </td></tr>				
 				<%
 					} else {
 						for (Question question : questionList) {
@@ -128,11 +127,10 @@
 						<tr>
 							<td><input type="checkbox"></td> 
 							<td><%=question.getNo() %></td>
-							<td><a href="detail.jsp?no=<%=question.getNo() %> "><%=question.getTitle() %></a></td>
+							<td><%=question.getTitle() %></td>
 							<td><%=question.getWriterNo() %></td>
 							<td><%=StringUtils.dateToText(question.getCreatedDate()) %></td>
 							<td><%=question.getReadCount() %></td>
-							<td><%=question.getCommentCount() %></td>
 							<td><%=question.getSuggestionCount() %></td>
 						</tr>
 				<%	
@@ -178,85 +176,9 @@
 		</div>
 	</div>
 </div>
-<div class="modal" tabindex="-1" id="modal-form-posts">
-	<div class="modal-dialog modal-lg">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">게시글 등록폼</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form class="border p-3 bg-light" method="post" action="register.jsp" enctype="multipart/form-data">
-					<div class="row mb-2">
-						<label class="col-sm-2 col-form-label col-form-label-sm">게시판 이름</label>
-						<div class="col-sm-5">
-							<select class="form-select form-select-sm" name="boardNo">
-								<option value="100"> 공지사항</option>
-								<option value="101"> 파일게시판</option>
-								<option value="102"> 자유게시판</option>
-								<option value="103"> 임시게시판</option>
-								<option value="104"> 갤러리</option>
-								<option value="105" selected> QnA게시판</option>
-							</select>
-						</div>
-					</div>
-					<div class="row mb-2">
-						<label class="col-sm-2 col-form-label col-form-label-sm">제목</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" placeholder="제목" name="title">
-						</div>
-					</div>
-					<div class="row mb-2">
-						<label class="col-sm-2 col-form-label col-form-label-sm">작성자</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" readonly="readonly" value="김유신" name="writer">
-						</div>
-					</div>
-					<div class="row mb-2">
-						<div class="col-sm-8 offset-sm-2">
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="important" value="N" >
-								<label class="form-check-label">일반</label>
-							</div>
-							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="important" value="Y" >
-								<label class="form-check-label">중요</label>
-							</div>
-						</div>
-					</div>
-					<div class="row mb-2">
-						<label class="col-sm-2 col-form-label col-form-label-sm">내용</label>
-						<div class="col-sm-10">
-							<textarea rows="5" class="form-control" name="content"></textarea>
-						</div>
-					</div>
-					<div class="row mb-2">
-						<label class="col-sm-2 col-form-label col-form-label-sm">첨부파일</label>
-						<div class="col-sm-9 mb-1">
-							<input type="file" class="form-control form-control-sm" name="attachedFile1">
-						</div>
-						<div class="col-sm-1">
-							<button type="button" class="btn btn-sm"><i class="bi bi-plus-circle"></i></button>
-						</div>
-					</div>
-					<div class="row mb-2">
-						<label class="col-sm-2 col-form-label col-form-label-sm">첨부파일</label>
-						<div class="col-sm-9 mb-1">
-							<input type="file" class="form-control form-control-sm" name="attachedFile2">
-						</div>
-						<div class="col-sm-1">
-							<button type="button" class="btn btn-sm"><i class="bi bi-plus-circle"></i></button>
-						</div>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-secondary btn-xs" data-bs-dismiss="modal">닫기</button>
-						<button type="submit" class="btn btn-primary btn-xs">등록</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-</div>
+<jsp:include page="../../common/modal-form-posts.jsp">
+	<jsp:param name="boardNo" value="105"/>
+</jsp:include>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">

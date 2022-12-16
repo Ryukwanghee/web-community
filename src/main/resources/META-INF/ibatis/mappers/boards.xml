@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="boards">
+	<select id="getBoardByNo" parameterClass="int" resultClass="com.community.vo.Board">
+		select
+			board_no as no,
+			board_name as name,
+			board_description as description,
+			board_seq as seq,
+			board_read_option as readOption,
+			board_write_option as writeOption,
+			board_deleted as deleted,
+			board_created_date as createdDate,
+			board_updated_date as updatedDate,
+			board_deleted_date as deletedDate,
+			parent_board_no as boardNo
+		from
+			comm_boards
+		where
+			board_no = #value#
+	</select>
+	
+	<select id="getBoards" resultClass="com.community.vo.Board">
+		select
+			board_no as no,
+			board_name as name,
+			board_description as description,
+			board_seq as seq,
+			board_read_option as readOption,
+			board_write_option as writeOption,
+			board_deleted as deleted,
+			board_created_date as createdDate,
+			board_updated_date as updatedDate,
+			board_deleted_date as deletedDate,
+			parent_board_no as boardNo
+		from
+			comm_boards
+		where
+			board_deleted = 'N'
+	</select>
+</sqlMap>
