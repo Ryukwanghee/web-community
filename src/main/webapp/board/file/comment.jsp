@@ -1,3 +1,5 @@
+<%@page import="com.community.vo.PostNotice"%>
+<%@page import="com.community.dao.PostNoticeDao"%>
 <%@page import="com.community.vo.Notice"%>
 <%@page import="com.community.dao.NoticeDao"%>
 <%@page import="com.community.dto.FileShareDto"%>
@@ -27,22 +29,22 @@
 	commentDao.addComment(comment);
 	
 	// 저장할 알림 정보 객체 생성하기
-	NoticeDao noticeDao = new NoticeDao();
-	Notice notice = new Notice();
+	PostNoticeDao postNoticeDao = new PostNoticeDao();
+	PostNotice postNotice = new PostNotice();
 	
-	notice.setPostNo(postNo);
-	notice.setSendEmpNo(empNo);
+	postNotice.setPostNo(postNo);
+	postNotice.setSendEmpNo(empNo);
 	// 수신자 직원번호 조회 -> 게시글 번호로 해당하는 게시글 조회 -> 게시글의 직원번호 획득 후 수신하는 직원 번호에 대입
 	FileShareDao fileShareDao = new FileShareDao();
 	FileShareDto dto = fileShareDao.getPostByNo(postNo);
-	notice.setReceiveEmpNo(dto.getWriterNo());
+	postNotice.setReceiveEmpNo(dto.getWriterNo());
 	
 	// 알림 정보 추가
-	noticeDao.addNotice(notice);
+	postNoticeDao.addNotice(postNotice);
 	
-	notice.setContent(content);
+	postNotice.setContent(content);
 	
-	noticeDao.updateNotice(notice);
+	postNoticeDao.updateNotice(postNotice);
 	
 	// post 번호로 게시글 정보를 불러와 댓글 개수를 1 증가시킨후 업데이트하기
 	PostDao postDao = new PostDao();

@@ -26,7 +26,7 @@
 		suggestion.setEmpNo(empNo);
 	
 		SuggestionDao suggestionDao = new SuggestionDao();
-		suggestionDao.insertSuggestion(suggestion);
+		suggestionDao.addSuggestion(suggestion);
 		
 		
 		// 게시글을 조회해서 게시글의 추천자수를 1증가시킨다.

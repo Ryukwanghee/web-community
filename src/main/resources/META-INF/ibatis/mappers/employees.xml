@@ -4,36 +4,8 @@
  
 <sqlMap namespace="employees">
 
-
-
-
-	<!-- 
-		아이디를 전달받아서 sample_board_users 테이블에서 사용자정보를 조회해서 반환한다.
-		
-		public User getUserById(String id) {
-			return (User) SqlMapper.selectOne("getUsrById", id);
-		}
-	 -->
-	<select id="getUserById" parameterClass="string" resultClass="com.community.vo.Employees">
-		select
-			emp_no as no,
-			emp_password as password,
-			emp_name as name,
-			emp_email as email,
-			emp_created_date as createdDate,
-			emp_updated_date as updatedDate
-		from
-			comm_employees
-		where
-			emp_no = #value#
-	</select>
-	
-	<select id="getUserByNo" parameterClass="int" resultClass="com.community.vo.Employees">
-		select
-
 	<select id="getEmployeeByNo" parameterClass="int" resultClass="com.community.vo.Employee">
 		select 
-
 			emp_no as no,
 			emp_password as password,
 			emp_name as name,
@@ -45,7 +17,6 @@
 			emp_created_date as createdDate,
 			emp_updated_date as updatedDate,
 			emp_deleted_date as deletedDate,
-
 			emp_type as type
 		from
 			comm_employees
@@ -53,54 +24,6 @@
 			emp_no = #value#
 	</select>
 
-	<!-- 
-		이메일을 전달받아서 sample_board_users 테이블에서 사용자정보를 조회해서 반환한다.
-		
-		public User getUserByEmail(String email) {
-			return (User) SqlMapper.selectOne("getUserByEmail", email);
-		}
-	 -->
-	<select id="getUserByEmail" parameterClass="string" resultClass="com.community.vo.Employees">
-		select
-			emp_no as no,
-			emp_password as password,
-			emp_name as name,
-			emp_email as email,
-			emp_phone as phone,
-			emp_dept_no as deptNo,
-			emp_position_no as positionNo,
-			emp_deleted as deleted,
-			emp_created_date as createdDate,
-			emp_updated_date as updatedDate,
-			emp_deleted_date as deletedDate,
-			emp_type as type
-		from
-			comm_employees
-		where
-			emp_email = #value#
-	</select>
-	 
-	 <!-- 
-	 	사용자정보를 전달받아서 sample_board_users 테이블에서 저장한다.
-	 	
-	 	public void insertUser(User user) {
-	 		SqlMapper.insert("insertUser", user)
-	 	}
-	  -->
-	<insert id="insertEmployees" parameterClass="com.community.vo.Employees">
-		insert into comm_employees
-		(emp_no, emp_password, emp_name, emp_email, emp_phone, emp_dept_no, emp_position_no)
-		values
-		(#no#, #password#, #name#, #email#, #phone#, #deptNo#, #positionNo#)
-	</insert>
-
-			emp_type as "type"
-		from
-			comm_employees
-		where
-			emp_no = #value#	
-	</select>	
-	
 	<select id="getEmployeeByEmail" parameterClass="string" resultClass="com.community.dto.EmployeeDto">
 		select 
 			A.emp_no as no,

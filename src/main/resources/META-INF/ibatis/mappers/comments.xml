@@ -9,6 +9,7 @@
 		values 
 			(comm_comments_seq.nextval, #empNo#, #content#, #postNo#)
 	</insert>
+
 	
 	<select id="getCommentsByNo" parameterClass="int" resultClass="com.community.dto.CommentDto">
 		select
@@ -45,6 +46,24 @@
 			comment_no = #value#
 	</select>
 
+	<select id="getCommentByQuestionNo" parameterClass="int" resultClass="com.community.vo.Comment">
+		select 
+			comment_no as no,
+			comment_emp_no as empNo,
+			comment_content as content,
+			comment_deleted as deleted,
+			comment_created_date as createdDate,
+			comment_updated_date as updatedDate,
+			comment_deleted_date as deletedDate,
+			comment_post_no as postNo
+		from 
+			comm_post_comments
+		where
+			comment_post_no = #value#
+		order by
+			comment_no asc
+	</select>
+	
 	<update id="deleteComment" parameterClass="com.community.vo.Comment">
 		update
 			comm_post_comments
@@ -55,5 +74,6 @@
 			comment_no = #no#
 	</update>
 	
+
 </sqlMap>
 
