@@ -1,5 +1,5 @@
 
-<%@page import="com.community.vo.Employees"%>
+<%@page import="com.community.vo.Employee"%>
 <%@page import="com.community.util.StringUtils"%>
 <%@page import="com.community.dao.NoticeDao"%>
 <%@page import="com.community.vo.Notice"%>
@@ -7,7 +7,7 @@
     pageEncoding="UTF-8"%>
 <%
 
-	Employees loginEmployees = (Employees) session.getAttribute("loginedEmployees");
+	Employee loginEmployees = (Employee) session.getAttribute("loginedEmployees");
 	if (loginEmployees == null) {
 		response.sendRedirect("/web-community/employees/loginform.jsp?error=deny");
 		return;

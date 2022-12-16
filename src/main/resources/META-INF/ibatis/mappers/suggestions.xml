@@ -19,5 +19,12 @@
 		where
 			suggestion_emp_no = #value#
 	</select>
+	
+	<insert id="insertSuggestion" parameterClass="com.community.vo.Suggestion">
+		insert into comm_post_suggestions
+			(suggestion_post_no, suggestion_emp_no)
+		values
+			(#postNo#, #empNo#)
+	</insert>
 </sqlMap>
 

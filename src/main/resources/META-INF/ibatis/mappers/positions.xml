@@ -4,15 +4,14 @@
 
 <sqlMap namespace="positions">	
 	<select id="getPositionByNo" parameterClass="int" resultClass="com.community.vo.Position">
-		select 
+		select
 			position_no as no,
 			position_name as name,
 			position_seq as seq
-		from 
+		from
 			comm_positions
 		where
-			position_no = 107
-			
+			position_no = #value#
 	</select>
 
 </sqlMap>
