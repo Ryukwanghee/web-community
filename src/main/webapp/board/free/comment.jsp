@@ -1,9 +1,9 @@
+<%@page import="com.community.vo.Comment"%>
 <%@page import="com.community.dao.PostNoticeDao"%>
 <%@page import="com.community.vo.Free"%>
 <%@page import="com.community.dao.FreeDao"%>
 <%@page import="com.community.util.StringUtils"%>
 <%@page import="com.community.vo.Employee"%>
-<%@page import="com.community.dto.CommentDto"%>
 <%@page import="com.community.dao.CommentDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%
@@ -19,13 +19,13 @@
 	String content = (String)request.getParameter("content");
 	int postNo = StringUtils.stringToInt(request.getParameter("postNo"));
 	
-	CommentDto commentDto = new CommentDto();
-	commentDto.setCommentEmpNo(empNo);
-	commentDto.setCommentContent(content);
-	commentDto.setCommentPostNo(postNo);
+	Comment comment = new Comment();
+	comment.setEmpNo(empNo);
+	comment.setContent(content);
+	comment.setPostNo(postNo);
 			
 	CommentDao commentDao = CommentDao.getInstance();
-	commentDao.insertComment(commentDto);
+	commentDao.insertComment(comment);
 	
 	//댓글수1증가시키기
 	FreeDao freeDao = FreeDao.getInstance();

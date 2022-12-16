@@ -4,24 +4,6 @@
  
 <sqlMap namespace="employees">
 
-	<select id="getAllEmployees" resultClass="com.community.vo.Employee">
-		select
-			emp_no as no,
-			emp_password as password,
-			emp_name as name,
-			emp_email as email,
-			emp_phone as phone,
-			emp_dept_no as deptNo,
-			emp_position_no as positionNo,
-			emp_deleted as deleted,
-			emp_created_date as createdDate,
-			emp_updated_date as updatedDate,
-			emp_deleted_date as deletedDate,
-			emp_type as type
-		from
-			comm_employees
-	</select>
-
 	<insert id="insertEmployee" parameterClass="com.community.vo.Employee">
 		insert into comm_employees
 			(emp_no, emp_password, emp_name, emp_email, emp_phone, emp_dept_no, emp_position_no)

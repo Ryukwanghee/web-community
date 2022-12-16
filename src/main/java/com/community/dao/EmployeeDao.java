@@ -25,10 +25,7 @@ public class EmployeeDao {
 		SqlMapper.insert("employees.insertEmployee", employee);
 	}
 	
-	@SuppressWarnings("unchecked")
-	public List<Employee> getAllEmployees(){
-		return (List<Employee>)SqlMapper.selectList("employees.getAllEmployees");
-	}
+	
 	
 	
 }

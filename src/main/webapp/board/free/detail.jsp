@@ -1,3 +1,4 @@
+<%@page import="com.community.vo.Comment"%>
 <%@page import="com.community.vo.Free"%>
 <%@page import="com.community.dao.FreeDao"%>
 <%@page import="com.community.util.StringUtils"%>
@@ -129,20 +130,20 @@
 <%
 	//글번호에 맞는 댓글들 가져오기
 	CommentDao commentDao = CommentDao.getInstance();
-	List<CommentDto> commentList = commentDao.getComments(postNo);
+	List<Comment> commentList = commentDao.getComments(postNo);
 	
 	//for문으로 값가져오는데 이름필요해서 employeeDao생성해서 가져오기. 
 	EmployeeDao employeeDao = EmployeeDao.getInstance();
-	for(CommentDto comment : commentList){
-		Employee emp =  employeeDao.getEmployeeByNo(comment.getCommentEmpNo());
+	for(Comment comment : commentList){
+		Employee emp =  employeeDao.getEmployeeByNo(comment.getEmpNo());
 %>
 				<div class="card-body py-1 px-3 small border-bottom">
 					<div class="mb-1 d-flex justify-content-between text-muted">
 						<span><%=emp.getName() %></span>
-						<span style="display:none"><%=comment.getCommentNo() %></span>
-						<span><span class="me-4"><%=StringUtils.dateToText(comment.getCommentCreatedDate()) %></span> <a href="deleteFreeComment.jsp?commentNo=<%=comment.getCommentNo() %>" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
+						<span style="display:none"><%=comment.getNo() %></span>
+						<span><span class="me-4"><%=StringUtils.dateToText(comment.getCreatedDate()) %></span> <a href="deleteFreeComment.jsp?commentNo=<%=comment.getNo() %>" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
 					</div>
-					<p class="card-text"><%=comment.getCommentContent() %></p>
+					<p class="card-text"><%=comment.getContent() %></p>
 				</div>
 <%
 	}
