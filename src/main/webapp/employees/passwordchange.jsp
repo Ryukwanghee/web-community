@@ -7,7 +7,7 @@
 	String password = request.getParameter("password");
 	int no = loginUser.getNo();
 
-	EmployeeDao employeeDao = new EmployeeDao();
+	EmployeeDao employeeDao = EmployeeDao.getInstance();
 	
 	Employee employee = employeeDao.getEmployeeByNo(no);
 	

@@ -11,9 +11,9 @@
 	int commentNo = StringUtils.stringToInt(request.getParameter("commentNo"));
 	
 	// CommentDao객체 생성해서, deleteComment(int commentNo)를 실행해서 댓글을 삭제한다.
-	CommentDao commentDao = new CommentDao();
+	CommentDao commentDao = CommentDao.getInstance();
 	
-	Comment comment = commentDao.getCommentByCommentNo(commentNo);	//<<<<< 새로 추가한 코드>>>>
+	Comment comment = commentDao.getCommentBycommentNo(commentNo);	//<<<<< 새로 추가한 코드>>>>
 	//   commentDao.deleteComment(commentNo); -> 기존에 있던 코드
 	
 	comment.setDeleted("Y");				//<<<<< 새로 추가한 코드>>>>

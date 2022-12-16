@@ -19,7 +19,7 @@
 	int empNo = loginUser.getNo();
 	
 	// 정보를 저장할 객체를 생성하기
-	CommentDao commentDao = new CommentDao();
+	CommentDao commentDao = CommentDao.getInstance();
 	Comment comment = new Comment();
 	// 생성된 객체에 전달받은 정보를 대입하기
 	comment.setPostNo(postNo);
@@ -29,7 +29,7 @@
 	commentDao.addComment(comment);
 	
 	// 저장할 알림 정보 객체 생성하기
-	PostNoticeDao postNoticeDao = new PostNoticeDao();
+	PostNoticeDao postNoticeDao = PostNoticeDao.getInstance();
 	PostNotice postNotice = new PostNotice();
 	
 	postNotice.setPostNo(postNo);
