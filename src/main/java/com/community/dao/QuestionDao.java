@@ -13,13 +13,19 @@ public class QuestionDao {
 		SqlMapper.insert("questions.insertQuestion", question);
 	}
 	
+	public void insertAnswer(Question question) {
+		SqlMapper.insert("questions.insertAnswer", question);
+	}
+	
+	
 	@SuppressWarnings("unchecked")
 	public List<Question> getQuestions(Map<String, Object> param){
 		return (List<Question>) SqlMapper.selectList("questions.getQuestions", param);
 	}
 	
-	public int getTotalRows() {
-		return (Integer) SqlMapper.selectOne("questions.getTotalRows");
+	// Map객체 추가    
+	public int getTotalRows(Map<String, Object> param) {
+		return (Integer) SqlMapper.selectOne("questions.getTotalRows", param);
 	}
 	
 	public QuestionDetailDto getQuestionDetailDtoByNo(int questionNo) {

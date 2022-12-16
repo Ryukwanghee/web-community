@@ -207,13 +207,14 @@
 </div>
 <div class="modal" tabindex="-1" id="modal-answer-posts">
 	<div class="modal-dialog modal-lg">
+	<form class="border p-3 bg-light" method="post" action="addAnswer.jsp" >
+		<input type="hidden" name="originalNo" value="<%=dto.getNo()%>">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title">게시글 등록폼</h5>
+				<h5 class="modal-title">게시글 상세정보 답변폼</h5>
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
-			<div class="modal-body">
-				<form class="border p-3 bg-light" method="post" action="register.jsp" >
+				<div class="modal-body">
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">게시판 이름</label>
 						<div class="col-sm-5">
@@ -223,7 +224,7 @@
 								<option value="102"> 자유게시판</option>
 								<option value="103"> 임시게시판</option>
 								<option value="104"> 갤러리</option>
-								<option value="105"> QnA게시판</option>
+								<option value="105" selected> QnA게시판</option>
 							</select>
 						</div>
 					</div>
@@ -279,9 +280,9 @@
 						<button type="button" class="btn btn-secondary btn-xs" data-bs-dismiss="modal">닫기</button>
 						<button type="submit" class="btn btn-primary btn-xs">등록</button>
 					</div>
-				</form>
 			</div>
 		</div>
+		</form>
 	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>

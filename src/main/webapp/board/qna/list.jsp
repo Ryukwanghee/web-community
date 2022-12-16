@@ -1,3 +1,5 @@
+
+<%@page import="com.community.util.Pagination"%>
 <%@page import="com.community.vo.Question"%>
 <%@page import="java.util.List"%>
 <%@page import="com.community.dao.QuestionDao"%>
@@ -28,19 +30,29 @@
 	</div>
 <%
 	// 페이지 번호를 조회
-	int currentPage = StringUtils.stringToInt(request.getParameter("page"), 1);
 	
-	// 페이지번호에 맞는 조회범위 계산, Map 객체에 저장
-	int rows = 10;
-	int begin = (currentPage - 1)*rows + 1;
-	int end = currentPage*rows;
+	int row = StringUtils.stringToInt(request.getParameter("row"), 10);
+	int currentPage = StringUtils.stringToInt(request.getParameter("page"), 1);
+	String keyword = StringUtils.nullToValue(request.getParameter("keyword"), "");	
+
+	QuestionDao questionDao = new QuestionDao();
 	
 	Map<String, Object> param = new HashMap<>();
-	param.put("begin", begin);
-	param.put("end", end);
+	if(!keyword.isEmpty()) {
+		param.put("keyword", keyword);
+	}
 	
-	QuestionDao questionDao = new QuestionDao();
-	List<Question> questionList = questionDao.getQuestions(param);
+	// 게시글 갯수 조회
+	int totalRows = questionDao.getTotalRows(param);
+	
+	// Pagination 객체를 생성
+	Pagination pagination = new Pagination(currentPage, totalRows, row);
+	
+	// 게시글 목록 조회
+	param.put("begin", pagination.getBegin());
+	param.put("end", pagination.getEnd());
+	
+	List<Question> questionList = questionDao.getQuestions(param); 
 	
 %>
 	<div class="row mb-3">
@@ -59,26 +71,28 @@
 			<div class="card">
 				<div class="card-header">묻고 답하기 게시판</div>
 				<div class="card-body">
-					<form class="mb-3" method="get" action="list.jsp">
+					<form  id="form-list" class="mb-3" method="get" action="list.jsp">
+						<input type="hidden" name="page" />
 						<div class="mb-2 d-flex justify-content-between">
 							<div>
-								<select class="form-select form-select-xs">
-									<option value="10"> 10</option>
-									<option value="10"> 15</option>
-									<option value="10"> 20</option>
+								<select class="form-select form-select-xs" name="row">
+									<option value="10" <%=row==10 ? "selected" : ""%>> 10</option>
+									<option value="15" <%=row==15 ? "selected" : ""%>> 15</option>
+									<option value="20" <%=row==20 ? "selected" : ""%>> 20</option>
 								</select>
 							</div>
 							<div>
 								<small><input type="checkbox"> 안읽은 게시글</small>
-								<select class="form-select form-select-xs">
-									<option value="10"> 제목</option>
-									<option value="10"> 작성자</option>
-									<option value="10"> </option>
+								<select class="form-select form-select-xs" name="opt">
+									<option value="title"> 제목</option>
+									<option value="writer"> 작성자</option>
+									<option value="content">내용</option>
 								</select>
-								<input type="text" class="form-control form-control-xs w-150" name="keyword">
-								<button type="button" class="btn btn-outline-secondary btn-xs">검색</button>
+								<input type="text" class="form-control form-control-xs w-150" name="keyword" value="<%=keyword %>">
+								<button type="submit" class="btn btn-outline-secondary btn-xs" id="">검색</button>
 							</div>
 						</div>
+					</form>
 						<table class="table table-sm border-top">
 							<colgroup>
 								<col width="5%">
@@ -121,52 +135,36 @@
 							<td><%=question.getCommentCount() %></td>
 							<td><%=question.getSuggestionCount() %></td>
 						</tr>
-						
-						<!-- 게시판 화면에서 답글
-						 <tr>
-							<td><input type="checkbox" name="" value=""/></td>
-							<td>100000</td>
-							<td class="ps-4"><a href="" class="text-decoration-none text-dark"><i class="bi bi-arrow-return-right"></i> 공지사항 등록</a></td>
-						    <td>홍길동</td>
-							<td>2022-12-01</td>
-							<td>12</td>
-							<td>10</td>
-						</tr> 
-						-->
 				<%	
 						}
 					}
 				%>
 							</tbody>
 						</table>
-						
 				<% 
-					// 총 게시글 갯수를 조회
-					int totalRows = questionDao.getTotalRows();
-					
-					// 총 페이지 갯수, 총 페이지 블록갯수, 현재 페이지블록번호, 시작페이지번호, 끝 페이지번호를 계산
-					int pages = 5;
-					int totalPages = (int) Math.ceil((double) totalRows/rows);
-					int totalBlocks = (int) Math.ceil((double) totalPages/pages);
-					int currentPageBlock = (int) Math.ceil((double) currentPage/pages);
-					int beginPage = (currentPageBlock - 1)*pages + 1;
-					int endPage = currentPageBlock == totalBlocks ? totalPages : currentPageBlock*pages;
+						int beginPage = pagination.getBeginPage();	// 시작 페이지번호
+						int endPage = pagination.getEndPage();		// 끝 페이지번호
+						boolean isFirst = pagination.isFirst();		// 첫 페이지인지 여부, 이전 버튼의 비활성화에서 사용
+						boolean isLast = pagination.isLast();		// 마지막 페이지인지 여부, 다음 버튼의 비활성화에서 사용
+						int prevPage = pagination.getPrevPage();	// 이전 페이지번호, 이전 버튼에서 사용
+						int nextPage = pagination.getNextPage();	// 다음 페이지번호, 다음 버튼에서 사용
 				%>
-					</form>
 					<nav>
 						<ul class="pagination pagination-sm justify-content-center">
 							<li class="page-item">
-								<a class="page-link <%=currentPage <= 1 ? "disabled" : "" %>" href="list.jsp?page=<%=currentPage - 1 %> ">이전</a>
+								<a class="page-link <%=isFirst ? "disabled" : "" %>" href="list.jsp?page=<%=prevPage %>" data-page-no="<%=prevPage %>">이전</a>
 							</li>
 				<%
 					for	(int number = beginPage; number <= endPage; number++) {
 				%>
-							<li class="page-item"><a class="page-link <%=currentPage == number ? "active" : "" %>" href="list.jsp?page=<%=number %>"><%=number %></a></li>
+							<li class="page-item">
+								<a class="page-link <%=currentPage == number ? "active" : "" %>"  href="list.jsp?page=<%=number %>"  data-page-no="<%=number %>"><%=number %></a>
+							</li>
 				<%
 					}
 				%>
 							<li>
-								<a class="page-link <%=currentPage >= totalPages ? "disabled" : ""  %>" href="list.jsp?page=<%=currentPage + 1 %> ">다음</a>
+								<a class="page-link <%=isLast ? "disabled" : "" %>" href="list.jsp?page=<%=nextPage %>"  data-page-no="<%=nextPage %>">다음</a>
 							</li>
 						</ul>
 					</nav>
@@ -261,5 +259,24 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("select[name=row]").change(function() {
+		$(":hidden[name=page]").val(1)
+		$("#form-list").trigger("submit")
+	});
+	$("#btn-search").change(function() {
+		$(":hidden[name=page]").val(1)
+		$("#form-list").trigger("submit")
+	});
+	
+	$(".pagination a").click(function(event) {
+		event.preventDefault();
+		var pageNo = $(this).attr("data-page-no");
+		$(":hidden[name=page]").val(pageNo)
+		$("#form-list").trigger("submit")
+	});
+})
+</script>
 </body>
 </html>

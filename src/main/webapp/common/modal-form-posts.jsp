@@ -1,3 +1,4 @@
+<!--QnA게시판   -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <div class="modal" tabindex="-1" id="modal-form-posts">

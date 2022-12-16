@@ -6,10 +6,11 @@
 
 	<insert id="insertQuestion" parameterClass="com.community.vo.Question">
 		insert into comm_posts
-			(post_no, post_board_no, post_title, post_writer_no, post_content, post_original_no)
+			(post_no, post_board_no, post_title, post_writer_no, post_content)
 		values
-			(comm_posts_seq.nextval, #boardNo#, #title#, #writerNo#, #content# , comm_posts_seq.currtval )
+			(comm_posts_seq.nextval, #boardNo#, #title#, #writerNo#, #content#)
 	</insert>
+	
 	<insert id="insertAnswer" parameterClass="com.community.vo.Question">
 		insert into comm_posts
 			(post_no, post_board_no, post_title, post_writer_no, post_content, post_original_no)
@@ -44,10 +45,18 @@
 				comm_posts
 			where
 				post_deleted = 'N'
-				and post_board_no = 105)
+				and post_board_no = 105
+			<dynamic>
+				<isNotNull property="keyword">
+					and post_title like '%' || #keyword# ||'%'
+				</isNotNull>
+			</dynamic>
+				)
 		where
 			row_numbers between #begin# and #end#
 	</select>
+	
+	<!-- 다이나믹 부분 추가 -->
 
 	<select id="getTotalRows" resultClass="int">
 		select
@@ -57,6 +66,11 @@
 		where
 			post_deleted = 'N'
 			and post_board_no = 105
+		<dynamic>
+				<isNotNull property="keyword">
+					and post_title like '%' || #keyword# ||'%'
+				</isNotNull>
+		</dynamic>
 	</select>
 	
 	<!-- 글 번호 전달받아서 게시판 테이블에서 게시글 정보를 조회해서 반환 
