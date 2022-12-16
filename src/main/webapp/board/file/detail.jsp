@@ -123,7 +123,7 @@
 		<div class="col-12">
 			<div class="card">
 <%
-	CommentDao commentDao = new CommentDao();
+	CommentDao commentDao = CommentDao.getInstance();
 	
 	List<CommentDto> comments = commentDao.getCommentsByNo(post.getNo());
 	

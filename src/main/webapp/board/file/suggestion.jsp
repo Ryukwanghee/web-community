@@ -21,7 +21,7 @@
 	PostDao postDao = new PostDao();
 	Post post = postDao.getPostByNo(postNo);
 	
-	SuggestionDao suggestionDao = new SuggestionDao();
+	SuggestionDao suggestionDao = SuggestionDao.getInstance();
 	List<Suggestion> suggestions = suggestionDao.getSuggestionsByEmpNo(empNo);
 	for (Suggestion sgt : suggestions) {
 		if (sgt.getPostNo() == postNo) {
@@ -43,7 +43,7 @@
 	
 	// 알림정보 추가하기
 	PostNotice notice = new PostNotice();
-	PostNoticeDao noticeDao = new PostNoticeDao();
+	PostNoticeDao noticeDao = PostNoticeDao.getInstance();
 	
 	notice.setPostNo(postNo);
 	notice.setSendEmpNo(empNo);

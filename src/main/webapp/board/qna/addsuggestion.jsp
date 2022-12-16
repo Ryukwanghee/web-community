@@ -25,7 +25,7 @@
 		suggestion.setPostNo(postNo);
 		suggestion.setEmpNo(empNo);
 	
-		SuggestionDao suggestionDao = new SuggestionDao();
+		SuggestionDao suggestionDao = SuggestionDao.getInstance();
 		suggestionDao.addSuggestion(suggestion);
 		
 		

@@ -9,7 +9,7 @@
 	String email = request.getParameter("email");
 	String password = request.getParameter("password");
 	
-	EmployeeDao employeeDao = new EmployeeDao();
+	EmployeeDao employeeDao = EmployeeDao.getInstance();
 	
 	EmployeeDto savedUser = employeeDao.getEmployeeByEmail(email);
 	
