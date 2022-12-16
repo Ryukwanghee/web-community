@@ -1,3 +1,5 @@
+<%@page import="com.community.dao.PostNoticeDao"%>
+<%@page import="com.community.vo.PostNotice"%>
 <%@page import="java.util.List"%>
 <%@page import="com.community.vo.Post"%>
 <%@page import="com.community.dao.PostDao"%>
@@ -40,8 +42,8 @@
 	suggestionDao.addSuggestion(suggestion);
 	
 	// 알림정보 추가하기
-	Notice notice = new Notice();
-	NoticeDao noticeDao = new NoticeDao();
+	PostNotice notice = new PostNotice();
+	PostNoticeDao noticeDao = new PostNoticeDao();
 	
 	notice.setPostNo(postNo);
 	notice.setSendEmpNo(empNo);

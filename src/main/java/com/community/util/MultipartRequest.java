@@ -86,14 +86,6 @@ public class MultipartRequest {
 		parameterMap = upload.parseParameterMap(request);
 	}
 
-	
-	private void parseParameterMap() throws IOException {
-		Set<Entry<String, List<FileItem>>> entries = parameterMap.entrySet();
-		for (Entry<String, List<FileItem>> entry : entries) {
-			
-			String filedName = entry.getKey();
-			List<String> fieldValues = new ArrayList<>();
-			
 
 
 	private void parseParameterMap() throws IOException {
@@ -150,7 +142,6 @@ public class MultipartRequest {
 
 		} 
 
-		}
 
 		if (values.isEmpty()) {
 			return null;

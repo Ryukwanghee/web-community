@@ -119,7 +119,8 @@
 		<%
 			// CommentDao 객체 생성해서 getCommentByQuestionNo(int questionNo)를 실행해서 댓글을 조회한다.
 			CommentDao commentDao = new CommentDao();
-			List<Comment> commentList = commentDao.getCommentByQuestionNo(questionNo);
+		/* 이 부분 은송씨는 번호로 조회, 승우씨는 게시판글 번호로 조회해서 Dao랑 xml에 중복된게 2개 있음. 나중에 통일 시켜야함 */
+			List<Comment> commentList = commentDao.getCommentByQuestionNo(questionNo); 
 		%>
 		<div class="col-12">
 		<div class="card">

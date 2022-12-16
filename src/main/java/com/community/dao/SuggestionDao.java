@@ -6,6 +6,8 @@ import com.community.util.SqlMapper;
 import com.community.vo.Suggestion;
 
 public class SuggestionDao {
+	
+	
 	public void addSuggestion(Suggestion suggestion) {
 		SqlMapper.insert("suggestions.addSuggestion", suggestion);
 	}

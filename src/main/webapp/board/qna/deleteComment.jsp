@@ -1,3 +1,4 @@
+<%@page import="com.community.vo.Comment"%>
 <%@page import="com.community.vo.Question"%>
 <%@page import="com.community.dao.QuestionDao"%>
 <%@page import="com.community.dao.CommentDao"%>
@@ -11,7 +12,12 @@
 	
 	// CommentDao객체 생성해서, deleteComment(int commentNo)를 실행해서 댓글을 삭제한다.
 	CommentDao commentDao = new CommentDao();
-	commentDao.deleteComment(commentNo);
+	
+	Comment comment = commentDao.getCommentByCommentNo(commentNo);	//<<<<< 새로 추가한 코드>>>>
+	//   commentDao.deleteComment(commentNo); -> 기존에 있던 코드
+	
+	comment.setDeleted("Y");				//<<<<< 새로 추가한 코드>>>>
+	commentDao.deleteComment(comment);		//<<<<< 새로 추가한 코드>>>>
 	
 	// QuestionDao객체 생성해서, getQuestionByNo(int questionNo)를 실행해서 게시글정보 조회한다.
 	QuestionDao questionDao = new QuestionDao();
