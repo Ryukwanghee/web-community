@@ -141,7 +141,7 @@
 			comment_deleted_date = #deletedDate#,
 			comment_post_no = #postNo#
 		where
-			comment_no = #commentNo#
+			comment_no = #no#
 			and comment_deleted = 'N'
 	</update>
 	
