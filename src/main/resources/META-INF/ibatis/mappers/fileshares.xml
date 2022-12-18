@@ -137,6 +137,24 @@
 		values
 			(comm_files_seq.nextval, #name#, #postNo#)
 	</insert>
+	
+	<select id="getFilesByNo" parameterClass="int" resultClass="com.community.vo.FileShare">
+		select 
+			file_no as no,
+			file_name as name,
+			file_post_no as postNo
+		from 
+			comm_post_files
+		where
+			file_post_no = #value#
+	</select>
+	
+	<delete id="deleteFiles" parameterClass="int">
+		delete from 
+			comm_post_files
+		where
+			file_post_no = #value#
+	</delete>
 
 </sqlMap>
 

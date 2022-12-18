@@ -20,14 +20,16 @@
 	String filename1 = mr.getFilename("attachedFile1");
 	String filename2 = mr.getFilename("attachedFile2");
 	
-	Post post = new Post();
+	PostDao postDao = new PostDao();
 	
+	int no = postDao.getnextPostNo();
+	
+	Post post = new Post();
+	post.setNo(no);
 	post.setBoardNo(boardNo);
 	post.setTitle(title);
 	post.setImportant(important);
 	post.setContent(content);
-	
-	PostDao postDao = new PostDao();
 	
 	post.setWriterNo(loginUser.getNo());
 	
@@ -40,18 +42,17 @@
 	
 	if (filename1 != null) {
 	file.setName(filename1);
-	file.setPostNo(post.getNo());
+	file.setPostNo(no);
 	
 	fileShareDao.insertFile(file);
 	}
 	
 	if (filename2 != null) {
 	file.setName(filename1);
-	file.setPostNo(post.getNo());
+	file.setPostNo(no);
 	
 	fileShareDao.insertFile(file);
 	}
 	
 	response.sendRedirect("list.jsp");
-	//response.sendRedirect("fileRegister.jsp?no=" + post.getNo());
 %>
