@@ -34,4 +34,13 @@ public class FileShareDao {
 	public void insertFile(FileShare fileShare) {
 		SqlMapper.insert("fileshares.insertFile", fileShare);
 	}
+	
+	@SuppressWarnings("unchecked")
+	public List<FileShare> getFilesByNo(int postNo) {
+		return (List<FileShare>) SqlMapper.selectList("fileshares.getFilesByNo", postNo);
+	}
+	
+	public void deleteFiles(int postNo) {
+		SqlMapper.delete("fileshares.deleteFiles", postNo);
+	}
 }

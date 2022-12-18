@@ -20,7 +20,7 @@ public class FileShareDto {
 	private String name;
 	private String departmentName;
 	private String positionName;
-	
+
 	public String getPositionName() {
 		return positionName;
 	}

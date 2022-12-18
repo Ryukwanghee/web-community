@@ -20,4 +20,8 @@ public class PostDao {
 	public void deletePost(Post post) {
 		SqlMapper.update("posts.deletePost", post);
 	}
+	
+	public Integer getnextPostNo() {
+		return (Integer) SqlMapper.selectOne("posts.getnextPostNo");
+	}
 }
