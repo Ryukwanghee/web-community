@@ -1,6 +1,7 @@
 package com.community.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.community.util.SqlMapper;
 import com.community.vo.Suggestion;
@@ -16,6 +17,9 @@ public class SuggestionDao {
 		SqlMapper.insert("suggestions.addSuggestion", suggestion);
 	}
 	
+	public int checkSuggestionAndEmpNo(Map<String, Object> param) {
+		return (int)SqlMapper.selectOne("suggestions.checkSuggestionAndEmpNo", param);
+	}
 	
 	@SuppressWarnings("unchecked")
 	public List<Suggestion> getSuggestionsByEmpNo(int empNo) {

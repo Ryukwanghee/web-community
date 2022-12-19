@@ -11,6 +11,9 @@
 <title>사내 커뮤니티</title>
 </head>
 <body>
+<jsp:include page="../common/logincheck.jsp">
+	<jsp:param name="menu" value="login"/>
+</jsp:include>
 <jsp:include page="../common/header.jsp">
 	<jsp:param name="menu" value="admin"/>
 </jsp:include>
@@ -34,7 +37,7 @@
 				</div>
 				<div class="card-body">
 					<div class="list-group">
-						<a href="" class="list-group-item list-group-item-action active">비밀번호 변경하기</a>
+						<a href="passwordform.jsp" class="list-group-item list-group-item-action active">비밀번호 변경하기</a>
 					</div>
 				</div>
 			</div>

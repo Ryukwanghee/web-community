@@ -65,11 +65,8 @@ public class CommentDao {
 		return (Integer)SqlMapper.selectOne("comments.getCommentsCountByEmpNo", commentEmpNo);
 	}
 	
-	public void updateComment(int commentNo) {
-		SqlMapper.update("comments.updateComment", commentNo);
+	public void updateComment(Comment comment) {
+		SqlMapper.update("comments.updateComment", comment);
 	}
 	
-	public void updateCommentDeleted (int commentNo) {
-		SqlMapper.update("comments.updateCommentDeleted", commentNo);
-	}
 }

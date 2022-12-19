@@ -68,7 +68,7 @@
 			comment_created_date desc
 	</select>
 	
-	<select id="getCommentByCommentNo" parameterClass="int" resultClass="com.community.vo.Comment">
+	<select id="getCommentBycommentNo" parameterClass="int" resultClass="com.community.vo.Comment">
 		select
 			comment_no as no,
 			comment_emp_no as empNo,
@@ -144,7 +144,6 @@
 			comment_no = #no#
 			and comment_deleted = 'N'
 	</update>
-	
 	
 	<update id="deleteComment" parameterClass="com.community.vo.Comment">
 		update
