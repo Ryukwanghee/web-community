@@ -3,9 +3,6 @@
 <%
 	String password = request.getParameter("password");
 
-	System.out.println("[" + password + "]");
-	
-	System.out.println("[" + loginUser.getPassword() + "]");
 	
 	if (loginUser.getPassword().equals(password)) {
 		out.write("samePassword");

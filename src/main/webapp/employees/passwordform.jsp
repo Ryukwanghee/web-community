@@ -78,18 +78,6 @@ $(function () {
 		let password = $(":input[name=password]").val();
 		let password2 = $(":input[name=password2]").val();
 		
-		// 입력받은 이전 비밀번호가 현재 비밀번호와 일치하는지 유효성 체크하기
-		$.post("password-check.jsp", {password:prevPassword}, function(responseData){
-			if (responseData === "samePassword") {
-				isValidPassword = true;
-			} else if (responseData === "NotSamePassword") {
-				isValidPassword = false;
-			}
-			if (!isValidPassword) {
-				alert("이전 비밀번호가 일치하지 않습니다.");
-				return false;
-			}
-		})
 		if (prevPassword === "") {
 			alert("이전 비밀번호는 필수 입력값입니다.");
 			return false;
@@ -109,6 +97,18 @@ $(function () {
 			alert("새 비밀번호가 동일하지 않습니다.");
 			return false;
 		}
+		// 입력받은 이전 비밀번호가 현재 비밀번호와 일치하는지 유효성 체크하기
+		$.post("password-check.jsp", {password:prevPassword}, function(responseData){
+			if (responseData === "samePassword") {
+				isValidPassword = true;
+			} else if (responseData === "NotSamePassword") {
+				isValidPassword = false;
+			}
+			if (!isValidPassword) {
+				alert("이전 비밀번호가 일치하지 않습니다.");
+				return false;
+			}
+		})
 		
 		return true;
 	})

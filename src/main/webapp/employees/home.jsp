@@ -1,4 +1,7 @@
 
+<%@page import="com.community.dao.PostNoticeDao"%>
+<%@page import="com.community.dao.PostDao"%>
+<%@page import="com.community.dao.CommentDao"%>
 <%@page import="com.community.util.StringUtils"%>
 <%@page import="com.community.vo.Employee"%>
 
@@ -79,6 +82,16 @@
 					</table>
 				</div>
 			</div>
+<%
+	int empNo = loginUser.getNo();
+	CommentDao commentDao = CommentDao.getInstance();	
+	PostDao postDao = new PostDao();
+	PostNoticeDao postNoticeDao = PostNoticeDao.getInstance();
+	
+	int commentsCount = commentDao.getCommentsCountByEmpNo(empNo);
+	int postsCount = postDao.getPostsCountByEmpNo(empNo);
+	int postNoticesCount = postNoticeDao.getPostNoticesCountByEmpNo(empNo);
+%>
 			<div class="row mb-3">
 				<div class="col-12">
 					<div class="card">
@@ -89,7 +102,7 @@
 								<div class="card">
 									<div class="card-body bg-primary text-white text-bold">
 										<h5>내가 작성한 글</h5>
-										<small>내가 작성한 글은 <strong>10개</strong> 입니다.</small>
+										<small>내가 작성한 글은 <strong><%=postsCount %>개</strong> 입니다.</small>
 									</div>
 								</div>
 								</div>
@@ -97,7 +110,7 @@
 									<div class="card">
 										<div class="card-body bg-success text-white text-bold">
 											<h5>내가 작성한 댓글</h5>
-											<small>내가 작성한 댓글은 <strong>10개</strong> 입니다.</small>
+											<small>내가 작성한 댓글은 <strong><%=commentsCount %>개</strong> 입니다.</small>
 										</div>
 									</div>
 								</div>
@@ -105,7 +118,7 @@
 									<div class="card">
 										<div class="card-body bg-danger text-white text-bold">
 											<h5>내에게 온 알림</h5>
-											<small>나에게 온 알림은 <strong>10개</strong> 입니다.</small>
+											<small>나에게 온 알림은 <strong><%=postNoticesCount %>개</strong> 입니다.</small>
 										</div>
 									</div>
 								</div>

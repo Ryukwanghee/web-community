@@ -62,5 +62,14 @@
 	select comm_posts_seq.nextval 
 	from dual
 	</select>
+	
+	<select id="getPostsCountByEmpNo" parameterClass="int" resultClass="int">
+		select 
+			count(*)
+		from
+			comm_posts
+		where
+			post_writer_no = #value#
+	</select>
 </sqlMap>
 

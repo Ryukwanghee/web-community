@@ -21,7 +21,11 @@ public class PostDao {
 		SqlMapper.update("posts.deletePost", post);
 	}
 	
-	public Integer getnextPostNo() {
+	public int getnextPostNo() {
 		return (Integer) SqlMapper.selectOne("posts.getnextPostNo");
+	}
+	
+	public int getPostsCountByEmpNo(int empNo) {
+		return (Integer) SqlMapper.selectOne("posts.getPostsCountByEmpNo", empNo);
 	}
 }
