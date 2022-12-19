@@ -11,6 +11,9 @@
 <title>사내 커뮤니티</title>
 </head>
 <body>
+<jsp:include page="../common/logincheck.jsp">
+	<jsp:param name="menu" value="login"/>
+</jsp:include>
 <jsp:include page="../common/header.jsp">
 	<jsp:param name="menu" value="admin"/>
 </jsp:include>
@@ -34,7 +37,7 @@
 				</div>
 				<div class="card-body">
 					<div class="list-group">
-						<a href="" class="list-group-item list-group-item-action active">비밀번호 변경하기</a>
+						<a href="passwordform.jsp" class="list-group-item list-group-item-action active">비밀번호 변경하기</a>
 					</div>
 				</div>
 			</div>
@@ -78,15 +81,6 @@ $(function () {
 		let password = $(":input[name=password]").val();
 		let password2 = $(":input[name=password2]").val();
 		
-		// 입력받은 이전 비밀번호가 현재 비밀번호와 일치하는지 유효성 체크하기
-		$.get("password-check.jsp", {password:prevPassword}, function(date){
-			if (data === "samePassword") {
-				isValidPassword = true;
-			} else if (data === "NotSamePassword") {
-				isValidPassword = false;
-			}
-		})
-		
 		if (prevPassword === "") {
 			alert("이전 비밀번호는 필수 입력값입니다.");
 			return false;
@@ -106,11 +100,19 @@ $(function () {
 			alert("새 비밀번호가 동일하지 않습니다.");
 			return false;
 		}
+		// 입력받은 이전 비밀번호가 현재 비밀번호와 일치하는지 유효성 체크하기
+		$.post("password-check.jsp", {password:prevPassword}, function(responseData){
+			if (responseData === "samePassword") {
+				isValidPassword = true;
+			} else if (responseData === "NotSamePassword") {
+				isValidPassword = false;
+			}
+			if (!isValidPassword) {
+				alert("이전 비밀번호가 일치하지 않습니다.");
+				return false;
+			}
+		})
 		
-		if (!isValidPassword) {
-			alert("이전 비밀번호가 일치하지 않습니다.");
-			return false;
-		}
 		return true;
 	})
 })

@@ -11,8 +11,8 @@
 	int no = StringUtils.stringToInt(request.getParameter("commentNo"));
 	int postNo = StringUtils.stringToInt(request.getParameter("postNo"));
 	
-	CommentDao commentDao = new CommentDao();
-	Comment comment = commentDao.getCommentByCommentNo(no);
+	CommentDao commentDao = CommentDao.getInstance();
+	Comment comment = commentDao.getCommentBycommentNo(no);
 	
 	// 삭제여부를 'Y'로 변경후 업데이트 반영
 	comment.setDeleted("Y");

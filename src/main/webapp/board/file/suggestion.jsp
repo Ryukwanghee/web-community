@@ -21,14 +21,21 @@
 	PostDao postDao = new PostDao();
 	Post post = postDao.getPostByNo(postNo);
 	
-	SuggestionDao suggestionDao = new SuggestionDao();
+	// 글 작성자의 사원번호와 로그인한 사원번호가 일치하면 상세페이지로 이동
+	if (post.getWriterNo() == empNo) {
+		post.setReadCount(post.getReadCount() - 1);
+		response.sendRedirect("detail.jsp?no=" + postNo);
+		postDao.updatePost(post);
+		return;
+	}
+	SuggestionDao suggestionDao = SuggestionDao.getInstance();
 	List<Suggestion> suggestions = suggestionDao.getSuggestionsByEmpNo(empNo);
 	for (Suggestion sgt : suggestions) {
 		if (sgt.getPostNo() == postNo) {
 			post.setReadCount(post.getReadCount() - 1);
 			
 			postDao.updatePost(post);
-			response.sendRedirect("detail.jsp?no=" + postNo + "&error=fail");
+			response.sendRedirect("detail.jsp?no=" + postNo);
 			return;
 		}
 	}
@@ -43,7 +50,7 @@
 	
 	// 알림정보 추가하기
 	PostNotice notice = new PostNotice();
-	PostNoticeDao noticeDao = new PostNoticeDao();
+	PostNoticeDao noticeDao = PostNoticeDao.getInstance();
 	
 	notice.setPostNo(postNo);
 	notice.setSendEmpNo(empNo);

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="postnotices">
+
+	<insert id="addNotice" parameterClass="com.community.vo.PostNotice">
+		insert into comm_post_notices
+			(notice_no, notice_post_no, notice_send_emp_no, notice_receive_emp_no)
+		values
+			(comm_notices_seq.nextval, #postNo#, #sendEmpNo#, #receiveEmpNo#)
+	</insert>
+	
+	<update id="updateNotice" parameterClass="com.community.vo.PostNotice">
+		update
+			comm_post_notices
+		set
+			notice_content = #content#,
+			notice_reading_status = #readingStatus#,
+			notice_deleted = #deleted#,
+			notice_updated_date = #updatedDate#
+		where
+			notice_no = #no#
+	</update>
+	
+	<select id="getPostNoticesCountByEmpNo" parameterClass="int" resultClass="int">
+		select 
+			count(*)
+		from
+			comm_post_notices
+		where
+			notice_receive_emp_no = #value#
+	</select>
+</sqlMap>

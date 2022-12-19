@@ -25,23 +25,24 @@
 		from
 			(select
 				row_number() over (order by post_no desc) row_numbers,
-				post_no, post_board_no, post_title, post_writer_no, post_content, post_important, post_read_count, post_suggestion_count, post_comment_count,
-				post_deleted, post_created_date, post_updated_date, post_deleted_date, post_original_no
+				A.post_no, A.post_board_no, post_title, A.post_writer_no, A.post_content, A.post_important, A.post_read_count, A.post_suggestion_count, A.post_comment_count,
+				A.post_deleted, A.post_created_date, A.post_updated_date, A.post_deleted_date, A.post_original_no, B.emp_name
 			from
-				comm_posts
+				comm_posts A, comm_employees B
 			where
-				post_board_no = 101
-				and post_deleted = 'N'
+				A.post_board_no = 101
+				and A.post_writer_no = B.emp_no
+				and A.post_deleted = 'N'
 		<dynamic>
 			<isNotNull property="opt">
 				<isEqual property="opt" compareValue="title">
-			  		and post_title like '%' || #keyword# || '%'
+			  		and A.post_title like '%' || #keyword# || '%'
 				</isEqual>
 				<isEqual property="opt" compareValue="writer">
-					and post_writer_no like '%' || #keyword# || '%'
+					and B.emp_name like '%' || #keyword# || '%'
 				</isEqual>
 				<isEqual property="opt" compareValue="content">
-					and post_content like '%' || #keyword# || '%'
+					and A.post_content like '%' || #keyword# || '%'
 				</isEqual>
 			</isNotNull>
 		</dynamic>				
@@ -56,20 +57,21 @@
 		select
 			count(*)
 		from
-			comm_posts
+			comm_posts A, comm_employees B
 		where
-			post_deleted = 'N'
-			and post_board_no = 101
+			A.post_deleted = 'N'
+			and A.post_board_no = 101
+			and A.post_writer_no = B.emp_no
 		<dynamic>
 			<isNotNull property="opt">
 				<isEqual property="opt" compareValue="title">
-			  		and post_title like '%' || #keyword# || '%'
+			  		and A.post_title like '%' || #keyword# || '%'
 				</isEqual>
 				<isEqual property="opt" compareValue="writer">
-					and post_writer_no like '%' || #keyword# || '%'
+					and B.emp_name like '%' || #keyword# || '%'
 				</isEqual>
 				<isEqual property="opt" compareValue="content">
-					and post_content like '%' || #keyword# || '%'
+					and A.post_content like '%' || #keyword# || '%'
 				</isEqual>
 			</isNotNull>
 		</dynamic>
@@ -131,7 +133,30 @@
 			post_no = #no#
 	</update>
 	
-
+	<insert id="insertFile" parameterClass="com.community.vo.FileShare">
+		insert into comm_post_files
+			(file_no, file_name, file_post_no)
+		values
+			(comm_files_seq.nextval, #name#, #postNo#)
+	</insert>
+	
+	<select id="getFilesByNo" parameterClass="int" resultClass="com.community.vo.FileShare">
+		select 
+			file_no as no,
+			file_name as name,
+			file_post_no as postNo
+		from 
+			comm_post_files
+		where
+			file_post_no = #value#
+	</select>
+	
+	<delete id="deleteFiles" parameterClass="int">
+		delete from 
+			comm_post_files
+		where
+			file_post_no = #value#
+	</delete>
 
 </sqlMap>
 

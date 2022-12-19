@@ -1,8 +1,8 @@
-package com.community.dto;
+package com.community.vo;
 
 import java.util.Date;
 
-public class FileShareDto {
+public class Free {
 	private int no;
 	private int boardNo;
 	private String title;
@@ -17,22 +17,8 @@ public class FileShareDto {
 	private Date updatedDate;
 	private Date deletedDate;
 	private Integer originalNo;
-	private String name;
-	private String departmentName;
-	private String positionName;
-
-	public String getPositionName() {
-		return positionName;
-	}
-	public void setPositionName(String positionName) {
-		this.positionName = positionName;
-	}
-	public String getDepartmentName() {
-		return departmentName;
-	}
-	public void setDepartmentName(String departmentName) {
-		this.departmentName = departmentName;
-	}
+	
+	
 	public int getNo() {
 		return no;
 	}
@@ -117,10 +103,6 @@ public class FileShareDto {
 	public void setOriginalNo(Integer originalNo) {
 		this.originalNo = originalNo;
 	}
-	public String getName() {
-		return name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
+
+	
 }

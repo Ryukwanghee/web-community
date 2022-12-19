@@ -24,7 +24,7 @@ EmployeeDto employee = (EmployeeDto) session.getAttribute("loginedUser");
 	comment.setContent(content);
 	
     // CommentDao객체를 생성하고, insertComment(Comment comment)를 실행해서 댓글 등록
-	CommentDao commentDao = new CommentDao();
+	CommentDao commentDao = CommentDao.getInstance();
 	commentDao.addComment(comment);
 	
 	// QuestionDao객체 생성하고, getQuestionByNo게시글정보 조회

@@ -13,7 +13,7 @@ pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 	comment.setPostNo(postNo);
 	comment.setContent(content);
 	
-	CommentDao commentDao = new CommentDao();
+	CommentDao commentDao = CommentDao.getInstance();
 	commentDao.insertComment(comment);
 	
 	response.sendRedirect("detail.jsp?no=" + postNo);

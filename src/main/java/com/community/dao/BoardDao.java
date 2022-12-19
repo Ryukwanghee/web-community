@@ -1,7 +1,6 @@
 package com.community.dao;
 
 import java.util.List;
-import java.util.Map;
 
 import com.community.util.SqlMapper;
 import com.community.vo.Board;
