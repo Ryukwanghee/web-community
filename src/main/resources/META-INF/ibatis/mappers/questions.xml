@@ -47,8 +47,16 @@
 				post_deleted = 'N'
 				and post_board_no = 105
 			<dynamic>
-				<isNotNull property="keyword">
-					and post_title like '%' || #keyword# ||'%'
+				<isNotNull property="opt">
+					<isEqual property="opt" compareValue="title">
+						and post_title like '%' || #keyword# ||'%'
+					</isEqual>
+					<isEqual property="opt" compareValue="writer">
+						and post_board_no like '%' || #keyword# ||'%'
+					</isEqual>
+					<isEqual property="opt" compareValue="content">
+						and post_content like '%' || #keyword# ||'%'
+					</isEqual>
 				</isNotNull>
 			</dynamic>
 				)
@@ -67,10 +75,18 @@
 			post_deleted = 'N'
 			and post_board_no = 105
 		<dynamic>
-				<isNotNull property="keyword">
-					and post_title like '%' || #keyword# ||'%'
+				<isNotNull property="opt">
+					<isEqual property="opt" compareValue="title">
+						and post_title like '%' || #keyword# ||'%'
+					</isEqual>
+					<isEqual property="opt" compareValue="writer">
+						and post_board_no like '%' || #keyword# ||'%'
+					</isEqual>
+					<isEqual property="opt" compareValue="content">
+						and post_content like '%' || #keyword# ||'%'
+					</isEqual>
 				</isNotNull>
-		</dynamic>
+			</dynamic>
 	</select>
 	
 	<!-- 글 번호 전달받아서 게시판 테이블에서 게시글 정보를 조회해서 반환 
@@ -108,7 +124,6 @@
              and B.emp_dept_no = C.department_no
              and B.emp_position_no = D.position_no
 	</select>
-	
 	
 	<select id="getQuestionByNo" parameterClass="int" resultClass="com.community.vo.Question">
 		select

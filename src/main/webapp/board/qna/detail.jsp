@@ -87,7 +87,6 @@
 					</tr>
 				</tbody>
 			</table>
-			
 			<div class="d-flex justify-content-between">
 				<span>
 					<a href="delete.jsp?no=<%=dto.getNo() %>" class="btn btn-danger btn-xs">삭제</a>
@@ -116,6 +115,7 @@
 				</div>
 			</form>
 		</div>
+		
 		<%
 			// CommentDao 객체 생성해서 getCommentByQuestionNo(int questionNo)를 실행해서 댓글을 조회한다.
 			CommentDao commentDao = new CommentDao();
@@ -238,7 +238,7 @@
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">작성자</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" readonly="readonly" value="김유신" name="writer">
+							<input type="text" class="form-control form-control-sm" readonly="readonly" value="이순신" name="writer">
 						</div>
 					</div>
 					<div class="row mb-2">

@@ -1,3 +1,4 @@
+<%@page import="com.community.dto.EmployeeDto"%>
 <%@page import="com.community.dao.SuggestionDao"%>
 <%@page import="com.community.vo.Suggestion"%>
 <%@page import="com.community.dao.QuestionDao"%>
@@ -8,7 +9,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%
-	Employee employee = (Employee) session.getAttribute("loginedUser");
+	EmployeeDto employee = (EmployeeDto) session.getAttribute("loginedUser");
 
 	if (employee == null ) {
 		response.sendRedirect("/web-community/employees/loginform.jsp?error=deny");

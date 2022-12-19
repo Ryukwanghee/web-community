@@ -1,4 +1,4 @@
-<%@page import="com.community.vo.Employees"%>
+<%-- <%@page import="com.community.vo.Employees"%>
 <%@page import="java.util.List"%>
 <%@page import="com.community.util.Pagination"%>
 <%@page import="com.community.util.StringUtils"%>
@@ -269,4 +269,4 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </body>
-</html>
+</html> --%>

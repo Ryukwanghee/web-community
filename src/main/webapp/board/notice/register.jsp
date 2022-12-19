@@ -1,4 +1,4 @@
-
+<%-- 
 <%@page import="com.community.vo.Employees"%>
 <%@page import="com.community.util.StringUtils"%>
 <%@page import="com.community.dao.NoticeDao"%>
@@ -33,4 +33,4 @@
 	
 	// 저장/변경/삭제 작업중에서 저장작업을 수행하였음으로 재요청 URL을 전송한다.
 	response.sendRedirect("list.jsp");
-%>
+%> --%>

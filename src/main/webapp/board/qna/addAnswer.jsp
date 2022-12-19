@@ -11,7 +11,7 @@
 	String content = request.getParameter("content");
 	int originalNo = StringUtils.stringToInt(request.getParameter("originalNo"));
 
-	int writerNo = 1002;
+	int writerNo = 1003;
 	
 	Question question = new Question();
 	

@@ -60,6 +60,7 @@
 			comm_post_comments
 		where
 			comment_post_no = #value#
+			and comment_deleted = 'N'
 		order by
 			comment_no asc
 	</select>

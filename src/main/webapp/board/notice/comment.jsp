@@ -1,4 +1,4 @@
-<%@page import="com.community.dao.CommentDao"%>
+<%-- <%@page import="com.community.dao.CommentDao"%>
 <%@page import="com.community.vo.Comment"%>
 <%@page import="com.community.util.StringUtils"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" 
@@ -17,4 +17,4 @@ pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
 	commentDao.insertComment(comment);
 	
 	response.sendRedirect("detail.jsp?no=" + postNo);
-%>
+%> --%>
