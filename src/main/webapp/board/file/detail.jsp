@@ -29,17 +29,6 @@
 		</div>
 	</div>
 <%
-	String errorCode = request.getParameter("error");
-
-	if ("fail".equals(errorCode)){
-%>
-	<div class="alert alert-danger">
-		 이미 추천한 게시글입니다.
-	</div>
-<%
-	}
-%>
-<%
 	// list.jsp 에서 post 번호를 전달받는다.
 	int no = StringUtils.stringToInt(request.getParameter("no"));
 
@@ -123,7 +112,7 @@
 					<a href="modify.jsp" class="btn btn-warning btn-xs <%=loginUser.getNo() == post.getWriterNo() ? "" : "disabled" %>" data-bs-toggle="modal" data-bs-target="#modal-form-posts">수정</a>
 				</span>
 				<span>
-					<a href="suggestion.jsp?no=<%=post.getNo() %>" class="btn btn-outline-primary btn-xs <%=post.getWriterNo() == loginUser.getNo() ? "disabled" : "" %>">추천</a>
+					<a href="suggestion.jsp?no=<%=post.getNo() %>" id="check-sgt" class="btn btn-outline-primary btn-xs <%=post.getWriterNo() == loginUser.getNo() ? "disabled" : "" %>">추천</a>
 				</span>
 			</div>
 		</div>
@@ -185,10 +174,8 @@
 							<select class="form-select form-select-sm" name="boardNo">
 								<option value="100"> 공지사항</option>
 								<option value="101"> 파일게시판</option>
-								<option value="102"> 갤러리</option>
-								<option value="103"> 묻고 답하기</option>
-								<option value="104"> 벼룩시장</option>
-								<option value="105"> 사는 얘기</option>
+								<option value="102"> 자유게시판</option>
+								<option value="105"> QnA</option>
 							</select>
 						</div>
 					</div>
@@ -234,7 +221,24 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
-
+$(function (){
+	let isValidSuggestion = false;
+	$("#check-sgt").click(function(){
+		let postNo = $(":input[name=postNo]").val();
+		$.get("suggestion-check.jsp", {no:postNo}, function(data){
+			if (data === "exist") {
+				isValidSuggestion = false;
+			} else {
+				isValidSuggestion = true;
+			}
+			if (!isValidSuggestion) {
+				alert("이미 추천한 게시글입니다.");
+				return false;
+			}
+		})
+		return true;
+	})
+})
 </script>
 </body>
 </html>

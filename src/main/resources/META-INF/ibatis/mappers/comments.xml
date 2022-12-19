@@ -119,7 +119,7 @@
 		from
 			comm_post_comments
 		where
-			comment_emp_no =#value#
+			comment_emp_no = #value#
 			and comment_deleted = 'N'
 	</select>
 	

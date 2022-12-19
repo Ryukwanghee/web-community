@@ -21,13 +21,13 @@ public class PostNoticeDao {
 		return (List<PostNotice>)SqlMapper.selectList("postNotices.getPostNoticeByEmpNo", empNo);
 	}
 	
-	public int getPostNoticeCountByEmpNo(int empNo) {
-		return (Integer)SqlMapper.selectOne("postNotices.getPostNoticeCountByEmpNo", empNo);
+	public int getPostNoticesCountByEmpNo(int empNo) {
+		return (Integer)SqlMapper.selectOne("postnotices.getPostNoticesCountByEmpNo", empNo);
 	}
 	
 	public void updateNotice(PostNotice notice) {
 		SqlMapper.update("postnotices.updateNotice", notice);
 	}
 	
-	
+
 }

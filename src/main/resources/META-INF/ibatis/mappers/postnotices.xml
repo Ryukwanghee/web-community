@@ -22,4 +22,13 @@
 		where
 			notice_no = #no#
 	</update>
+	
+	<select id="getPostNoticesCountByEmpNo" parameterClass="int" resultClass="int">
+		select 
+			count(*)
+		from
+			comm_post_notices
+		where
+			notice_receive_emp_no = #value#
+	</select>
 </sqlMap>
