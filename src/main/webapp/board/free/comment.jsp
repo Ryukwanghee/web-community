@@ -1,3 +1,4 @@
+<%@page import="com.community.dto.EmployeeDto"%>
 <%@page import="com.community.vo.Comment"%>
 <%@page import="com.community.dao.PostNoticeDao"%>
 <%@page import="com.community.vo.Free"%>
@@ -8,7 +9,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%
 	//댓글추가하기
-	Employee loginedEmployee = (Employee)session.getAttribute("loginedEmployee");
+	EmployeeDto loginedEmployee = (EmployeeDto)session.getAttribute("loginedUser");
 	//일단 null이면 돌려보내기
 	if(loginedEmployee.equals(null)){
 		response.sendRedirect("loginForm.jsp?error=deny");

@@ -1,3 +1,4 @@
+<%@page import="com.community.dto.EmployeeDto"%>
 <%@page import="com.community.vo.Comment"%>
 <%@page import="com.community.vo.Free"%>
 <%@page import="com.community.dao.FreeDao"%>
@@ -42,7 +43,7 @@
 				</colgroup>
 				<tbody>
 <%
-	Employee loginedEmployee = (Employee)session.getAttribute("loginedEmployee");	
+	EmployeeDto loginedEmployee = (EmployeeDto)session.getAttribute("loginedUser");	
 
 	//필요한건 게시글의 정보 + 작성자의 이름 + 작성자의 직위이름 
 	
@@ -94,7 +95,7 @@
 <%
 	if(loginedEmployee != null){
 %>
-					<a href="../deleteFree.jsp?no=<%=detail.getPostNo() %> " 
+					<a href="deleteFree.jsp?no=<%=detail.getPostNo() %> " 
 					class="btn btn-danger btn-xs <%=detail.getPostWriterNo() == loginedEmployee.getNo() ? "" : "disabled" %>">삭제</a>
 					<a href="../updateFree.jsp?no=<%=detail.getPostNo() %> "
 					 class="btn btn-warning btn-xs <%=detail.getPostWriterNo() == loginedEmployee.getNo() ? "" : "disabled" %>" data-bs-toggle="modal" data-bs-target="#modal-form-posts">수정</a>
@@ -156,7 +157,7 @@
 </div>
 <div class="modal" tabindex="-1" id="modal-form-posts">
 	<div class="modal-dialog modal-lg">
-	<form class="border p-3 bg-light" method="post" action="../modify.jsp">
+	<form class="border p-3 bg-light" method="post" action="modify.jsp">
 		<!-- 게시글의 글 번호을 value에 설정하세요 -->
 		<input type="hidden" name="postNo" value="<%=detail.getPostNo()%>"/>
 		<div class="modal-content">
@@ -181,7 +182,7 @@
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">제목</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" name="title" placeholder="<%=detail.getPostTitle() %>">
+							<input type="text" class="form-control form-control-sm" name="title" value="<%=detail.getPostTitle() %>">
 						</div>
 					</div>
 					<div class="row mb-2">

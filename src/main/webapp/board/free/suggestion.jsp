@@ -1,3 +1,6 @@
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+<%@page import="com.community.dto.EmployeeDto"%>
 <%@page import="java.util.List"%>
 <%@page import="com.community.vo.Employee"%>
 <%@page import="com.community.vo.Suggestion"%>
@@ -7,9 +10,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%
 	//직원정보 가져오기.
-	Employee employee = (Employee)session.getAttribute("loginedEmployee");
+	EmployeeDto employee = (EmployeeDto)session.getAttribute("loginedUser");
 	if(employee == null){
-		response.sendRedirect("../../loginform.jsp?error=deny");
+		response.sendRedirect("../../employee/loginform.jsp?error=deny");
 		return;
 	}
 
@@ -21,18 +24,13 @@
 	
 	//Suggestion객체에 있나 확인하기
 	SuggestionDao suggestionDao = SuggestionDao.getInstance();
-	List<Suggestion> suggestionList = suggestionDao.getSuggestionByPostNo(postNo);
-	
-	boolean isEmpNoExist = false;
-	for(Suggestion suggestion : suggestionList){
-		if(suggestion.getEmpNo() == employee.getNo()){
-			isEmpNoExist = true;
-			return;
-		}
-	}
+	Map<String, Object> param = new HashMap<>();
+	param.put("postNo", postNo);
+	param.put("empNo", employee.getNo());
+	int isEmpNoExist = suggestionDao.checkSuggestionAndEmpNo(param);
 	
 	//해당하는 직원번호가 없으면 추천수를 늘리고, suggestion객체를 업데이트시킨다.
-	if(isEmpNoExist == false){
+	if(isEmpNoExist == 0){
 		Suggestion suggestion = new Suggestion();
 		suggestion.setEmpNo(employee.getNo());
 		suggestion.setPostNo(postNo);
@@ -44,8 +42,11 @@
 		//업데이트하기
 		freeDao.updateFree(free);
 		suggestionDao.insertSuggestion(suggestion);
+		
+	}else{
+		free.setReadCount(free.getReadCount() - 1);
 	}
-	 
 	
-	response.sendRedirect("detail.jsp?no="+postNo);
+	response.sendRedirect("detail.jsp?no=" + postNo);
+	
 %>

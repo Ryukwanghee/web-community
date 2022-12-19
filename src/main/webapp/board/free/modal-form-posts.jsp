@@ -11,7 +11,7 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<form class="border p-3 bg-light" action="../register.jsp" method="post" enctype="multipart/form-data">
+				<form class="border p-3 bg-light" action="register.jsp" method="post" enctype="multipart/form-data">
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">게시판 이름</label>
 						<div class="col-sm-5">

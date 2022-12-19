@@ -73,9 +73,9 @@
 						<div class="mb-2 d-flex justify-content-between">
 							<div>
 								<select class="form-select form-select-xs" name="rows" id="rows-select" onchange="changeRows()">
-									<option value="10" selected> 10개</option>
-									<option value="15"> 15개</option>
-									<option value="20"> 20개</option>
+									<option value="10" <%=rows == 10 ? "selected" : ""%>> 10개</option>
+									<option value="15" <%=rows == 15 ? "selected" : ""%>> 15개</option>
+									<option value="20" <%=rows == 20 ? "selected" : ""%>> 20개</option>
 								</select>
 							</div>
 							<div>
@@ -117,7 +117,11 @@
 	if(freeList.isEmpty()){
 %>
 	<tr>
+		<td></td>
+		<td></td>
 		<td>게시글이 없습니다.</td>
+		<td></td>
+		<td></td>
 	</tr>
 <% 
 	}else{
@@ -231,7 +235,7 @@
 	
 	function deletePost(){
 		let form = document.querySelector("form");
-		form.setAttribute("action","../deleteFree.jsp");
+		form.setAttribute("action","deleteFree.jsp");
 	}
 	
 	$("#register").click(function(){

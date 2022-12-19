@@ -10,6 +10,16 @@
 			(#postNo#, #empNo#)
 	</insert>
 	
+	<select id="checkSuggestionAndEmpNo" parameterClass="map" resultClass="int">
+		select
+			count(*)
+		from
+			comm_post_suggestions
+		where
+			suggestion_post_no = #postNo#
+			and suggestion_emp_no = #empNo#
+	</select>
+	
 	<select id="getSuggestionsByEmpNo" parameterClass="int" resultClass="com.community.vo.Suggestion">
 		select
 			suggestion_post_no as postNo,
@@ -18,6 +28,16 @@
 			comm_post_suggestions
 		where
 			suggestion_emp_no = #value#
+	</select>
+	
+	<select id="getSuggestionByPostNo" parameterClass="int" resultClass="com.community.vo.Suggestion">
+		select
+			suggestion_post_no as postNo,
+			suggestion_emp_no as empNo
+		from 
+			comm_post_suggestions
+		where
+			suggestion_post_no = #value#
 	</select>
 	
 	<insert id="insertSuggestion" parameterClass="com.community.vo.Suggestion">

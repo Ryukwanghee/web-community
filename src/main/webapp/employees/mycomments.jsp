@@ -26,15 +26,15 @@
 				<div class="card-header">나의 메뉴</div>
 				<div class="card-body">
 					<div class="list-group">
-						<a href="" class="list-group-item list-group-item-action">내 정보 보기</a>
-						<a href="" class="list-group-item list-group-item-action">내가 작성한 게시글</a>
-						<a href="" class="list-group-item list-group-item-action active">내가 작성한 댓글</a>
-						<a href="" class="list-group-item list-group-item-action">나에게 온 알림</a>
+						<a href="home.jsp" class="list-group-item list-group-item-action">내 정보 보기</a>
+						<a href="myposts.jsp" class="list-group-item list-group-item-action">내가 작성한 게시글</a>
+						<a href="mycomments.jsp" class="list-group-item list-group-item-action">내가 작성한 댓글</a>
+						<a href="mynotice.jsp" class="list-group-item list-group-item-action">나에게 온 알림</a>
 					</div>
 				</div>
 				<div class="card-body">
 					<div class="list-group">
-						<a href="" class="list-group-item list-group-item-action">비밀번호 변경하기</a>
+						<a href="passwordform.jsp" class="list-group-item list-group-item-action active">비밀번호 변경하기</a>
 					</div>
 				</div>
 			</div>
