@@ -5,9 +5,9 @@
 <sqlMap namespace="posts">
 	<insert id="insertPost" parameterClass="com.community.vo.Post">
 		insert into comm_posts
-			(post_no, post_board_no, post_title, post_writer_no, post_content)
+			(post_no, post_board_no, post_title, post_writer_no, post_content, post_important)
 		values
-			(comm_posts_seq.nextval, #boardNo#, #title#, #writerNo#, #content#)
+			(#no#, #boardNo#, #title#, #writerNo#, #content#, #important#)
 	</insert>	
 	
 	<update id="updatePost" parameterClass="com.community.vo.Post">
@@ -58,5 +58,9 @@
 			post_no = #value#
 	</select>
 
+	<select id="getnextPostNo" resultClass="int">
+	select comm_posts_seq.nextval 
+	from dual
+	</select>
 </sqlMap>
 

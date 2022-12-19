@@ -1,3 +1,4 @@
+<%@page import="com.community.vo.FileShare"%>
 <%@page import="com.community.dto.CommentDto"%>
 <%@page import="com.community.dao.CommentDao"%>
 <%@page import="java.util.List"%>
@@ -50,6 +51,10 @@
 	post.setReadCount(post.getReadCount() + 1);
 	// 변경된 객체 정보를 업데이트 시킨다.
 	fileShareDao.updateCount(post);
+	
+	List<FileShare> files = fileShareDao.getFilesByNo(no);
+	
+	
 %>
 	<div class="row mb-3">
 		<div class="col-12">
@@ -89,6 +94,24 @@
 						<th class="text-center bg-light">내용</th>
 						<td colspan="3"><textarea rows="4" class="form-control border-0" readonly="readonly"><%=post.getContent() %></textarea></td>
 					</tr>
+					<tr>
+						<th class="text-center bg-light">첨부파일</th>
+						<td colspan="3">
+<%
+	for (FileShare file : files) {
+%>
+						<%=file.getName() != null ? file.getName() : "없음"  %>
+<%
+		if (file.getName() != null) {
+%>
+						<a href="../../download?no=<%=file.getPostNo() %>&filename=<%=file.getName() %>" class="ms-5 btn btn-success"
+						 style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .65rem;">다운로드</a>
+<%
+		}
+	}
+%>
+				</td>
+			</tr>					
 				</tbody>
 			</table>
 			<div class="d-flex justify-content-between">
