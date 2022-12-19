@@ -9,7 +9,7 @@
 				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 			</div>
 			<div class="modal-body">
-				<form class="border p-3 bg-light" method="post" enctype="multipart/form-data" action="register.jsp" >
+				<form id="form-submit" class="border p-3 bg-light" method="post" enctype="multipart/form-data" action="register.jsp" >
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">게시판 이름</label>
 						<div class="col-sm-5">
@@ -38,7 +38,7 @@
 					<div class="row mb-2">
 						<div class="col-sm-8 offset-sm-2">
 							<div class="form-check form-check-inline">
-								<input class="form-check-input" type="radio" name="important" value="N" >
+								<input class="form-check-input" type="radio" name="important" value="N" checked>
 								<label class="form-check-label">일반</label>
 							</div>
 							<div class="form-check form-check-inline">
@@ -73,10 +73,32 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary btn-xs" data-bs-dismiss="modal">닫기</button>
-						<button type="submit" class="btn btn-primary btn-xs">등록</button>
+						<button type="submit" class="btn btn-primary btn-xs" >등록</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function () {
+	$("#form-submit").submit(function(){
+		let title = $(":input[name=title]").val();
+		let content = $(":input[name=content]").val();
+		
+		if (title === "") {
+			alert("제목은 필수 입력값입니다.");
+			return false;
+		}
+		
+		if (content === "") {
+			alert("내용은 필수 입력값입니다.");
+			return false;
+		}
+		
+		return true;
+	})
+})
+</script>
 </div>

@@ -129,7 +129,7 @@ if (posts.isEmpty()) {
 								<tr>
 									<td><input type="checkbox" name="" value=""/></td>
 									<td><%=post.getNo() %></td>
-									<td><a href="download"><i class="bi bi-paperclip"></i></a></td>
+									<td><a href="detail.jsp?no=<%=post.getNo() %>"><i class="bi bi-paperclip"></i></a></td>
 									<td><a href="detail.jsp?no=<%=post.getNo() %>" class="text-decoration-none text-dark"><%=post.getTitle() %></a></td>
 									<td><%=post.getName() %></td>
 									<td><%=StringUtils.dateToText(post.getCreatedDate()) %></td>
