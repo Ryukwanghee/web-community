@@ -61,20 +61,6 @@
 						</colgroup>
 						<tbody>
 							<tr>
-								<th class="bg-light">직원번호</th><td>1000</td>
-								<th class="bg-light">입사일</th><td>2022년 12월 1일</td>
-							</tr>
-							<tr>
-								<th class="bg-light">소속부서</th><td>개발1팀</td>
-								<th class="bg-light">직위</th><td>과장</td>
-							</tr>
-							<tr>
-								<th class="bg-light">이름</th><td colspan="3">홍길동</td>
-							</tr>
-							<tr>
-								<th class="bg-light">연락처</th><td>010-1111-1111</td>
-								<th class="bg-light">이메일</th><td>hong@gmail.com</td>
-
 								<th class="bg-light">직원번호</th><td><%=loginUser.getNo() %></td>
 								<th class="bg-light">입사일</th><td><%=StringUtils.dateToText(loginUser.getCreatedDate())  %></td>
 							</tr>
@@ -88,7 +74,6 @@
 							<tr>
 								<th class="bg-light">연락처</th><td><%=loginUser.getPhone() %></td>
 								<th class="bg-light">이메일</th><td><%=loginUser.getEmail() %></td>
-
 							</tr>
 						</tbody>
 					</table>
