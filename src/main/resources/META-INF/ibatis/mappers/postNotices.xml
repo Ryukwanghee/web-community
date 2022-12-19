@@ -3,44 +3,44 @@
 	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
  
 <sqlMap namespace="postNotices" >
-	<insert id="insertPostNotice" parameterClass="com.community.dto.PostNoticeDto">
+	<insert id="insertPostNotice" parameterClass="com.community.vo.PostNotice">
 		insert into comm_post_notices
 			(notice_no, notice_post_no, notice_send_emp_no, notice_receive_emp_no, notice_content)
 		values
-			(comm_notices_seq.nextval, #noticePostNo#, #noticeSendEmpNo#,#noticeReceiveEmpNo#,#noticeContent#)
+			(comm_notices_seq.nextval, #postNo#, #sendEmpNo#,#receiveEmpNo#,#content#)
 	</insert>
 	
-	<select id="getpostNoticesByNoticePostNo" parameterClass="int" resultClass="com.community.dto.PostNoticeDto">
+	<select id="getpostNoticesByNoticePostNo" parameterClass="int" resultClass="com.community.vo.PostNotice">
 		select
-			notice_no as noticeNo,
-			notice_post_no as noticePostNo,
-			notice_send_emp_no as noticeSendEmpNo,
-			notice_receive_emp_no as notice_receive_emp_no,
-			notice_content as noticeContent,
-			notice_reading_status as noticeReadingStatus,
-			notice_deleted as noticeDeleted,
-			notice_created_date as noticeCreatedDate,
-			notice_updated_date as noticeUpdatedDate,
-			notice_deleted_date as noticeDeletedDate
+			notice_no as no,
+			notice_post_no as postNo,
+			notice_send_emp_no as sendEmpNo,
+			notice_receive_emp_no as receiveEmpNo,
+			notice_content as content,
+			notice_reading_status as readingStatus,
+			notice_deleted as deleted,
+			notice_created_date as createdDate,
+			notice_updated_date as updatedDate,
+			notice_deleted_date as deletedDate
 		from
 			comm_post_notices
 		where
-			notice_post_no = #noticePostNo#
+			notice_post_no = #postNo#
 	</select>
 	
 	<!-- 수신자 직원번호로 알림정보찾기 -->
-	<select id="getPostNoticeByEmpNo" parameterClass="int" resultClass="com.community.dto.PostNoticeDto">
+	<select id="getPostNoticeByEmpNo" parameterClass="int" resultClass="com.community.vo.PostNotice">
 		select
-			notice_no as noticeNo,
-			notice_post_no as noticePostNo,
-			notice_send_emp_no as noticeSendEmpNo,
-			notice_receive_emp_no as notice_receive_emp_no,
-			notice_content as noticeContent,
-			notice_reading_status as noticeReadingStatus,
-			notice_deleted as noticeDeleted,
-			notice_created_date as noticeCreatedDate,
-			notice_updated_date as noticeUpdatedDate,
-			notice_deleted_date as noticeDeletedDate
+			notice_no as no,
+			notice_post_no as postNo,
+			notice_send_emp_no as sendEmpNo,
+			notice_receive_emp_no as receiveEmpNo,
+			notice_content as content,
+			notice_reading_status as readingStatus,
+			notice_deleted as deleted,
+			notice_created_date as createdDate,
+			notice_updated_date as updatedDate,
+			notice_deleted_date as deletedDate
 		from
 			comm_post_notices
 		where
