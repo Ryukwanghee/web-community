@@ -1,3 +1,5 @@
+<%@page import="com.community.vo.Post"%>
+<%@page import="com.community.dao.PostDao"%>
 <%@page import="com.community.dto.EmployeeDto"%>
 <%@page import="com.community.vo.Comment"%>
 <%@page import="com.community.vo.Free"%>
@@ -29,10 +31,10 @@
 		
 		//해당 댓글의 게시글정보에서 댓글 갯수를 1감소시킨다.
 		//FreeDao로 Free객체가져와서 -1시키고 업데이트시키기.
-		FreeDao freeDao = FreeDao.getInstance();
-		Free free = (Free)freeDao.getFreeByNo(comment.getPostNo());
-		free.setCommentCount(free.getCommentCount() - 1);
-		freeDao.updateFree(free);
+		PostDao postDao = new PostDao();
+		Post post = (Post)postDao.getPostByNo(comment.getPostNo());
+		post.setCommentCount(post.getCommentCount() - 1);
+		postDao.updatePost(post);
 		
 		response.sendRedirect("mycomments.jsp");
 		
