@@ -185,7 +185,7 @@
 
 <div class="modal" tabindex="-1" id="modal-form-posts">
 	<div class="modal-dialog modal-lg">
-		<form class="border p-3 bg-light" method="post" action="register.jsp">
+		<form class="border p-3 bg-light" method="post" action="register.jsp" enctype="multipart/form-data">
 		<div class="modal-content">
 			<div class="modal-header">
 				<h5 class="modal-title">게시글 등록폼</h5>
@@ -243,17 +243,17 @@
 							<textarea rows="5" class="form-control" name="content"></textarea>
 						</div>
 					</div>
-					<!-- <div id="box-file"> append는 안쪽에 생성되는 거라서 div를 바깥에 생성해서 감싸준다. 
+					<div id="box-file"> <!--  append는 안쪽에 생성되는 거라서 div를 바깥에 생성해서 감싸준다. -->
 						<div class="row mb-2">
 							<label class="col-sm-2 col-form-label col-form-label-sm">첨부파일</label>
 							<div class="col-sm-8 mb-1">
-								<input type="file" class="form-control form-control-sm" name="add">
+								<input type="file" class="form-control form-control-sm" name="attachfile">
 							</div>
 							<div class="col-sm-1">
 								<button type="button" class="btn btn-sm" id="file-add-field" ><i class="bi bi-plus-circle" ></i></button>
 							</div>
 						</div>
-					</div> -->
+					</div>
 					
 			</div>
 			<div class="modal-footer">
@@ -341,7 +341,7 @@ $(function(){
 	}
 	
 	
-	function changePage(event, page) {
+	function changePage(event, page) {	//설정한 opt나 검색한 것이 유지되도록 설정
 		event.preventDefault();
 		
 		submitForm(page);

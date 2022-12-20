@@ -1,10 +1,10 @@
+<%@page import="com.community.vo.Review"%>
+<%@page import="com.community.dto.ReviewDto"%>
+<%@page import="com.community.dao.ReviewDao"%>
 <%@page import="com.community.vo.Board"%>
 <%@page import="com.community.dao.BoardDao"%>
-<%-- <%@page import="com.community.dto.ReviewDto"%>
- --%><%-- <%@page import="com.community.vo.Review"%>
- --%><%@page import="java.util.List"%>
-<%-- <%@page import="com.community.dao.ReviewDao"%>
- --%><%@page import="com.community.dto.TempDto"%>
+<%@page import="java.util.List"%>
+<%@page import="com.community.dto.TempDto"%>
 <%@page import="com.community.vo.Temp"%>
 <%@page import="com.community.dao.TempDao"%>
 <%@page import="com.community.util.StringUtils"%>
@@ -105,8 +105,9 @@
 			if (tempDto.getFileName() != null) {
 				//download를 서블릿으로 만든다.
 	%>
-					<a href="../download?no<%=tempDto.getTempNo() %>" class="ms-5 btn btn-success" 
-						style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .65rem;">다운로드</a>
+					<%-- <a href="../download?no<%=tempDto.getTempNo() %>" class="ms-5 btn btn-success" 
+						style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .65rem;">다운로드</a> --%>
+						  <a href="/web-community/download?filename=<%=tempDto.getFileName()%>"><%=tempDto.getFileName()%></a>
 	<%
 			}
 	%>
@@ -131,10 +132,10 @@
 			</div>
 		</div>
 	</div>
-<%-- <%
-	ReviewDao reviewDao = ReviewDao.getInstance();
+<%
+	ReviewDao reviewDao = ReviewDao.getInstance(); 
 	List<ReviewDto> dtoList = reviewDao.getReviewsByTempNo(tempNo);
-%> --%>
+%>
 	<div class="row mb-3">
 		<div class="col-12 mb-1">
 			<form method="post" action="addReview.jsp">
@@ -151,33 +152,32 @@
 				</div>
 			</form>
 		</div>
-<%-- <%
+<%
 	if (!dtoList.isEmpty()) {
 		for (ReviewDto reviewDto : dtoList) {
-	
-%> --%>
+%> 
 		<div class="col-12">
 			<div class="card">
 				<!-- 댓글 반복 시작 -->
-				<<%-- div class="card-body py-1 px-3 small border-bottom">
+				<div class="card-body py-1 px-3 small border-bottom">
 					<div class="mb-1 d-flex justify-content-between text-muted">
 						<span><%=reviewDto.getEmpName()%></span>
-						<span><span class="me-4"><%=StringUtils.dateToText(reviewDto.getCreatedDate()) %></span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
+						<span><span class="me-4"><%=StringUtils.dateToText(reviewDto.getCreatedDate()) %></span> <a href="deleteReview.jsp?reviewNo=<%=reviewDto.getNo() %>&tempNo=<%=temp.getTempNo() %>" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
 					</div>
 					<p class="card-text"><%=reviewDto.getContent() %></p>
-				</div> --%>
+				</div>
 				<!-- 댓글 반복 끝 -->
 			</div>				
 		</div>
-<%-- <%
+<%
 		}
 	}
-%> --%>
+%>
 	</div> 
 </div>
 <div class="modal" tabindex="-1" id="modal-form-posts">
 	<div class="modal-dialog modal-lg">
-	<form class="border p-3 bg-light" method="post" action="modify.jsp">
+	<form class="border p-3 bg-light" method="post" action="modify.jsp"  enctype="multipart/form-data">
 		<!-- 게시글의 글 번호을 value에 설정하세요 -->
 		<input type="hidden" name="tempNo" value="<%=tempNo %>"/>
 		<input type="hidden" name="empNo" value="<%=loginUser.getNo() %>"/>
@@ -235,6 +235,17 @@
 						<label class="col-sm-2 col-form-label col-form-label-sm">내용</label>
 						<div class="col-sm-10">
 							<textarea rows="5" class="form-control" name="content">내용을 수정하세요</textarea>
+						</div>
+					</div>
+					<div id="box-file"> <!--  append는 안쪽에 생성되는 거라 div를 바깥에 생성해서 감싸준다. -->
+						<div class="row mb-2">
+							<label class="col-sm-2 col-form-label col-form-label-sm">첨부파일</label>
+							<div class="col-sm-8 mb-1">
+								<input type="file" class="form-control form-control-sm" name="attachfile">
+							</div>
+							<div class="col-sm-1">
+								<button type="button" class="btn btn-sm" id="file-add-field" ><i class="bi bi-plus-circle" ></i></button>
+							</div>
 						</div>
 					</div>
 			</div>

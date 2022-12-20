@@ -78,9 +78,9 @@
 	
 	<insert id="insertTemp" parameterClass="com.community.vo.Temp">
 		insert into comm_temp_post
-		(post_temp_no, post_title, post_content, post_important, board_no, emp_no)
+		(post_temp_no, post_title, post_content, post_important, board_no, emp_no, post_file_name)
 		values
-		(comm_posts_seq.nextval, #title#, #content#, #important#, #boardNo#, #empNo#)
+		(comm_posts_seq.nextval, #title#, #content#, #important#, #boardNo#, #empNo#, #fileName#)
 	</insert>
 	
 	<delete id="deleteTempByNo" parameterClass="int">
@@ -113,7 +113,7 @@
 			C.emp_dept_no as deptNo,
 			A.post_content as content,
 			A.post_important as important,
-			<!-- A.post_file_name as fileName, -->
+			A.post_file_name as fileName,
 			A.post_recommend_count as recommendCount
 		from
 			comm_temp_post A, comm_boards B, comm_employees C, comm_departments D
@@ -134,7 +134,7 @@
 			board_no = #boardNo#,
 			post_read_count = #postReadCount#,
 			post_review_count = #postReviewCount#,
-			<!-- post_file_name = #fileName#, -->
+			post_file_name = #fileName#,
 			post_recommend_count = #recommendCount#
 		where
 			post_temp_no = #tempNo#

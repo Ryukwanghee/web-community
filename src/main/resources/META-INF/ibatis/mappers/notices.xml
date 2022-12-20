@@ -16,10 +16,7 @@
 		values
 		(comm_posts_seq.nextval, #boardNo#, #title#, #writerNo#, #content#, #important#,  comm_posts_seq.currval)
 	</insert>
-	
 
-	
-	
 	<select id="getNotices" parameterClass="map" resultClass="com.community.vo.Notice">
 		select
 			post_no as postNo,
@@ -58,10 +55,7 @@
 				post_deleted = 'N')
 			where
 				row_numbers between #begin# and #end#
-	
-	
 	</select>
-	
 	
 	<!-- 
 		comm_posts에서 총 갯수를 조회해서 반환
@@ -73,7 +67,6 @@
 			comm_posts
 		where
 			post_deleted = 'N'
-	
 	</select>
 	
 	<select id="getNoticeByNo" parameterClass="int" resultClass="com.community.vo.Notice">
@@ -119,5 +112,14 @@
 			post_no = #postNo#
 		
 	</update>
+	
+	<select id="getNoticeCountByReceiveNo" parameterClass="int" resultClass="int">
+		select
+			count(*)
+		from
+			comm_post_notices
+		where
+			notice_receive_emp_no = #value#
+	</select>
 	
 </sqlMap>

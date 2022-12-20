@@ -14,6 +14,11 @@
 <jsp:include page="../common/header.jsp">
 	<jsp:param name="menu" value="admin"/>
 </jsp:include>
+
+<%
+	// 요청 파라미터값을 조회한다.
+	String error = request.getParameter("error");
+%>
 <div class="container my-3">
 	<div class="row mb-3">
 		<div class="col">
@@ -34,7 +39,7 @@
 				</div>
 				<div class="card-body">
 					<div class="list-group">
-						<a href="" class="list-group-item list-group-item-action active">비밀번호 변경하기</a>
+						<a href="passwordForm.jsp" class="list-group-item list-group-item-action active">비밀번호 변경하기</a>
 					</div>
 				</div>
 			</div>
@@ -43,7 +48,16 @@
 			<div class="row mb-3">
 				<div class="col-12">
 					<p>비밀번호를 변경하세요.</p>
-					<form id="form-change-pwd" class="border p-3 bg-light" method="post" action="passwordchange.jsp">
+<%
+	if ("fail".equals(error)) {
+%>
+					<div class="alert alert-danger">
+						<strong>비밀번호 변경 실패</strong>비밀번호가 일치하지 않거나 유효한 비밀번호가 아닙니다.
+					</div>
+<%
+	}
+%>
+					<form id="form-passowrd" class="border p-3 bg-light" method="post" action="password-change.jsp">
 						<div class="mb-3">
 							<label class="form-label">이전 비밀번호</label>
 							<input type="password" class="form-control" name="prevPassword" />
@@ -68,51 +82,30 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
-$(function () {
-	// 비밀번호 일치여부를 저장하는 변수
-	let isValidPassword = false;
-	// 비밀번호 변경 버튼을 눌러 submit 이벤트 발생시 실행할 이벤트 핸들러 함수 등록
+$(function() {
 	$("#form-change-pwd").submit(function(){
-		// 입력 받은 이전 비밀번호, 새 비밀번호, 새 비밀번호 확인 값 전달받기
 		let prevPassword = $(":input[name=prevPassword]").val();
 		let password = $(":input[name=password]").val();
 		let password2 = $(":input[name=password2]").val();
-		
-		// 입력받은 이전 비밀번호가 현재 비밀번호와 일치하는지 유효성 체크하기
-		$.get("password-check.jsp", {password:prevPassword}, function(date){
-			if (data === "samePassword") {
-				isValidPassword = true;
-			} else if (data === "NotSamePassword") {
-				isValidPassword = false;
-			}
-		})
 		
 		if (prevPassword === "") {
 			alert("이전 비밀번호는 필수 입력값입니다.");
 			return false;
 		}
-
 		if (password === "") {
 			alert("새 비밀번호는 필수 입력값입니다.");
 			return false;
 		}
-		
 		if (password2 === "") {
 			alert("새 비밀번호 확인은 필수 입력값입니다.");
 			return false;
 		}
-		
-		if (password !== password2) {
-			alert("새 비밀번호가 동일하지 않습니다.");
-			return false;
-		}
-		
-		if (!isValidPassword) {
-			alert("이전 비밀번호가 일치하지 않습니다.");
+		if (password != password2) {
+			alert("비밀번호가 서로 일치하지 않습니다.");
 			return false;
 		}
 		return true;
-	})
+	});
 })
 </script>
 </body>

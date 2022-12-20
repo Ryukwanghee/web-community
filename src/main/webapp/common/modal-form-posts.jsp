@@ -1,4 +1,4 @@
-<%-- <%@page import="com.community.vo.Board"%>
+<%@page import="com.community.vo.Board"%>
 <%@page import="java.util.HashMap"%>
 <%@page import="java.util.Map"%>
 <%@page import="java.util.List"%>
@@ -45,7 +45,7 @@
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">작성자</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" readonly="readonly" value="<%=loginEmployee.getName() %>">
+							<input type="text" class="form-control form-control-sm" readonly="readonly" value="<%=loginUser.getName() %>">
 						</div>
 					</div>
 					<div class="row mb-2">
@@ -92,4 +92,4 @@
 			</div>
 		</div>
 	</div>
-</div> --%>
+</div>

@@ -74,6 +74,36 @@
 			comment_no = #no#
 	</update>
 	
-
+	<select id="getCommentCountByEmpNo" parameterClass="int" resultClass="int">
+		select 
+			count(*)
+		from
+			comm_post_comments
+		where
+			comment_emp_no = #value#
+			and comment_deleted = 'N'
+	</select>
+	<select id="getComments" parameterClass="map" resultClass="com.community.vo.Comment">
+		select 
+			*
+		from (select
+			row_number() over (order by comment_no desc) row_numbers,
+			comment_no as no,
+			comment_emp_no as empNo,
+			comment_content as content,
+			comment_deleted as deleted,
+			comment_created_date as createdDate,
+			comment_updated_date as updatedDate,
+			comment_deleted_date as deletedDate,
+			comment_post_no as postNo
+		   from
+		   	comm_post_comments
+		   where
+		   	comment_emp_no = #empNo#
+		   	and comment_deleted = 'N'
+		)
+		where
+			row_numbers between #begin# and #end#
+	</select>
 </sqlMap>
 

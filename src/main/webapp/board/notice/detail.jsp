@@ -1,8 +1,8 @@
 <%@page import="java.util.List"%>
 <%@page import="com.community.vo.Comment"%>
 <%@page import="com.community.dao.CommentDao"%>
-<%@page import="com.community.vo.Employees"%>
-<%@page import="com.community.dao.EmployeesDao"%>
+<%@page import="com.community.vo.Employee"%>
+<%@page import="com.community.dao.EmployeeDao"%>
 <%@page import="com.community.vo.Notice"%>
 <%@page import="com.community.dao.NoticeDao"%>
 <%@page import="com.community.util.StringUtils"%>
@@ -122,7 +122,7 @@
 		<%
 			// CommentDao 객체를 생성해서 getCommentsByPostNo(int postNo)를 실행해서 리뷰를 조회하낟.
 			CommentDao commentDao = new CommentDao();
-		List<Comment> commentList = commentDao.getCommentsByPostNo(postNo);
+			List<Comment> commentList = commentDao.getCommentsByNo(postNo);
 		%>
 		
 		<div class="col-12">

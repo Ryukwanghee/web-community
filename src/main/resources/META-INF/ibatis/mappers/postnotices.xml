@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap PUBLIC "-//iBATIS.com//DTD SQL Map 2.0//EN" 
+	"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+ 
+<sqlMap namespace="postnotices">
+	<insert id="addPostNotice" parameterClass="com.community.vo.PostNotice">
+		insert into comm_post_notices
+		(notice_no, notice_post_no, notice_send_emp_no, notice_receive_emp_no, notice_content)
+		values
+		(comm_notice_seq.nextval, #postNo#, #sendEmpNo#, #receiveEmpNo#, #content#)
+	</insert>
+	
+	<update id="updatePostNotice" parameterClass="com.community.vo.PostNotice">
+		update 
+			comm_post_notices
+		set
+			notice_content = #content#,
+			notice_deleted = #deleted#,
+			notice_reading_status = #readingStatus#,
+			notice_updated_date = sysdate,
+			notice_deleted_date = sysdate
+		where
+			notice_no = #no#
+	</update>
+	
+	<select id="getTotalRows" parameterClass="map" resultClass="int">
+		select
+			count(*)
+		from
+			comm_post_notices
+		where
+		 	notice_deleted = 'N'
+		 	<dynamic>	<!-- 동적쿼리 시작  -->
+	 		<isNotNull property="opt">		<!-- 동적쿼리 추가 조건 시작  -->
+	 			<isEqual property="opt" compareValue="title"> <!-- opt라는 이름으로 찾은값이 title이면 -->
+	 				and notice_post_no in (select post_no
+	 										from comm_posts
+	 										where post_title like '%' || #keyword# || '%') 
+	 			</isEqual>
+	 			<isEqual property="opt" compareValue="content">
+	 				and notice_content like '%' || #keyword# || '%'
+	 			</isEqual> 
+	 		</isNotNull>				<!-- 동적쿼리 추가 조건 끝 -->
+	 	</dynamic> <!-- 동적쿼리 끝 -->
+	</select>
+	
+	<select id="getPostNoticeByEmpNo" parameterClass="int" resultClass="com.community.vo.PostNotice">
+		select
+			notice_no as no,
+			notice_post_no as postNo,
+			notice_send_emp_no as sendEmpNo,
+			notice_receive_emp_no as receiveEmpNo,
+			notice_content as content,
+			notice_reading_status as readingStatus,
+			notice_deleted as deleted,
+			notice_created_date as createdDate,
+			notice_deleted_date as deletedDate,
+			notice_updated_date as updatedDate
+		from
+			comm_post_notices
+		where
+			notice_receive_emp_no = #value#
+	</select>
+	
+	<select id="getPostCount" parameterClass="int" resultClass="int">
+		select
+			count(*)
+		from
+			comm_post_notices
+		where
+			notice_deleted = 'N'
+			and notice_receive_emp_no = #value#
+	</select>
+	
+	<select id="getPostNotices" parameterClass="map" resultClass="com.community.dto.PostNoticeDto">
+		select
+			*
+		from (select
+				row_number() over (order by A.notice_no desc) row_numbers,
+				A.notice_no as no,
+				A.notice_post_no as postNo,
+				A.notice_send_emp_no as sendEmpNo,
+				A.notice_receive_emp_no as receiveEmpNo,
+				A.notice_content as content,
+				A.notice_reading_status as readingStatus,
+				A.notice_deleted as deleted,
+				A.notice_created_date as createdDate,
+				A.notice_deleted_date as deletedDate,
+				A.notice_updated_date as updatedDate,
+				b.post_title as title,
+				c.emp_name as sendEmpName
+			from
+				comm_post_notices A, comm_posts B, comm_employees C
+			where
+				A.notice_deleted = 'N'
+				and A.notice_receive_emp_no = #receiveEmpNo# 
+				<dynamic>	
+	 		<isNotNull property="opt">		
+	 			<isEqual property="opt" compareValue="title">
+	 				and B.post_title like '%' || #keyword# || '%'
+	 			</isEqual>
+	 			<isEqual property="opt" compareValue="content">
+	 				and A.notice_content like '%' || #keyword# || '%'
+	 			</isEqual>
+	 		</isNotNull>				
+	 	</dynamic> )
+		where
+			row_numbers between #begin# and #end#
+	</select>
+</sqlMap>

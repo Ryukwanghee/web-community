@@ -1,6 +1,7 @@
 <%@page import="com.community.vo.Employee"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ include file="../common/logincheck.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -80,6 +81,10 @@
 									<th>추천</th>
 								</tr>
 							</thead>
+<%
+	
+
+%>
 							<tbody>
 								<tr>
 									<td><input type="checkbox" name="" value=""/></td>

@@ -1,4 +1,3 @@
-
 <%@page import="com.community.dto.EmployeeDto"%>
 <%@page import="com.community.util.StringUtils"%>
 <%@page import="com.community.vo.Employee"%>
@@ -9,7 +8,7 @@
 	String email = request.getParameter("email");
 	String password = request.getParameter("password");
 	
-	EmployeeDao employeeDao = new EmployeeDao();
+	EmployeeDao employeeDao = EmployeeDao.getInstance();
 	
 	EmployeeDto savedUser = employeeDao.getEmployeeByEmail(email);
 	

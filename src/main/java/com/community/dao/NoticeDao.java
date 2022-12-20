@@ -8,6 +8,12 @@ import com.community.vo.Notice;
 
 public class NoticeDao {
 	
+	private static NoticeDao instance = new NoticeDao();
+	private NoticeDao() {}
+	public static NoticeDao getInstance() {
+		return instance;
+	}
+	
 	public void insertNotice(Notice notice) {
 		SqlMapper.insert("notices.insertNotice" , notice);
 	}
@@ -27,5 +33,9 @@ public class NoticeDao {
 	
 	public void updateNotice(Notice notice) {
 		SqlMapper.update("notices.updateNotice", notice);
+	}
+	
+	public int getNoticeCountByReceiveNo(int receiveNo) {
+		return (Integer) SqlMapper.selectOne("notices.getNoticeCountByReceiveNo", receiveNo);
 	}
 }
