@@ -124,6 +124,38 @@
 			and comment_deleted = 'N'
 	</select>
 	
+	<select id="getmyComments" parameterClass="map" resultClass="com.community.vo.Comment">
+		select
+			comment_no as no,
+			comment_emp_no as empNo,
+			comment_content as content,
+			comment_deleted as deleted,
+			comment_created_date as createdDate,
+			comment_updated_date as updatedDate,
+			comment_deleted_date as deletedDate,
+			comment_post_no as postNo
+		from
+			(select
+			row_number() over(order by comment_no desc) row_num,
+			comment_no,
+			comment_emp_no,
+			comment_content,
+			comment_deleted,
+			comment_created_date,
+			comment_updated_date,
+			comment_deleted_date,
+			comment_post_no
+			from 
+				comm_post_comments
+			where
+				comment_deleted = 'N'
+				and comment_emp_no = #empNo#
+			)
+		where
+			row_num between #begin# and #end#
+			
+	</select>
+	
 	<insert id="insertComment" parameterClass="com.community.vo.Comment">
 		insert into comm_post_comments
 			(comment_no, comment_emp_no, comment_content, comment_post_no)
