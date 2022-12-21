@@ -36,11 +36,11 @@
 			post_original_no as originalNo
 		from
 			(select
-				row_number() over (order by post_no desc) row_numbers,
+				row_number() over(order by nvl(post_original_no, post_no) desc, post_no asc) row_numbers,
 				post_no, post_board_no, post_title, post_writer_no, post_content,
 				post_important, post_read_count, post_suggestion_count,
 				post_comment_count, post_deleted, post_created_date,
-				post_updated_date, post_original_no
+				post_updated_date, nvl(post_original_no, post_no) post_original_no
 			from
 				comm_posts
 			where

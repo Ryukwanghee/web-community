@@ -16,6 +16,18 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 <link href="/web-community/resources/css/style.css" rel="stylesheet">
 <title>사내 커뮤니티</title>
+<style>
+  a{
+     text-decoration: none;
+     color:black;
+   }
+  .blue-color {
+        color:blue;
+    }
+  span {
+  padding: 25px;
+}
+</style>
 </head>
 <body>
 <jsp:include page="../../common/header.jsp">
@@ -83,10 +95,9 @@
 								</select>
 							</div>
 							<div>
-								<small><input type="checkbox"> 안읽은 게시글</small>
 								<select class="form-select form-select-xs" name="opt">
 									<option value="title" <%="title".equals(opt) ? "selected" : ""%>> 제목</option>
-									<option value="writer" <%="writer".equals(opt) ? "selected" : ""%>> 작성자</option>
+									<option value="writer" <%="writerNo".equals(opt) ? "selected" : ""%>> 작성자</option>
 									<option value="content" <%="content".equals(opt) ? "selected" : ""%>> 내용</option>
 								</select>
 								<input type="text" class="form-control form-control-xs w-150" name="keyword" value="<%=keyword %>">
@@ -129,7 +140,22 @@
 						<tr>
 							<td><input type="checkbox"></td> 
 							<td><%=question.getNo() %></td>
-							<td><a href="detail.jsp?no=<%=question.getNo() %> "><%=question.getTitle() %></a></td>
+							<td>
+							<%
+								if (question.getNo() == question.getOriginalNo()) {
+							%>
+									<a href="detail.jsp?no=<%=question.getNo() %> " class="text-decoration-none"><%=question.getTitle() %></a>
+							<%
+								} else {
+							%>
+									  <a href="detail.jsp?no=<%=question.getNo() %>" > <span class="bi bi-arrow-return-right blue-color" class="text-small ps-5" ><%=question.getTitle() %>
+									  
+									 </span></a>  
+							<% 		
+								}
+							%>
+							
+							</td>
 							<td><%=question.getWriterNo() %></td>
 							<td><%=StringUtils.dateToText(question.getCreatedDate()) %></td>
 							<td><%=question.getReadCount() %></td>
@@ -211,7 +237,7 @@
 					<div class="row mb-2">
 						<label class="col-sm-2 col-form-label col-form-label-sm">작성자</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control form-control-sm" readonly="readonly" value="김유신" name="writer">
+							<input type="text" class="form-control form-control-sm" readonly="readonly" value="김유신" name="writerNo">
 						</div>
 					</div>
 					<div class="row mb-2">
