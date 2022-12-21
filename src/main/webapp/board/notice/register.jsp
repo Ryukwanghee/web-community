@@ -1,5 +1,5 @@
-<%@page import="com.community.vo.Employee"%
 <%@page import="com.community.util.StringUtils"%>
+<%@page import="com.community.vo.Employee"%>
 <%@page import="com.community.dao.NoticeDao"%>
 <%@page import="com.community.vo.Notice"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
