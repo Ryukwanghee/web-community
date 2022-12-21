@@ -1,3 +1,11 @@
+<%@page import="com.community.util.StringUtils"%>
+<%@page import="com.community.dto.EmployeeDto"%>
+<%@page import="com.community.util.Pagination"%>
+<%@page import="java.util.HashMap"%>
+<%@page import="java.util.Map"%>
+<%@page import="com.community.dao.CommentDao"%>
+<%@page import="com.community.vo.Comment"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -11,6 +19,9 @@
 <title>사내 커뮤니티</title>
 </head>
 <body>
+<jsp:include page="../common/logincheck.jsp">
+	<jsp:param name="my" value="comments"/>
+</jsp:include>
 <jsp:include page="../common/header.jsp">
 	<jsp:param name="menu" value="admin"/>
 </jsp:include>
@@ -45,63 +56,94 @@
 					<p>내가 작성한 댓글을 확인하세요</p>
 					<div class="card">
 						<!-- 댓글 반복 시작 -->
+<%
+	//employee객체 갖고오기
+	EmployeeDto employee = (EmployeeDto) session.getAttribute("loginedUser");
+	int empNo = employee.getNo();
+	
+	//param에 담아야할 값 구하기
+	CommentDao commentDao = CommentDao.getInstance();
+	int totalRows = commentDao.getCommentsCountByEmpNo(empNo);
+	
+	//페이지네이션
+	int currentPage = StringUtils.stringToInt(request.getParameter("page"), 1);
+	Pagination pagination = new Pagination(currentPage, totalRows);
+				
+	
+	Map<String, Object> param = new HashMap<>();
+	param.put("empNo", empNo);
+	param.put("begin", pagination.getBegin());  
+	param.put("end", pagination.getEnd());
+	
+	List<Comment> commentList = commentDao.getmyComments(param);
+	if(commentList.isEmpty()){
+%>		
+	<div class="card-body py-1 px-3 small border-bottom">
+							<div class="mb-1 text-muted text-end">
+								<span><span class="me-4"></span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
+							</div>
+							<p class="card-text">등록된 댓글이 없습니다.</p>
+						</div>	
+<%
+	}else{
+		for(Comment comment : commentList){
+%>
 						<div class="card-body py-1 px-3 small border-bottom">
 							<div class="mb-1 text-muted text-end">
-								<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
+								<span><span class="me-4"><%=StringUtils.dateToText(comment.getCreatedDate()) %></span> <a href="deleteComment.jsp?commentNo=<%=comment.getNo()%>"
+								 class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
 							</div>
-							<p class="card-text">내용댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.</p>
+							<p class="card-text"><%=comment.getContent() %></p>
 						</div>
+<%
+		}
+	}
+%>
 						<!-- 댓글 반복 끝 -->
-						<div class="card-body py-1 px-3 small border-bottom">
-							<div class="mb-1 text-muted text-end">
-								<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-							</div>
-							<p class="card-text">댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.</p>
-						</div>
-						<div class="card-body py-1 px-3 small border-bottom">
-							<div class="mb-1 text-muted text-end">
-								<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-							</div>
-							<p class="card-text">내용댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.</p>
-						</div>
-						<div class="card-body py-1 px-3 small border-bottom">
-							<div class="mb-1 text-muted text-end">
-								<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-							</div>
-							<p class="card-text">내용댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.</p>
-						</div>
-						<div class="card-body py-1 px-3 small border-bottom">
-							<div class="mb-1 text-muted text-end">
-								<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-							</div>
-							<p class="card-text">내용댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.</p>
-						</div>
-						<div class="card-body py-1 px-3 small border-bottom">
-							<div class="mb-1 text-muted text-end">
-								<span><span class="me-4">2022년 12월 10일</span> <a href="" class="text-danger"><i class="bi bi-trash-fill"></i></a></span>
-							</div>
-							<p class="card-text">내용댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.댓글 내용입니다.</p>
-						</div>
-					</div>		
+					</div>
 				</div>
 			</div>	
+<%
+	if(!commentList.isEmpty()){
+		int beginPage = pagination.getBeginPage();
+		int endPage = pagination.getEndPage();
+		boolean isFirst = pagination.isFirst();
+		boolean isLast = pagination.isLast();
+		int nextPage = pagination.getNextPage();
+		int prevPage = pagination.getPrevPage();
+%>
+		<form>
 			<div class="row mb-3">
 				<div class="col-12">	
 					<nav>
 						<ul class="pagination pagination-sm justify-content-center">
-							<li class="page-item disabled">
-								<a class="page-link">이전</a>
+							<li class="page-item <%=isFirst ? "disabled" : "" %>">
+								<a href="mycomments.jsp?page=<%=prevPage %>" 
+								class="page-link"
+								id="prevPage">이전</a>
 							</li>
-							<li class="page-item"><a class="page-link active" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-								<li class="page-item"><a class="page-link" href="#">3</a></li>
+<%
+	for(int no = beginPage; no <= endPage; no++){
+%>
+							<li class="page-item"><a class="page-link <%=currentPage == no ? "active" : "" %>"  
+							href="mycomments.jsp?page=<%=no %>"><%=no %></a></li>
+<%
+	}
+%>
 							<li class="page-item">
-								<a class="page-link" href="#">다음</a>
+								<a class="page-link <%=isLast ? "disabled" : "" %> " 
+								href="mycomments.jsp?page=<%=nextPage %>"
+								onclick="changePage(event, <%=nextPage %>)">다음</a>
 							</li>
 						</ul>
 					</nav>
 				</div>
 			</div>
+<%
+	}
+%>
+		</form>
+
 		</div>
 	</div>
 </div>

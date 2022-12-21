@@ -1,6 +1,7 @@
 package com.community.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.community.vo.Comment;
 import com.community.dto.CommentDto;
@@ -46,6 +47,11 @@ public class CommentDao {
 	
 	public Comment getCommentBycommentNo(int commentNo) {
 		return (Comment)SqlMapper.selectOne("comments.getCommentBycommentNo", commentNo);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Comment> getmyComments(Map<String, Object> param){
+		return (List<Comment>)SqlMapper.selectList("comments.getmyComments", param);
 	}
 	
 	public void deleteComment(Comment comment) {
