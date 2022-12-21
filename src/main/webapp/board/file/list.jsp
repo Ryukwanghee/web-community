@@ -98,8 +98,7 @@
 						</div>
 						<table class="table table-sm border-top">
 							<colgroup>
-								<col width="3%"> 
-								<col width="9%">
+								<col width="11%">
 								<col width="7%">
 								<col width="*">
 								<col width="10%">
@@ -108,7 +107,6 @@
 							</colgroup>
 							<thead>
 								<tr class="bg-light">
-									<th><input type="checkbox"></th>
 									<th>번호</th>
 									<th><i class="bi bi-paperclip"></i></th>
 									<th>제목</th>
@@ -127,7 +125,6 @@ if (posts.isEmpty()) {
 %>
 							<tbody>
 								<tr>
-									<td><input type="checkbox" name="" value=""/></td>
 									<td><%=post.getNo() %></td>
 									<td><a href="detail.jsp?no=<%=post.getNo() %>"><i class="bi bi-paperclip"></i></a></td>
 									<td><a href="detail.jsp?no=<%=post.getNo() %>" class="text-decoration-none text-dark"><%=post.getTitle() %></a></td>
@@ -172,11 +169,10 @@ if (posts.isEmpty()) {
 				<a class="page-link <%=isLast ? "disabled" : "" %>" href="list.jsp?page=<%=nextPage %>"
 					onclick="changePage(event, <%=nextPage %>)">다음</a>
 				</li>
-						</ul>
+			</ul>
 					</nav>
 					<div class="text-end">
 						<button class="btn btn-dark btn-xs" data-bs-toggle="modal" data-bs-target="#modal-form-posts">등록</button>
-						<button class="btn btn-outline-dark btn-xs">삭제</button>
 					</div>
 				</div>
 			</div>

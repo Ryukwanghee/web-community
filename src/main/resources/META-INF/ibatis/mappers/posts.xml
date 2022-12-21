@@ -69,7 +69,8 @@
 		from
 			comm_posts
 		where
-			post_writer_no = #value#
+			post_deleted = 'N'
+			and post_writer_no = #value#
 	</select>
 </sqlMap>
 

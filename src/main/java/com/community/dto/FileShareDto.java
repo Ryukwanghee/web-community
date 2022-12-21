@@ -5,6 +5,7 @@ import java.util.Date;
 public class FileShareDto {
 	private int no;
 	private int boardNo;
+	private String boardName;
 	private String title;
 	private int writerNo;
 	private String content;
@@ -21,6 +22,12 @@ public class FileShareDto {
 	private String departmentName;
 	private String positionName;
 
+	public String getBoardName() {
+		return boardName;
+	}
+	public void setBoardName(String boardName) {
+		this.boardName = boardName;
+	}
 	public String getPositionName() {
 		return positionName;
 	}

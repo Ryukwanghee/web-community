@@ -50,6 +50,7 @@
 	PostDao postDao = new PostDao();
 	Post post = postDao.getPostByNo(postNo);
 	post.setCommentCount(post.getCommentCount() + 1);
+	post.setReadCount(post.getReadCount() - 1);
 	postDao.updatePost(post);
 	// 재응답 url로 게시글 번호에 맞는 상세페이지로 보내기
 	response.sendRedirect("detail.jsp?no=" + postNo);

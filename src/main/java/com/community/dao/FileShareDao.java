@@ -16,9 +16,18 @@ public class FileShareDao {
 		return (List<FileShareDto>) SqlMapper.selectList("fileshares.getFileShares", param);
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<FileShareDto> getPostsByEmpNo(Map<String, Object> param){
+		return (List<FileShareDto>) SqlMapper.selectList("fileshares.getPostsByEmpNo", param);
+	}
+	
 	public int getTotalRows(Map<String, Object> param) {
 		return (Integer) SqlMapper.selectOne("fileshares.getTotalRows", param);
 	}
+	
+	public int getTotalRowsByEmpNo(Map<String, Object> param) {
+		return (Integer) SqlMapper.selectOne("fileshares.getTotalRowsByEmpNo", param);
+	}	
 	
 	public FileShareDto getPostByNo(int no) {
 		return (FileShareDto) SqlMapper.selectOne("fileshares.getPostByNo", no);

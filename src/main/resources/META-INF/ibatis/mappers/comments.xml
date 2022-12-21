@@ -155,5 +155,44 @@
 		where
 			comment_no = #no#
 	</update>
+	
+	<!-- 게시글 갯수를 조회한다. -->
+	<select id="getTotalRowsByEmpNo" parameterClass="int" resultClass="int">
+		select
+			count(*)
+		from
+			comm_post_comments A, comm_employees B
+		where
+			A.comment_deleted = 'N'
+			and A.comment_emp_no = B.emp_no
+			and B.emp_no = #value#
+	</select>
+	
+		<select id="getCommentsByEmpNo" parameterClass="map" resultClass="com.community.vo.Comment">
+		select
+			comment_no as no,
+			comment_emp_no as empNo,
+			comment_content as content,
+			comment_deleted as deleted,
+			comment_created_date as createdDate,
+			comment_updated_date as updatedDate,
+			comment_deleted_date as deletedDate,
+			comment_post_no as postNo
+		from
+			(select
+				row_number() over (order by comment_no desc) row_numbers,
+				comment_no, comment_emp_no, comment_content, comment_deleted, comment_created_date,
+				comment_updated_date, comment_deleted_date, comment_post_no
+			from
+				comm_post_comments
+			where
+				comment_deleted = 'N'
+				and comment_emp_no = #empNo#
+			)
+		where
+			row_numbers between #begin# and #end#
+		order by
+			comment_created_date desc
+	</select>
 </sqlMap>
 

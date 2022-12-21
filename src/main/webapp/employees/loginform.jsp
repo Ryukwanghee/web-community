@@ -29,7 +29,7 @@
 	if ("fail".equals(errorCode)){
 %>
 	<div class="alert alert-danger">
-		<strong>로그인 실패</strong>회원번호 혹은 비밀번호가 일치하지 않습니다.
+		<strong>로그인 실패</strong> 이메일 혹은 비밀번호가 일치하지 않습니다.
 	</div>
 <%
 	} else if ("deny".equals(errorCode)) {
@@ -43,7 +43,7 @@
 	<div id="error-message-box" class="alert alert-danger d-none" >
 		<strong>입력값 누락</strong> <span id="message-box"></span>
 	</div>
-	<form class="bg-light border p-3" id="form-login" method="post" action="login.jsp" onsubmit="return checkLoginForm();">
+	<form class="bg-light border p-3" id="form-login" method="post" action="login.jsp">
 		<div class="mb-3">
 			<label class="form-label">이메일</label>
 			<input type="text" class="form-control" name="email" />
@@ -60,26 +60,25 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
-	function checkLoginForm(){
-		var emailField = document.querySelector("[name=email]");
-		var passwordField = document.querySelector("[name=password]");
-		var errorMessageBox = document.querySelector("#error-message-box");
-		var messageBox = document.querySelector("#message-box");
+$(function(){
+	$("#form-login").submit(function(){
+		let email = $(":input[name=email]").val();
+		let password = $(":input[name=password]").val();
 		
-		if (emailField.value === '') {
-			errorMessageBox.classList.remove("d-none");
-			messageBox.textContent = " 아이디는 필수입력값입니다.";
-			idField.focus();
+		if (email === "") {
+			alert("이메일은 필수 입력값입니다.");
 			return false;
 		}
-		if (passwordField.value === '') {
-			errorMessageBox.classList.remove("d-none");
-			messageBox.textContent = " 비밀번호는 필수입력값입니다.";
-			passwordField.focus();
+		
+		if (password === "") {
+			alert("비밀번호는 필수 입력값입니다.");
 			return false;
 		}
-	}
-
+		
+		return true;
+	})
+	
+})
 </script>
 </body>
 </html>

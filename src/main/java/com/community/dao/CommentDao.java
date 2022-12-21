@@ -1,6 +1,7 @@
 package com.community.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.community.vo.Comment;
 import com.community.dto.CommentDto;
@@ -50,6 +51,15 @@ public class CommentDao {
 	
 	public void deleteComment(Comment comment) {
 		SqlMapper.update("comments.deleteComment", comment);
+	}
+	
+	public int getTotalRowsByEmpNo(int empNo) {
+		return (Integer) SqlMapper.selectOne("comments.getTotalRowsByEmpNo", empNo);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Comment> getCommentsByEmpNo(Map<String, Object> param){
+		return (List<Comment>)SqlMapper.selectList("comments.getCommentsByEmpNo", param);
 	}
 	
 	/**

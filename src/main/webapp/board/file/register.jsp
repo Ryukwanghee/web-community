@@ -48,7 +48,7 @@
 	}
 	
 	if (filename2 != null) {
-	file.setName(filename1);
+	file.setName(filename2);
 	file.setPostNo(no);
 	
 	fileShareDao.insertFile(file);

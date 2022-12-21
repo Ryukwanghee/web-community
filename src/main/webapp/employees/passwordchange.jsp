@@ -4,8 +4,14 @@
 <!DOCTYPE html>
 <%@ include file= "../../common/logincheck.jsp" %>
 <%
+	String prevPassword = request.getParameter("prevPassword");
 	String password = request.getParameter("password");
 	int no = loginUser.getNo();
+	
+	if (!loginUser.getPassword().equals(prevPassword)) {
+		response.sendRedirect("passwordform.jsp?error=fail");
+		return;
+	}
 
 	EmployeeDao employeeDao = EmployeeDao.getInstance();
 	

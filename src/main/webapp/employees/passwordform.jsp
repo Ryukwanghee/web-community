@@ -45,7 +45,19 @@
 		<div class="col-9">
 			<div class="row mb-3">
 				<div class="col-12">
+<%
+	String errorCode = request.getParameter("error");
+%>				
 					<p>비밀번호를 변경하세요.</p>
+<%
+	if ("fail".equals(errorCode)){
+%>
+	<div class="alert alert-danger">
+		<strong>비밀번호 변경 실패</strong> 이전 비밀번호가 일치하지 않습니다.
+	</div>
+<%
+	}
+%>					
 					<form id="form-change-pwd" class="border p-3 bg-light" method="post" action="passwordchange.jsp">
 						<div class="mb-3">
 							<label class="form-label">이전 비밀번호</label>
@@ -100,18 +112,6 @@ $(function () {
 			alert("새 비밀번호가 동일하지 않습니다.");
 			return false;
 		}
-		// 입력받은 이전 비밀번호가 현재 비밀번호와 일치하는지 유효성 체크하기
-		$.post("password-check.jsp", {password:prevPassword}, function(responseData){
-			if (responseData === "samePassword") {
-				isValidPassword = true;
-			} else if (responseData === "NotSamePassword") {
-				isValidPassword = false;
-			}
-			if (!isValidPassword) {
-				alert("이전 비밀번호가 일치하지 않습니다.");
-				return false;
-			}
-		})
 		
 		return true;
 	})
