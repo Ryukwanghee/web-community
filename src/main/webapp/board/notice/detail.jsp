@@ -37,7 +37,7 @@
 			String id = request.getParameter("id");
 		
 			// NoticeDao 객체를 생성하고 getNoticeByNo를 실행하고 조회하고 출력
-			NoticeDao noticeDao = new NoticeDao();
+			NoticeDao noticeDao = NoticeDao.getInstance();
 			Notice notice = noticeDao.getNoticeByNo(postNo);
 			
 		
@@ -119,16 +119,16 @@
 				</div>
 			</form>
 		</div>
-		<%
+		<%-- <%
 			// CommentDao 객체를 생성해서 getCommentsByPostNo(int postNo)를 실행해서 리뷰를 조회하낟.
 			CommentDao commentDao = new CommentDao();
 			List<Comment> commentList = commentDao.getCommentsByNo(postNo);
-		%>
+		%> --%>
 		
 		<div class="col-12">
 			<div class="card">
 			
-			<%
+		<%-- 	<%
 				if (commentList.isEmpty()) {
 					for (Comment comment : commentList) {
 			%>
@@ -142,7 +142,7 @@
 			<% 		
 					}
 				}
-			%>
+			%> --%>
 				
 			
 			</div>				
