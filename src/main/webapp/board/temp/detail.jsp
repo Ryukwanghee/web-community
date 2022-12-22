@@ -105,8 +105,9 @@
 			if (tempDto.getFileName() != null) {
 				//download를 서블릿으로 만든다.
 	%>
-						  <a href="/web-community/download?filename=<%=tempDto.getFileName() %>" class="ms-5 btn btn-success" 
-						style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .65rem;">다운로드</a>
+					<%-- <a href="../download?no<%=tempDto.getTempNo() %>" class="ms-5 btn btn-success" 
+						style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .4rem; --bs-btn-font-size: .65rem;">다운로드</a> --%>
+						  <a href="/web-community/download?filename=<%=tempDto.getFileName()%>"><%=tempDto.getFileName()%></a>
 	<%
 			}
 	%>
@@ -243,7 +244,7 @@
 								<input type="file" class="form-control form-control-sm" name="attachfile">
 							</div>
 							<div class="col-sm-1">
-								<button type="button" class="btn btn-sm" id="file-attachfile-field" ><i class="bi bi-plus-circle" ></i></button>
+								<button type="button" class="btn btn-sm" id="file-add-field" ><i class="bi bi-plus-circle" ></i></button>
 							</div>
 						</div>
 					</div>
@@ -258,28 +259,5 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(function() {
-	$("#file-attachfile-field").click(function() {
-		var htmlContent = `
-			<div class="row ">
-				<div class="col-8 offset-2">
-					<input type="file" class="form-control form-control-sm" name="attachfile">
-				</div>
-				<div class="col-2 text-end pt-1">
-				<button type="button" class="btn btn-sm" id="file-attachfile-field" ><i class="bi bi-dash-circle" ></i></button>
-				</div>
-			</div>
-		`;
-		$("#box-file").append(htmlContent);
-	});
-		
-	//미래에 생길 테이블에서 삭제버튼 클릭했을 때 발생하는 이벤트, 클래스의 bi-dash-circle이 실제 이벤트 핸들러 대상임
-	$("#box-file").on("click", '.bi-dash-circle', function() {
-		$(this).closest('.row').remove();
-	});
-})
-
-</script>
 </body>
 </html>

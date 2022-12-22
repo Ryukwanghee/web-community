@@ -67,7 +67,7 @@
 			</div>
 		</div>
 		<div class="col-9">
-					<form class="mb-3" id="keyword-value" method="get" action="deleteItems.jsp">
+					<form class="mb-3" method="get" action="deleteItems.jsp">
 						
 			<div class="card">
 				<div class="card-header">임시저장함</div>
@@ -76,9 +76,9 @@
 						<div class="mb-2 d-flex justify-content-between">
 							<div>
 								<select class="form-select form-select-xs" name="rows" onchange="changeRows()">
-									<option value="5" <%=rows == 5 ? "selected" : "" %>> 5</option>
-									<option value="10" <%=rows == 10 ? "selected" : "" %>> 10</option>
-									<option value="15" <%=rows == 15 ? "selected" : "" %>> 15</option>
+									<option value="5"> 5</option>
+									<option value="10"> 10</option>
+									<option value="15"> 15</option>
 								</select>
 							</div>
 							
@@ -250,7 +250,7 @@
 								<input type="file" class="form-control form-control-sm" name="attachfile">
 							</div>
 							<div class="col-sm-1">
-								<button type="button" class="btn btn-sm" id="file-attachfile-field" ><i class="bi bi-plus-circle" ></i></button>
+								<button type="button" class="btn btn-sm" id="file-add-field" ><i class="bi bi-plus-circle" ></i></button>
 							</div>
 						</div>
 					</div>
@@ -313,14 +313,14 @@ $(function(){
 				alert("체크한게 하나도 없습니다. 체크하세요");
 			}
 		}); */
-		$("#file-attachfile-field").click(function() {
+		/* $("#file-add-field").click(function() { 첨부파일
 			var htmlContent = `
 				<div class="row ">
 					<div class="col-8 offset-2">
-						<input type="file" class="form-control form-control-sm" name="attachfile">
+						<input type="file" class="form-control form-control-sm" name="add">
 					</div>
 					<div class="col-2 text-end pt-1">
-					<button type="button" class="btn btn-sm" id="file-attachfile-field" ><i class="bi bi-dash-circle" ></i></button>
+					<button type="button" class="btn btn-sm" id="file-add-field" ><i class="bi bi-dash-circle" ></i></button>
 					</div>
 				</div>
 			`;
@@ -330,11 +330,12 @@ $(function(){
 		//미래에 생길 테이블에서 삭제버튼 클릭했을 때 발생하는 이벤트, 클래스의 bi-dash-circle이 실제 이벤트 핸들러 대상임
 		$("#box-file").on("click", '.bi-dash-circle', function() {
 			$(this).closest('.row').remove();
-		});
+		}); */
 	
 });
 
-	function changeRows() {
+
+	function changeRows(event) {
 		
 		submitForm(1);				
 	}
@@ -346,23 +347,12 @@ $(function(){
 		submitForm(page);
 	}
 	
-	 $("#keyword-value").submit(function() {
-		var keywordVal = $(":input[name=keyword]").val();
-		if (keywordVal === "") {
-			event.preventDefault();
-			alert("검색어를 입력하세요.");
-			return false;
-		}
-	})
-	
-	
 	function submitForm(page) {
 		var pageField = document.querySelector("[name=page]");
 		pageField.value = page;
 		
 		var form = document.querySelector("form");
 		form.setAttribute("action", "list.jsp");
-		
 		form.submit();
 	}
 </script>

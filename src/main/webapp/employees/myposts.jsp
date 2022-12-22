@@ -80,9 +80,9 @@
 						<div class="mb-2 d-flex justify-content-between">
 							<div>
 								<select class="form-select form-select-xs" name="rows" onchange="changeRows()">
-									<option value="5" <%=rows == 5 ? "selected" : "" %>> 5</option>
-									<option value="10" <%=rows == 10 ? "selected" : "" %>> 10</option>
-									<option value="15" <%=rows == 15 ? "selected" : "" %>> 15</option>
+									<option value="5"> 5</option>
+									<option value="10"> 10</option>
+									<option value="15"> 15</option>
 								</select>
 							</div>
 							<div>
@@ -186,7 +186,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function() {
-	function changeRows() {
+	function changeRows(event) {
 		
 		submitForm(1);				
 	}
@@ -197,15 +197,6 @@ $(function() {
 		
 		submitForm(page);
 	}
-	
-	$("#keyword-value").submit(function() {
-		var keywordVal = $(":input[name=keyword]").val();
-		if (keywordVal === "") {
-			event.preventDefault();
-			alert("검색어를 입력하세요.");
-			return false;
-		}
-	})
 	
 	function submitForm(page) {
 		var pageField = document.querySelector("[name=page]");

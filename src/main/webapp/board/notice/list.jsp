@@ -40,7 +40,7 @@
 	param.put("end", end);
 	
 	// NoticeDao 객체를 생성해서 noticeDao 메소드해서 목록조회
-	NoticeDao noticeDao = NoticeDao.getInstance();
+	NoticeDao noticeDao = new NoticeDao();
 	List<Notice> noticeList = noticeDao.getNotices(param);
 %>
 	<div class="row mb-3">
